@@ -1,4 +1,3 @@
-import os
 from Modulos import *
 
 root = Tk()
@@ -52,10 +51,7 @@ def operaciones2():
     mesa.place(x=400, y=310)
 
 
-frome = Frame(root, width=570, height=299, bg="white")
-
-frome.config(relief="raised")
-
+frome = Frame(root, width=570, height=299, bg="white", relief="raised", bd=1)
 frome.place(x=0, y=0)
 
 fuento = tkinter.font.Font(family="Calibri", size=19)
