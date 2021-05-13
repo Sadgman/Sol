@@ -55,7 +55,6 @@ frome = Frame(root, width=570, height=299, bg="white", relief="raised", bd=1)
 frome.place(x=0, y=0)
 
 fuento = tkinter.font.Font(family="Calibri", size=19)
-
 fuent = tkinter.font.Font(family="artic", size=8)
 
 n = Label(text="Bienvenido al asistente de", bg="white", font=fuento)
