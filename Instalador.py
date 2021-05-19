@@ -239,6 +239,7 @@ commando()
 Angel = Frame(root, bg="white", width=570, height=53, borderwidth=1)
 Angel.place(x=0, y=0)
 
+file = "C:\Program Files"
 
 def abrir():
     global file
