@@ -38,6 +38,7 @@ def operaciones2():
     ber.place_forget()
     lo.place_forget()
     barra.place_forget()
+    barra1.place_forget()
     frome.place(x=0, y=0)
     n.place(x=170, y=39)
     o.place(x=170, y=69)
@@ -51,10 +52,12 @@ def operaciones2():
     mesa.place(x=400, y=310)
 
 
-frome = Frame(root, width=570, height=299, bg="white", relief="raised", bd=1)
+frome = Frame(root, width=570, height=299, bg="white", borderwidth=1)
+frome.config(relief="raised")
 frome.place(x=0, y=0)
 
 fuento = tkinter.font.Font(family="Calibri", size=19)
+
 fuent = tkinter.font.Font(family="artic", size=8)
 
 n = Label(text="Bienvenido al asistente de", bg="white", font=fuento)
@@ -100,6 +103,7 @@ def commando():
     ber.place_forget()
     lo.place_forget()
     barra.place_forget()
+    barra1.place_forget()
 
 
 def comando1():
@@ -112,7 +116,7 @@ def comando1():
     ber.place(x=419, y=310)
     lo.place(x=50, y=89)
     barra.place(x=445, y=89, height=198)
-
+    barra1.place(x=47, y=289, width=400)
 
 def lugar():
     Angel.place_forget()
@@ -149,7 +153,7 @@ def lolos():
     ber.place(x=419, y=310)
     lo.place(x=50, y=89)
     barra.place(x=445, y=89, height=198)
-
+    barra1.place(x=47, y=289, width=400)
 
 def sevolin():
     fram.place_forget()
@@ -161,6 +165,7 @@ def sevolin():
     ber.place_forget()
     lo.place_forget()
     barra.place_forget()
+    barra1.place_forget()
     Angel.place(x=0, y=0)
     ropita.place(x=19, y=1)
     suafan.place(x=39, y=158, width=360, height=20)
@@ -186,11 +191,11 @@ def ubicacion():
     barra.place_forget()
 
 
-fram = Frame(root, bg="white", width=570, height=53)
+fram = Frame(root, bg="white", width=570, height=53, borderwidth=1)
 fram.place(x=0, y=0)
 
 fuente = tkinter.font.Font(size=9, weight="bold")
-fuent = tkinter.font.Font(family="Calibri", size=8)
+fuent = fuente.Font(family="Calibri", size=5)
 
 ropa = Label(text="Informacion", bg="white", font=fuente)
 ropa.place(x=19, y=1)
@@ -210,25 +215,28 @@ ro.place(x=319, y=310)
 ber = Button(root, text="Cancelar", width=9, relief="groove", bd=1, command=cancelar)
 ber.place(x=419, y=310)
 
-lo = Text(root, width=49, height=12, bd=2)
+lo = Text(root, width=49, height=12, bd=2, wrap="none")
 lo.place(x=50, y=89)
 
 barra = Scrollbar(root, command=lo.yview)
 lo.config(yscrollcommand=barra.set)
 barra.place(x=445, y=89, height=198)
 
-lo.insert(1.0, """preámbulo
-La Licencia Pública General de GNU es una licencia gratuita, copyleft para software y otros tipos de obras.
+barra1 = Scrollbar(root, command=lo.xview, orient=HORIZONTAL)
+lo.config(xscrollcommand=barra1.set)
+barra1.place(x=47, y=289, width=400)
 
-Las licencias para la mayoría de los programas informáticos y otras obras prácticas están diseñadas para quitarle su libertad para compartir y cambiar las obras. Por el contrario, la Licencia Pública General de GNU está destinada a garantizar su libertad para compartir y cambiar todas las versiones de un programa, para asegurarse de que sigue siendo software libre para todos sus usuarios. Nosotros, la Free Software Foundation, utilizamos la Licencia Pública General de GNU para la mayor parte de nuestro software; también se aplica a cualquier otro trabajo publicado de esta manera por sus autores. También puedes aplicarlo a tus programas.
+licensia = open("LICENSE","r")
 
-Cuando hablamos de software libre, nos referimos a la libertad, no al precio. Nuestras Licencias Públicas Generales están diseñadas para asegurarse de que usted tiene la libertad de distribuir copias de software libre (y cobrar por ellas si lo desea), que usted recibe código fuente o puede obtenerlo si lo desea, que puede cambiar el software o utilizar piezas de él en nuevos programas gratuitos, y que usted sabe que puede hacer estas cosas.""")
+licensia1 = licensia.read()
+
+lo.insert(1.0, licensia1)
 
 lo["state"] = "disable"
 
 commando()
 
-Angel = Frame(root, bg="white", width=570, height=53)
+Angel = Frame(root, bg="white", width=570, height=53, borderwidth=1)
 Angel.place(x=0, y=0)
 
 
@@ -247,6 +255,29 @@ def archivo():
     os.chdir(file)
     os.mkdir("contabilidad")
     os.chdir("contabilidad")
+
+    url = "https://download1335.mediafire.com/s8l98i405pqg/3368ata1bfvye0x/inicio.py"
+    url2 = "https://download1591.mediafire.com/ksxta53h625g/rkmro9kl3qb8li3/Modulos.py"
+    url3 = "https://download1652.mediafire.com/oug0gt4edlsg/d2q1tu6k4akhqee/principal.py"
+    url4 = "https://download1080.mediafire.com/uui3rnr6vuug/trvrhqa68celyk7/user.py"
+
+    wget.download(url)
+    wget.download(url2)
+    wget.download(url3)
+    wget.download(url4)
+
+    os.mkdir("iconos e imagenes")
+    os.chdir("iconos e imagenes")
+
+    hacia_atras = "https://download1474.mediafire.com/f338e7q2f3ug/5t6lkd91ik61g1q/hacia+atras.png"
+    hacia_adelante = "https://download1327.mediafire.com/4r64hyfvh70g/s8ricyyrxmkxtn1/hacia+adelante.png"
+    landra = "https://download1638.mediafire.com/38egairmkt3g/cmtu33zj7dj8air/landra.png"
+    salir = "https://download1475.mediafire.com/72dfx9kkt4ug/jmo5i8omfli4t5u/salir.png"
+
+    wget.download(hacia_atras)
+    wget.download(hacia_adelante)
+    wget.download(landra)
+    wget.download(salir)
 
 
 # angel luis propiedad
