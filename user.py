@@ -1,5 +1,3 @@
-import os
-
 from Modulos import *
 
 root = Tk()
@@ -8,6 +6,21 @@ root.title("")
 root.iconbitmap('iconos e imagenes\icono.ico')
 root.config(width=500, height=299)
 
+if __name__ == "__main__":
+
+    try:
+
+        nanombre = sqlite3.connect("users.db")
+
+        cursor = nanombre.cursor()
+
+        cursor.execute("CREATE TABLE PERSONA(COMPAÑIA VARCHAR ,"
+                       "NOMBRE VARCHAR UNIQUE , CONTRASEÑA INTEGER)")
+
+        nanombre.close()
+
+    except sqlite3.OperationalError:
+        pass
 
 def cosito(eventico):
 
