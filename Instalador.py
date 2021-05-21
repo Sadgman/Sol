@@ -1,14 +1,16 @@
+import wget
 from Modulos import *
 
 root = Tk()
 root.title("Instalar")
 root.iconbitmap('iconos e imagenes\icono.ico')
 root.geometry("500x345")
+root.resizable(width=False, height=False)
 
 def cancelar():
 
     mas = messagebox.askyesno("cancelar la instalacion", "seguro que desea cancelar la instalacion")
-    if mas == True:
+    if mas:
         root.destroy()
 
 root.protocol("WM_DELETE_WINDOW", cancelar)
@@ -246,6 +248,7 @@ def abrir():
 
     file = FileDialog.askdirectory(initialdir="C:\Program Files", title="Abrir")
 
+
     if len(file) > 0:
         sufall.set("")
         sufall.set(file)
@@ -254,7 +257,15 @@ def abrir():
 def archivo():
 
     os.chdir(file)
-    os.mkdir("contabilidad")
+
+    try:
+        os.mkdir("contabilidad")
+    except:
+        propuesta = messagebox.askyesno("","Desea volver a instalar este programa en su sistema?")
+        if propuesta:
+            shutil.rmtree("contabilidad")
+            os.mkdir("contabilidad")
+
     os.chdir("contabilidad")
 
     url = "https://download1335.mediafire.com/s8l98i405pqg/3368ata1bfvye0x/inicio.py"
