@@ -66,13 +66,13 @@ class principal:
 
         self.crear_productos = Button(root, image=self.crear_producto_imagen, command=self.crear_producto_1)
 
-        self.label_entry_codigo = Label(self.frame_crear_producto, text="Codigo", font=fuente_crear_producto, bg="#127271")
-        self.entry_codigo = Entry(self.frame_crear_producto, width=35)
-        self.Entry_Nombre_producto = Entry(self.frame_crear_producto, width=46)
+        self.label_codigo = Label(self.frame_crear_producto, text="Codigo", font=fuente_crear_producto, bg="#127271")
+        self.entry_codigo = ttk.Entry(self.frame_crear_producto, width=35,validate='all', validatecommand=(root.register(self.activar_puestos), '%P'))
+        self.Entry_Nombre_producto = ttk.Entry(self.frame_crear_producto, width=46)
         self.label_Nombre_producto = Label(self.frame_crear_producto, bg="#127271",text="Nombre del producto", font=fuente_crear_producto)
 
-        self.label_precio_en_venta = Label(self.frame_crear_producto, text="Precio en compra.", font=fuente_crear_producto,bg="#127271")
-        self.label_precio_en_venta1 = Label(self.frame_crear_producto, text="Ganancias", bg="#127271", font=fuente_crear_producto)
+        self.label_precio_en_venta = Label(self.frame_crear_producto, text="Precio en compra.", font=fuente_crear_producto, bg="#127271")
+        self.label_precio_Ganancias = Label(self.frame_crear_producto, text="Ganancias", bg="#127271", font=fuente_crear_producto)
         self.label_coste_producto = Label(self.frame_crear_producto, text="Costo del producto", bg="#127271",font=fuente_crear_producto)
         self.label_calificacion_producto = Label(self.frame_crear_producto, text="Calificacion del producto",bg="#127271", font=fuente_crear_producto)
 
@@ -93,6 +93,7 @@ class principal:
         self.label_asignado_bodega = Label(self.frame_crear_producto, text="Asignado a bodega", bg="#127271", font=fuente_categoria)
         self.label_ubicacion = Label(self.frame_crear_producto, text="Ubicacion fisica",bg="#127271", font=fuente_categoria)
         self.label_vende_por = Label(self.frame_crear_producto, text="Se vende por",bg="#127271", font=fuente_categoria)
+        self.label_compra_por = Label(self.frame_crear_producto, text="Se vende por",bg="#127271", font=fuente_categoria)
 
         self.label_contiene = Label(self.frame_crear_producto, text="Y contiene",bg="#127271", font=fuente_categoria)
         self.label_cUnidades = Label(self.frame_crear_producto, text="Unidades",bg="#127271", font=fuente_especial)
@@ -103,25 +104,50 @@ class principal:
         self.label_precio3 = Label(self.frame_crear_producto, text="Precio 3 impto",bg="#127271", font=fuente_categoria)
         self.label_precio4 = Label(self.frame_crear_producto, text="Precio 4 impto",bg="#127271", font=fuente_categoria)
 
-        self.entry_numero1 = Entry(self.frame_crear_producto)
-        self.entry_numero2 = Entry(self.frame_crear_producto)
-        self.entry_numero3 = Entry(self.frame_crear_producto)
-        self.entry_numero4 = Entry(self.frame_crear_producto)
+        self.string_entry1 = StringVar()
+        self.string_entry2 = StringVar()
+        self.string_entry3 = StringVar()
+        self.string_entry4 = StringVar()
 
-        self.entry_numero5 = Entry(self.frame_crear_producto)
-        self.entry_numero6 = Entry(self.frame_crear_producto)
-        self.entry_numero7 = Entry(self.frame_crear_producto)
-        self.entry_numero8 = Entry(self.frame_crear_producto)
+        self.string_entry1.set("0.00")
+        self.string_entry2.set("0.00")
+        self.string_entry3.set("0.00")
+        self.string_entry4.set("0.00")
 
-        self.entry_numero9 = Entry(self.frame_crear_producto)
-        self.entry_numero10 = Entry(self.frame_crear_producto, state="disable")
-        self.entry_numero11 = Entry(self.frame_crear_producto)
+        self.entry_numero1 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry1)
+        self.entry_numero2 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry2)
+        self.entry_numero3 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry3)
+        self.entry_numero4 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry4)
 
-        self.entry_numero12 = Entry(self.frame_crear_producto, width=11)
-        self.entry_numero14 = Entry(self.frame_crear_producto)
-        self.entry_numero15 = Entry(self.frame_crear_producto)
-        self.entry_numero16 = Entry(self.frame_crear_producto)
-        self.entry_numero17 = Entry(self.frame_crear_producto)
+        self.string_entry5 = StringVar()
+        self.string_entry6 = StringVar()
+        self.string_entry7 = StringVar()
+        self.string_entry8 = StringVar()
+
+        self.string_entry5.set("0.000")
+        self.string_entry6.set("0.000")
+        self.string_entry7.set("0.000")
+        self.string_entry8.set("0.000")
+
+        self.entry_numero5 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry5)
+        self.entry_numero6 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry6)
+        self.entry_numero7 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry7)
+        self.entry_numero8 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry8)
+
+        self.Int_por_unidad = IntVar()
+        self.Int_en_dolares = IntVar()
+
+        self.Int_por_unidad.set("0.00")
+
+        self.entry_por_unidad = ttk.Entry(self.frame_crear_producto, textvariable=self.Int_por_unidad,validate='all', validatecommand=(root.register(self.calculos), '%P'))
+        self.entry_en_dolares = ttk.Entry(self.frame_crear_producto, state="readonly", textvariable=self.Int_en_dolares)
+        self.entry_numero11 = ttk.Entry(self.frame_crear_producto)
+
+        self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11)
+        self.entry_numero14 = ttk.Entry(self.frame_crear_producto)
+        self.entry_numero15 = ttk.Entry(self.frame_crear_producto)
+        self.entry_numero16 = ttk.Entry(self.frame_crear_producto)
+        self.entry_numero17 = ttk.Entry(self.frame_crear_producto)
 
         self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -135,13 +161,16 @@ class principal:
 
         self.S1 = Spinbox(self.frame_crear_producto, from_=0, to=10, width=3)
 
-        self.cx = ttk.Combobox(root, width=12)
-        self.cx0 = ttk.Combobox(root, width=12)
-        self.cx1 = ttk.Combobox(self.frame_crear_producto, width=8)
-        self.cx2 = ttk.Combobox(self.frame_crear_producto, width=8)
-        self.cx3 = ttk.Combobox(self.frame_crear_producto, width=6)
-        self.cx4 = ttk.Combobox(self.frame_crear_producto, width=5)
+        self.cx_inpuesto = ttk.Combobox(root, width=12, values=("Tax", "Iva", "SIN"))
+        self.cx0_otro_inpu = ttk.Combobox(root, width=12)
+        self.cx1_categoria_producto = ttk.Combobox(self.frame_crear_producto, width=8)
+        self.cx2_asignacion_bodega = ttk.Combobox(self.frame_crear_producto, width=8)
+        self.cx3_asignado_bodega = ttk.Combobox(self.frame_crear_producto, width=6)
+        self.cx4_se_vende_por = ttk.Combobox(self.frame_crear_producto, width=8, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
+        self.cx5_y_contiene = ttk.Combobox(self.frame_crear_producto, width=10)
+        self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10)
 
+        self.n = 1
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -220,36 +249,41 @@ class principal:
 
         self.root.config(bg="#335DD9")
 
-        self.label_entry_codigo.place(x=42,y=12)
+        self.label_codigo.place(x=42,y=12)
         self.entry_codigo.place(x=130, y=18, height=20)
         self.frame_crear_producto.place(x=90, y=40)
         self.Entry_Nombre_producto.place(x=600, y=18, height=20)
+
         self.label_Nombre_producto.place(x=400, y=12)
-        self.label_precio_en_venta.place(x=40, y=100)
-        self.label_precio_en_venta1.place(x=250, y=100)
-        self.label_coste_producto.place(x=400, y=100)
-        self.label_calificacion_producto.place(x=630, y=100)
+        self.label_precio_en_venta.place(x=40, y=90)
+        self.label_precio_Ganancias.place(x=250, y=90)
 
-        self.label_numero1.place(x=40, y=170)
-        self.label_numero2.place(x=40, y=210)
-        self.label_numero3.place(x=40, y=250)
-        self.label_numero4.place(x=40, y=286)
+        self.label_coste_producto.place(x=400, y=90)
+        self.label_calificacion_producto.place(x=630, y=90)
 
-        self.label_por_unidad.place(x=380, y=175)
-        self.label_en_us.place(x=380, y=208)
-        self.label_El_producto_es.place(x=40, y=350)
+        self.label_numero1.place(x=40, y=140)
+        self.label_numero2.place(x=40, y=180)
+        self.label_numero3.place(x=40, y=220)
+        self.label_numero4.place(x=40, y=256)
+
+        self.label_por_unidad.place(x=380, y=145)
+        self.label_en_us.place(x=380, y=178)
+        self.label_El_producto_es.place(x=40, y=320)
         self.label_cantidad_inicial.place(x=40, y=390)
         self.label_facturar_precio.place(x=330, y=390)
+
         self.label_inpuesto.place(x=39, y=440)
         self.label_inpuesto1.place(x=36, y=480)
-        self.label_categoria.place(x=600, y=170)
-        self.label_sub_categoria.place(x=600, y=210)
-        self.label_asignado_bodega.place(x=600, y=250)
-        self.label_ubicacion.place(x=600, y=290)
+        self.label_categoria.place(x=600, y=140)
+        self.label_sub_categoria.place(x=600, y=180)
 
-        self.label_vende_por.place(x=600, y=330)
-        self.label_contiene.place(x=600, y=370)
-        self.label_cUnidades.place(x=800, y=375)
+        self.label_asignado_bodega.place(x=600, y=220)
+        self.label_ubicacion.place(x=600, y=260)
+
+        self.label_vende_por.place(x=600, y=300)
+        self.label_contiene.place(x=600, y=340)
+        self.label_compra_por.place(x=600, y=374)
+        self.label_cUnidades.place(x=800, y=345)
         self.label_Aplicar_en.place(x=290, y=419)
 
         self.label_precio1.place(x=600, y=410)
@@ -257,43 +291,103 @@ class principal:
         self.label_precio3.place(x=600, y=470)
         self.label_precio4.place(x=600, y=500)
 
-        self.entry_numero1.place(x=70, y=175)
-        self.entry_numero2.place(x=70, y=216)
-        self.entry_numero3.place(x=70, y=256)
-        self.entry_numero4.place(x=70, y=290)
+        self.entry_numero1.place(x=70, y=145)
+        self.entry_numero2.place(x=70, y=186)
+        self.entry_numero3.place(x=70, y=226)
+        self.entry_numero4.place(x=70, y=260)
 
-        self.entry_numero5.place(x=240, y=175)
-        self.entry_numero6.place(x=240, y=216)
-        self.entry_numero7.place(x=240, y=256)
-        self.entry_numero8.place(x=240, y=290)
+        self.entry_numero5.place(x=240, y=145)
+        self.entry_numero6.place(x=240, y=186)
+        self.entry_numero7.place(x=240, y=226)
+        self.entry_numero8.place(x=240, y=260)
 
-        self.entry_numero9.place(x=460, y=175)
-        self.entry_numero10.place(x=460, y=209)
+        self.entry_por_unidad.place(x=460, y=145)
+        self.entry_en_dolares.place(x=460, y=179)
         self.entry_numero11.place(x=179, y=392)
-        self.entry_numero12.place(x=745, y=295)
+
+        self.entry_ubicacion_fisica.place(x=745, y=265)
+
         self.entry_numero14.place(x=700, y=413)
         self.entry_numero15.place(x=700, y=442)
-        self.entry_numero16.place(x=700, y=442)
+        self.entry_numero16.place(x=700, y=472)
         self.entry_numero17.place(x=700, y=502)
 
-        self.CN.place(x=410, y=260)
+        self.CN.place(x=410, y=230)
         self.CN1.place(x=300, y=450)
         self.CN2.place(x=300, y=483)
         self.CN3.place(x=340, y=450)
         self.CN4.place(x=340, y=483)
 
-        self.R1.place(x=250, y=390)
-        self.R2.place(x=320, y=392)
-        self.R3.place(x=400, y=394)
+        self.R1.place(x=250, y=360)
+        self.R2.place(x=320, y=362)
+        self.R3.place(x=400, y=364)
 
         self.S1.place(x=484,y=394)
 
-        self.cx.place(x=214, y=483) 
-        self.cx0.place(x=214, y=523)
-        self.cx1.place(x=744, y=170)
-        self.cx2.place(x=744, y=210)
-        self.cx3.place(x=744, y=255)
-        self.cx4.place(x=744, y=335)
+    def calculos(self, dominiga):
+
+        if self.n == 1:
+
+            self.entry_por_unidad.delete(0, END)
+
+            self.n -= 1
+
+        if str.isdigit(dominiga):
+
+            Dominicanos = float(dominiga)
+
+            dolares_entre_dominicanos = format(Dominicanos / 58, ".2f")
+
+            self.Int_en_dolares.set(dolares_entre_dominicanos)
+
+            return True
+
+        else:
+
+            return True
+
+    def activar_puestos(self, dxs):
+
+        en_numeros = len(dxs)
+
+        if str.isdigit(dxs):
+
+            if en_numeros > 5:
+
+                self.cx4_se_vende_por.place(x=744, y=305)
+                self.cx5_y_contiene .place(x=700, y=340)
+                self.cx2_asignacion_bodega.place(x=744, y=180)
+                self.cx1_categoria_producto.place(x=744, y=140)
+                self.cx3_asignado_bodega.place(x=744, y=225)
+                self.cx5_se_compra_por.place(x=700, y=374)
+
+                self.cx_inpuesto.place(x=214, y=483)
+                self.cx0_otro_inpu.place(x=214, y=523)
+
+            else:
+                self.cx4_se_vende_por.place_forget()
+                self.cx5_y_contiene.place_forget()
+                self.cx2_asignacion_bodega.place_forget()
+                self.cx1_categoria_producto.place_forget()
+                self.cx3_asignado_bodega.place_forget()
+                self.cx_inpuesto.place_forget()
+                self.cx0_otro_inpu.place_forget()
+                self.cx5_se_compra_por.place_forget()
+
+            return True
+
+        else:
+
+            self.cx4_se_vende_por.place_forget()
+            self.cx5_y_contiene.place_forget()
+            self.cx2_asignacion_bodega.place_forget()
+            self.cx1_categoria_producto.place_forget()
+            self.cx3_asignado_bodega.place_forget()
+            self.cx_inpuesto.place_forget()
+            self.cx0_otro_inpu.place_forget()
+            self.cx5_se_compra_por.place_forget()
+
+            return True
 
 root0 = Tk()
 principal(root0)
