@@ -72,7 +72,7 @@ class principal:
         self.label_Nombre_producto = Label(self.frame_crear_producto, bg="#127271",text="Nombre del producto", font=fuente_crear_producto)
 
         self.label_precio_en_venta = Label(self.frame_crear_producto, text="Precio en compra.", font=fuente_crear_producto, bg="#127271")
-        self.label_precio_Ganancias = Label(self.frame_crear_producto, text="Ganancias", bg="#127271", font=fuente_crear_producto)
+        self.label_precio_Ganancias = Label(self.frame_crear_producto, text="Utilidad %", bg="#127271", font=fuente_crear_producto)
         self.label_coste_producto = Label(self.frame_crear_producto, text="Costo del producto", bg="#127271",font=fuente_crear_producto)
         self.label_calificacion_producto = Label(self.frame_crear_producto, text="Calificacion del producto",bg="#127271", font=fuente_crear_producto)
 
@@ -129,7 +129,7 @@ class principal:
         self.string_entry7.set("0.000")
         self.string_entry8.set("0.000")
 
-        self.entry_numero5 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry5)
+        self.entry_numero5 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry5, validate='all', validatecommand=(root.register(self.calculo), '%P'))
         self.entry_numero6 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry6)
         self.entry_numero7 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry7)
         self.entry_numero8 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry8)
@@ -141,7 +141,7 @@ class principal:
 
         self.entry_por_unidad = ttk.Entry(self.frame_crear_producto, textvariable=self.Int_por_unidad,validate='all', validatecommand=(root.register(self.calculos), '%P'))
         self.entry_en_dolares = ttk.Entry(self.frame_crear_producto, state="readonly", textvariable=self.Int_en_dolares)
-        self.entry_numero11 = ttk.Entry(self.frame_crear_producto)
+        self.entry_cantidad_inicial = ttk.Entry(self.frame_crear_producto)
 
         self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11)
         self.entry_numero14 = ttk.Entry(self.frame_crear_producto)
@@ -171,6 +171,7 @@ class principal:
         self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10)
 
         self.n = 1
+        self.n1 = 1
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -269,7 +270,7 @@ class principal:
         self.label_por_unidad.place(x=380, y=145)
         self.label_en_us.place(x=380, y=178)
         self.label_El_producto_es.place(x=40, y=320)
-        self.label_cantidad_inicial.place(x=40, y=390)
+        self.label_cantidad_inicial.place(x=37, y=390)
         self.label_facturar_precio.place(x=330, y=390)
 
         self.label_inpuesto.place(x=39, y=440)
@@ -303,7 +304,7 @@ class principal:
 
         self.entry_por_unidad.place(x=460, y=145)
         self.entry_en_dolares.place(x=460, y=179)
-        self.entry_numero11.place(x=179, y=392)
+        self.entry_cantidad_inicial.place(x=189, y=392)
 
         self.entry_ubicacion_fisica.place(x=745, y=265)
 
@@ -318,11 +319,11 @@ class principal:
         self.CN3.place(x=340, y=450)
         self.CN4.place(x=340, y=483)
 
-        self.R1.place(x=250, y=360)
-        self.R2.place(x=320, y=362)
-        self.R3.place(x=400, y=364)
+        self.R1.place(x=270, y=360)
+        self.R2.place(x=340, y=362)
+        self.R3.place(x=420, y=364)
 
-        self.S1.place(x=484,y=394)
+        self.S1.place(x=516,y=394)
 
     def calculos(self, dominiga):
 
@@ -352,7 +353,7 @@ class principal:
 
         if str.isdigit(dxs):
 
-            if en_numeros > 5:
+            if en_numeros > 2:
 
                 self.cx4_se_vende_por.place(x=744, y=305)
                 self.cx5_y_contiene .place(x=700, y=340)
@@ -361,8 +362,8 @@ class principal:
                 self.cx3_asignado_bodega.place(x=744, y=225)
                 self.cx5_se_compra_por.place(x=700, y=374)
 
-                self.cx_inpuesto.place(x=214, y=483)
-                self.cx0_otro_inpu.place(x=214, y=523)
+                self.cx_inpuesto.place(x=234, y=483)
+                self.cx0_otro_inpu.place(x=234, y=523)
 
             else:
                 self.cx4_se_vende_por.place_forget()
@@ -386,6 +387,30 @@ class principal:
             self.cx_inpuesto.place_forget()
             self.cx0_otro_inpu.place_forget()
             self.cx5_se_compra_por.place_forget()
+
+            return True
+
+    def calculo(self, cel):
+
+        nf = float(self.Int_por_unidad.get())
+
+        if self.n1 == 1:
+
+            self.entry_numero5.delete(0, END)
+
+            self.n1 -= 1
+
+        if str.isdigit(cel):
+
+            fn = float(cel)
+
+            fns = format(fn / nf, ".2f")
+
+            self.string_entry1.set(fns)
+
+            return True
+
+        else:
 
             return True
 
