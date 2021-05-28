@@ -93,7 +93,7 @@ class principal:
         self.label_asignado_bodega = Label(self.frame_crear_producto, text="Asignado a bodega", bg="#127271", font=fuente_categoria)
         self.label_ubicacion = Label(self.frame_crear_producto, text="Ubicacion fisica",bg="#127271", font=fuente_categoria)
         self.label_vende_por = Label(self.frame_crear_producto, text="Se vende por",bg="#127271", font=fuente_categoria)
-        self.label_compra_por = Label(self.frame_crear_producto, text="Se vende por",bg="#127271", font=fuente_categoria)
+        self.label_compra_por = Label(self.frame_crear_producto, text="Se Compra por",bg="#127271", font=fuente_categoria)
 
         self.label_contiene = Label(self.frame_crear_producto, text="Y contiene",bg="#127271", font=fuente_categoria)
         self.label_cUnidades = Label(self.frame_crear_producto, text="Unidades",bg="#127271", font=fuente_especial)
@@ -144,13 +144,16 @@ class principal:
         self.entry_cantidad_inicial = ttk.Entry(self.frame_crear_producto)
 
         self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11)
-        self.entry_numero14 = ttk.Entry(self.frame_crear_producto)
+
+        self.string_entry14 = IntVar()
+
+        self.entry_numero14 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry14)
         self.entry_numero15 = ttk.Entry(self.frame_crear_producto)
         self.entry_numero16 = ttk.Entry(self.frame_crear_producto)
         self.entry_numero17 = ttk.Entry(self.frame_crear_producto)
 
         self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
-        self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
+        self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271" ,activebackground="#127271")
         self.CN2 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN3 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN4 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -185,6 +188,8 @@ class principal:
         self.pepe = 0
         self.pepero = 0
         self.peperoni = 0
+
+        self.cx_inpuesto.bind("<<ComboboxSelected>>", self.funny)
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -354,6 +359,7 @@ class principal:
         if self.variable == 1:
             if ch == "":
                 self.string_entry5.set("0.000")
+                self.string_entry1.set("0.00")
                 if self.n1 == 0:
                     self.n1 += 1
             self.variable -= 1
@@ -361,6 +367,7 @@ class principal:
         if self.variable1 == 1:
             if ch1 == "":
                 self.string_entry6.set("0.000")
+                self.string_entry2.set("0.00")
                 if self.n2 == 0:
                     self.n2 += 1
             self.variable1 -= 1
@@ -368,6 +375,7 @@ class principal:
         if self.variable2 == 1:
             if ch2 == "":
                 self.string_entry7.set("0.000")
+                self.string_entry3.set("0.00")
                 if self.n3 == 0:
                     self.n3 += 1
             self.variable2 -= 1
@@ -375,6 +383,7 @@ class principal:
         if self.variable3 == 1:
             if ch3 == "":
                 self.string_entry8.set("0.000")
+                self.string_entry4.set("0.00")
                 if self.n4 == 0:
                     self.n4 += 1
             self.variable3 -= 1
@@ -416,6 +425,7 @@ class principal:
             if en_numeros > 2:
 
                 self.cx4_se_vende_por.place(x=744, y=305)
+                self.cx4_se_vende_por.current(1)
                 self.cx5_y_contiene .place(x=700, y=340)
                 self.cx2_asignacion_bodega.place(x=744, y=180)
                 self.cx1_categoria_producto.place(x=744, y=140)
@@ -581,6 +591,24 @@ class principal:
         else:
 
             return True
+
+    def funny(self, e):
+
+        inpuesto = self.cx_inpuesto.get()
+        nf = float(self.string_entry1.get())
+
+        if inpuesto == "Iva":
+
+            n1 = 15
+
+            res = eval("n1 * 1 / 100")
+
+            res *= 1000
+
+            fns = format(nf + res, ".2f")
+
+            self.string_entry14.set(fns)
+
 
 root0 = Tk()
 principal(root0)
