@@ -902,8 +902,6 @@ class principal:
 
         if modelo_de_venta == "Unidad":
             
-            self.label_por_unidad.place(x=380, y=145)
-            self.label_cUnidades.place(x=800, y=345)
             self.label_kilogramos.place_forget()
             self.label_pieza.place_forget()
             self.label_docena.place_forget()
@@ -912,9 +910,11 @@ class principal:
             self.label_por_docena.place_forget()
             self.label_por_kilogramo.place_forget()
             self.label_por_botella.place_forget()
+            self.label_por_unidad.place(x=380, y=145)
+            self.label_cUnidades.place(x=800, y=345)
 
         elif modelo_de_venta == "Pieza":
-            
+
             self.label_cUnidades.place_forget()
             self.label_docena.place_forget()
             self.label_kilogramos.place_forget()
@@ -927,7 +927,7 @@ class principal:
             self.label_por_pieza.place(x=380, y=145)
 
         elif modelo_de_venta == "Docena":
-            
+
             self.label_pieza.place_forget()
             self.label_cUnidades.place_forget()
             self.label_kilogramos.place_forget()
@@ -940,7 +940,7 @@ class principal:
             self.label_por_docena.place(x=380, y=145)
 
         elif modelo_de_venta == "kilogramos":
-            
+
             self.label_kilogramos.place_forget()
             self.label_docena.place_forget()
             self.label_pieza.place_forget()
@@ -954,7 +954,7 @@ class principal:
             self.label_por_kilogramo.place(x=380, y=145)
 
         elif modelo_de_venta == "Botella":
-            
+
             self.label_kilogramos.place_forget()
             self.label_docena.place_forget()
             self.label_pieza.place_forget()
