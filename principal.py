@@ -82,6 +82,11 @@ class principal:
         self.label_numero4 = Label(self.frame_crear_producto, text="4.", bg="#127271", font=fuente_numeros)
 
         self.label_por_unidad = Label(self.frame_crear_producto, text="Por unidad", bg="#127271", font=fuente_numeros1)
+        self.label_por_pieza = Label(self.frame_crear_producto, text="Por Pieza", bg="#127271", font=fuente_numeros1)
+        self.label_por_kilogramo = Label(self.frame_crear_producto, text="Por Kg", bg="#127271", font=fuente_numeros1)
+        self.label_por_botella = Label(self.frame_crear_producto, text="Por Botella", bg="#127271", font=fuente_numeros1)
+        self.label_por_docena = Label(self.frame_crear_producto, text="Por Docena", bg="#127271", font=fuente_numeros1)
+
         self.label_en_us = Label(self.frame_crear_producto, text="En dolares", bg="#127271", font=fuente_numeros1)
         self.label_El_producto_es = Label(self.frame_crear_producto, text="El producto es", bg="#127271", font="Arial")
         self.label_cantidad_inicial = Label(self.frame_crear_producto, text="Cantidad inicial", bg="#127271", font="Arial")
@@ -97,8 +102,12 @@ class principal:
 
         self.label_contiene = Label(self.frame_crear_producto, text="Y contiene",bg="#127271", font=fuente_categoria)
         self.label_cUnidades = Label(self.frame_crear_producto, text="Unidades",bg="#127271", font=fuente_especial)
-        self.label_Aplicar_en = Label(self.frame_crear_producto, text="Aplicar en\nventas  compras",bg="#127271", font=fuente_especial)
+        self.label_pieza = Label(self.frame_crear_producto, text="Pieza",bg="#127271", font=fuente_especial)
+        self.label_docena = Label(self.frame_crear_producto, text="Docena",bg="#127271", font=fuente_especial)
+        self.label_kilogramos = Label(self.frame_crear_producto, text="Kilogramos",bg="#127271", font=fuente_especial)
+        self.label_botella = Label(self.frame_crear_producto, text="Botella",bg="#127271", font=fuente_especial)
 
+        self.label_Aplicar_en = Label(self.frame_crear_producto, text="Aplicar en\nventas  compras",bg="#127271", font=fuente_especial)
         self.label_precio1 = Label(self.frame_crear_producto, text="Precio 1 impto",bg="#127271", font=fuente_categoria)
         self.label_precio2 = Label(self.frame_crear_producto, text="Precio 2 impto",bg="#127271", font=fuente_categoria)
         self.label_precio3 = Label(self.frame_crear_producto, text="Precio 3 impto",bg="#127271", font=fuente_categoria)
@@ -156,10 +165,11 @@ class principal:
         self.entry_numero17 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry17)
 
         self.CN_variable = IntVar()
+        self.CN1_variable = IntVar()
 
         self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, variable=self.CN_variable, bg="#127271", activebackground="#127271", command=self.funny)
-        self.CN2 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
+        self.CN2 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0,variable=self.CN1_variable, bg="#127271", activebackground="#127271")
         self.CN3 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN4 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
 
@@ -195,6 +205,7 @@ class principal:
         self.peperoni = 0
 
         self.cx_inpuesto.bind("<<ComboboxSelected>>", self.funny_fan)
+        self.cx4_se_vende_por.bind("<<ComboboxSelected>>", self.funcion_decoradora)
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -290,7 +301,7 @@ class principal:
         self.label_numero3.place(x=40, y=220)
         self.label_numero4.place(x=40, y=256)
 
-        self.label_por_unidad.place(x=380, y=145)
+        self.label_por_pieza.place(x=380, y=145)
         self.label_en_us.place(x=380, y=178)
         self.label_El_producto_es.place(x=40, y=320)
         self.label_cantidad_inicial.place(x=37, y=390)
@@ -307,8 +318,8 @@ class principal:
         self.label_vende_por.place(x=600, y=300)
         self.label_contiene.place(x=600, y=340)
         self.label_compra_por.place(x=600, y=374)
-        self.label_cUnidades.place(x=800, y=345)
         self.label_Aplicar_en.place(x=290, y=419)
+        self.label_pieza.place(x=800, y=345)
 
         self.label_precio1.place(x=600, y=410)
         self.label_precio2.place(x=600, y=440)
@@ -884,6 +895,75 @@ class principal:
             self.string_entry15.set("")
             self.string_entry16.set("")
             self.string_entry17.set("")
+
+    def funcion_decoradora(self, f):
+        
+        modelo_de_venta = self.cx4_se_vende_por.get()
+
+        if modelo_de_venta == "Unidad":
+            
+            self.label_por_unidad.place(x=380, y=145)
+            self.label_cUnidades.place(x=800, y=345)
+            self.label_kilogramos.place_forget()
+            self.label_pieza.place_forget()
+            self.label_docena.place_forget()
+            self.label_botella.place_forget()
+            self.label_por_pieza.place_forget()
+            self.label_por_docena.place_forget()
+            self.label_por_kilogramo.place_forget()
+            self.label_por_botella.place_forget()
+
+        elif modelo_de_venta == "Pieza":
+            
+            self.label_cUnidades.place_forget()
+            self.label_docena.place_forget()
+            self.label_kilogramos.place_forget()
+            self.label_botella.place_forget()
+            self.label_por_unidad.place_forget()
+            self.label_por_docena.place_forget()
+            self.label_por_kilogramo.place_forget()
+            self.label_por_botella.place_forget()
+            self.label_pieza.place(x=800, y=345)
+            self.label_por_pieza.place(x=380, y=145)
+
+        elif modelo_de_venta == "Docena":
+            
+            self.label_pieza.place_forget()
+            self.label_cUnidades.place_forget()
+            self.label_kilogramos.place_forget()
+            self.label_por_pieza.place_forget()
+            self.label_botella.place_forget()
+            self.label_por_unidad.place_forget()
+            self.label_por_kilogramo.place_forget()
+            self.label_por_botella.place_forget()
+            self.label_docena.place(x=800, y=345)
+            self.label_por_docena.place(x=380, y=145)
+
+        elif modelo_de_venta == "kilogramos":
+            
+            self.label_kilogramos.place_forget()
+            self.label_docena.place_forget()
+            self.label_pieza.place_forget()
+            self.label_cUnidades.place_forget()
+            self.label_botella.place_forget()
+            self.label_por_pieza.place_forget()
+            self.label_por_unidad.place_forget()
+            self.label_por_docena.place_forget()
+            self.label_por_botella.place_forget()
+            self.label_kilogramos.place(x=800, y=345)
+            self.label_por_kilogramo.place(x=380, y=145)
+
+        elif modelo_de_venta == "Botella":
+            
+            self.label_kilogramos.place_forget()
+            self.label_docena.place_forget()
+            self.label_pieza.place_forget()
+            self.label_cUnidades.place_forget()
+            self.label_por_unidad.place_forget()
+            self.label_por_docena.place_forget()
+            self.label_por_kilogramo.place_forget()
+            self.label_botella.place(x=800, y=345)
+            self.label_por_botella.place(x=380, y=145)
 
 root0 = Tk()
 principal(root0)
