@@ -10,12 +10,15 @@ class principal:
         root.geometry("1080x640")
         root.minsize(width=200, height=256)
 
+        self.lolosevolin = ttk.Notebook(root)
+        self.lolosevolin.pack(pady=10, expand=True)
+
         self.frame = Frame(root,bg="#03A9F4",width=10080, height=1080)
         self.frame.place(x=0, y=0)
 
         self.frame_inventario = Frame(root,bg="white",width=500, height=500)
 
-        self.frame_crear_producto = Frame(root, width=900, height=530, bg="#127271")
+        self.frame_crear_producto = Frame(self.lolosevolin, width=900, height=530, bg="#127271")
 
         fuente_inventario = font.Font(size=13, font="Arial")
         fuente_todos = font.Font(font="Arial")
@@ -185,7 +188,7 @@ class principal:
         self.cx2_asignacion_bodega = ttk.Combobox(self.frame_crear_producto, width=8)
         self.cx3_asignado_bodega = ttk.Combobox(self.frame_crear_producto, width=6)
         self.cx4_se_vende_por = ttk.Combobox(self.frame_crear_producto, width=8, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
-        self.cx5_y_contiene = ttk.Combobox(self.frame_crear_producto, width=10)
+        self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12)
         self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10)
 
         self.n = 1
@@ -287,6 +290,7 @@ class principal:
         self.label_codigo.place(x=42,y=12)
         self.entry_codigo.place(x=130, y=18, height=20)
         self.frame_crear_producto.place(x=90, y=40)
+        self.lolosevolin.add(self.frame_crear_producto, text="Informacion del producto")
         self.Entry_Nombre_producto.place(x=600, y=18, height=20)
 
         self.label_Nombre_producto.place(x=400, y=12)
@@ -442,7 +446,7 @@ class principal:
 
                 self.cx4_se_vende_por.place(x=744, y=305)
                 self.cx4_se_vende_por.current(1)
-                self.cx5_y_contiene .place(x=700, y=340)
+                self.cx5_y_contiene_entry.place(x=700, y=340)
                 self.cx2_asignacion_bodega.place(x=744, y=180)
                 self.cx1_categoria_producto.place(x=744, y=140)
                 self.cx3_asignado_bodega.place(x=744, y=225)
@@ -453,7 +457,7 @@ class principal:
 
             else:
                 self.cx4_se_vende_por.place_forget()
-                self.cx5_y_contiene.place_forget()
+                self.cx5_y_contiene_entry.place_forget()
                 self.cx2_asignacion_bodega.place_forget()
                 self.cx1_categoria_producto.place_forget()
                 self.cx3_asignado_bodega.place_forget()
@@ -466,7 +470,7 @@ class principal:
         else:
 
             self.cx4_se_vende_por.place_forget()
-            self.cx5_y_contiene.place_forget()
+            self.cx5_y_contiene_entry.place_forget()
             self.cx2_asignacion_bodega.place_forget()
             self.cx1_categoria_producto.place_forget()
             self.cx3_asignado_bodega.place_forget()
@@ -897,11 +901,11 @@ class principal:
             self.string_entry17.set("")
 
     def funcion_decoradora(self, f):
-        
+
         modelo_de_venta = self.cx4_se_vende_por.get()
 
         if modelo_de_venta == "Unidad":
-            
+
             self.label_kilogramos.place_forget()
             self.label_pieza.place_forget()
             self.label_docena.place_forget()
