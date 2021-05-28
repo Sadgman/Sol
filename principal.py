@@ -146,14 +146,19 @@ class principal:
         self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11)
 
         self.string_entry14 = IntVar()
+        self.string_entry15 = IntVar()
+        self.string_entry16 = IntVar()
+        self.string_entry17 = IntVar()
 
         self.entry_numero14 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry14)
-        self.entry_numero15 = ttk.Entry(self.frame_crear_producto)
-        self.entry_numero16 = ttk.Entry(self.frame_crear_producto)
-        self.entry_numero17 = ttk.Entry(self.frame_crear_producto)
+        self.entry_numero15 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry15)
+        self.entry_numero16 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry16)
+        self.entry_numero17 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry17)
+
+        self.CN_variable = IntVar()
 
         self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
-        self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271" ,activebackground="#127271")
+        self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, variable=self.CN_variable, bg="#127271", activebackground="#127271", command=self.funny)
         self.CN2 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN3 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN4 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -189,7 +194,7 @@ class principal:
         self.pepero = 0
         self.peperoni = 0
 
-        self.cx_inpuesto.bind("<<ComboboxSelected>>", self.funny)
+        self.cx_inpuesto.bind("<<ComboboxSelected>>", self.funny_fan)
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -592,23 +597,293 @@ class principal:
 
             return True
 
-    def funny(self, e):
+    def funny(self):
 
         inpuesto = self.cx_inpuesto.get()
         nf = float(self.string_entry1.get())
+        nf1 = float(self.string_entry2.get())
+        nf2 = float(self.string_entry3.get())
+        nf3 = float(self.string_entry4.get())
 
-        if inpuesto == "Iva":
+        if self.CN_variable.get() == 1:
 
-            n1 = 15
+            if inpuesto == "Iva":
 
-            res = eval("n1 * 1 / 100")
+                if nf == 0.0:
+                    self.string_entry14.set("")
 
-            res *= 1000
+                else:
 
-            fns = format(nf + res, ".2f")
+                    n1 = 15
 
-            self.string_entry14.set(fns)
+                    res = eval("n1 * 1 / 100")
 
+                    res *= 2000
+
+                    fns = format(nf + res, ".2f")
+
+                    self.string_entry14.set(fns)
+
+                if nf1 == 0.0:
+                    self.string_entry15.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf1 + res, ".2f")
+
+                    self.string_entry15.set(fns)
+
+                if nf2 == 0.0:
+                    self.string_entry16.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf2 + res, ".2f")
+
+                    self.string_entry16.set(fns)
+
+                if nf3 == 0.0:
+                    self.string_entry17.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf3 + res, ".2f")
+
+                    self.string_entry17.set(fns)
+
+            elif inpuesto == "Tax":
+
+                if nf == 0.0:
+                    self.string_entry14.set("")
+
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 1000
+
+                    fns = format(nf + res, ".2f")
+
+                    self.string_entry14.set(fns)
+
+                if nf1 == 0.0:
+                    self.string_entry15.set("")
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf1 + res, ".2f")
+
+                    self.string_entry15.set(fns)
+
+                if nf2 == 0.0:
+                    self.string_entry16.set("")
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf2 + res, ".2f")
+
+                    self.string_entry16.set(fns)
+
+                if nf3 == 0.0:
+                    self.string_entry17.set("")
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf3 + res, ".2f")
+
+                    self.string_entry17.set(fns)
+
+            else:
+                pass
+
+        else:
+            self.string_entry14.set("")
+            self.string_entry15.set("")
+            self.string_entry16.set("")
+            self.string_entry17.set("")
+
+    def funny_fan(self, z):
+
+        inpuesto = self.cx_inpuesto.get()
+        nf = float(self.string_entry1.get())
+        nf1 = float(self.string_entry2.get())
+        nf2 = float(self.string_entry3.get())
+        nf3 = float(self.string_entry4.get())
+
+        if self.CN_variable.get() == 1:
+
+            if inpuesto == "Iva":
+
+                if nf == 0.0:
+                    self.string_entry14.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf + res, ".2f")
+
+                    self.string_entry14.set(fns)
+
+                if nf1 == 0.0:
+                    self.string_entry15.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf1 + res, ".2f")
+
+                    self.string_entry15.set(fns)
+
+                if nf2 == 0.0:
+                    self.string_entry16.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf2 + res, ".2f")
+
+                    self.string_entry16.set(fns)
+
+                if nf3 == 0.0:
+                    self.string_entry17.set("")
+
+                else:
+
+                    n1 = 15
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf3 + res, ".2f")
+
+                    self.string_entry17.set(fns)
+
+            elif inpuesto == "Tax":
+
+                if nf == 0.0:
+                    self.string_entry14.set("")
+
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 1000
+
+                    fns = format(nf + res, ".2f")
+
+                    self.string_entry14.set(fns)
+
+                if nf1 == 0.0:
+                    self.string_entry15.set("")
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf1 + res, ".2f")
+
+                    self.string_entry15.set(fns)
+
+                if nf2 == 0.0:
+                    self.string_entry16.set("")
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf2 + res, ".2f")
+
+                    self.string_entry16.set(fns)
+
+                if nf3 == 0.0:
+                    self.string_entry17.set("")
+
+                else:
+
+                    n1 = 7
+
+                    res = eval("n1 * 1 / 100")
+
+                    res *= 2000
+
+                    fns = format(nf3 + res, ".2f")
+
+                    self.string_entry17.set(fns)
+
+            else:
+                pass
+
+        else:
+            self.string_entry14.set("")
+            self.string_entry15.set("")
+            self.string_entry16.set("")
+            self.string_entry17.set("")
 
 root0 = Tk()
 principal(root0)
