@@ -130,9 +130,9 @@ class principal:
         self.string_entry8.set("0.000")
 
         self.entry_numero5 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry5, validate='all', validatecommand=(root.register(self.calculo), '%P'))
-        self.entry_numero6 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry6)
-        self.entry_numero7 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry7)
-        self.entry_numero8 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry8)
+        self.entry_numero6 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry6, validate='all', validatecommand=(root.register(self.calculo2), '%P'))
+        self.entry_numero7 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry7, validate='all', validatecommand=(root.register(self.calculo3), '%P'))
+        self.entry_numero8 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry8, validate='all', validatecommand=(root.register(self.calculo4), '%P'))
 
         self.Int_por_unidad = IntVar()
         self.Int_en_dolares = IntVar()
@@ -172,6 +172,19 @@ class principal:
 
         self.n = 1
         self.n1 = 1
+        self.n2 = 1
+        self.n3 = 1
+        self.n4 = 1
+
+        self.variable = 1
+        self.variable1 = 1
+        self.variable2 = 1
+        self.variable3 = 1
+
+        self.pero = 0
+        self.pepe = 0
+        self.pepero = 0
+        self.peperoni = 0
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -327,13 +340,58 @@ class principal:
 
     def calculos(self, dominiga):
 
+        ch = self.string_entry5.get()
+        ch1 = self.string_entry6.get()
+        ch2 = self.string_entry6.get()
+        ch3 = self.string_entry6.get()
+
         if self.n == 1:
 
             self.entry_por_unidad.delete(0, END)
 
             self.n -= 1
 
+        if self.variable == 1:
+            if ch == "":
+                self.string_entry5.set("0.000")
+                if self.n1 == 0:
+                    self.n1 += 1
+            self.variable -= 1
+
+        if self.variable1 == 1:
+            if ch1 == "":
+                self.string_entry6.set("0.000")
+                if self.n2 == 0:
+                    self.n2 += 1
+            self.variable1 -= 1
+
+        if self.variable2 == 1:
+            if ch2 == "":
+                self.string_entry7.set("0.000")
+                if self.n3 == 0:
+                    self.n3 += 1
+            self.variable2 -= 1
+
+        if self.variable3 == 1:
+            if ch3 == "":
+                self.string_entry8.set("0.000")
+                if self.n4 == 0:
+                    self.n4 += 1
+            self.variable3 -= 1
+
         if str.isdigit(dominiga):
+
+            if self.pero == 0:
+                self.pero += 1
+
+            if self.pepe == 0:
+                self.pepe += 1
+
+            if self.pepero == 0:
+                self.pepero += 1
+
+            if self.peperoni == 0:
+                self.peperoni += 1
 
             Dominicanos = float(dominiga)
 
@@ -344,6 +402,8 @@ class principal:
             return True
 
         else:
+
+            self.pero = 0
 
             return True
 
@@ -392,7 +452,8 @@ class principal:
 
     def calculo(self, cel):
 
-        nf = float(self.Int_por_unidad.get())
+        if self.variable == 0:
+            self.variable += 1
 
         if self.n1 == 1:
 
@@ -402,11 +463,118 @@ class principal:
 
         if str.isdigit(cel):
 
-            fn = float(cel)
+            if self.pero == 1:
 
-            fns = format(fn / nf, ".2f")
+                nf = float(self.Int_por_unidad.get())
 
-            self.string_entry1.set(fns)
+                n1 = int(cel)
+
+                res = eval("n1 * 1 / 100")
+
+                res *= 1000
+
+                fns = format(nf + res, ".2f")
+
+                self.string_entry1.set(fns)
+
+            return True
+
+        else:
+
+            return True
+
+    def calculo2(self, cel):
+
+        if self.variable1 == 0:
+            self.variable1 += 1
+
+        if self.n2 == 1:
+
+            self.entry_numero6.delete(0, END)
+
+            self.n2 -= 1
+
+        if str.isdigit(cel):
+
+            if self.pepe == 1:
+
+                nf = float(self.Int_por_unidad.get())
+
+                n1 = int(cel)
+
+                res = eval("n1 * 1 / 100")
+
+                res *= 1000
+
+                fns = format(nf + res, ".2f")
+
+                self.string_entry2.set(fns)
+
+            return True
+
+        else:
+
+            return True
+
+    def calculo3(self, cel):
+
+        if self.variable2 == 0:
+            self.variable2 += 1
+
+        if self.n3 == 1:
+
+            self.entry_numero7.delete(0, END)
+
+            self.n3 -= 1
+
+        if str.isdigit(cel):
+
+            if self.pepero == 1:
+
+                nf = float(self.Int_por_unidad.get())
+
+                n1 = int(cel)
+
+                res = eval("n1 * 1 / 100")
+
+                res *= 1000
+
+                fns = format(nf + res, ".2f")
+
+                self.string_entry3.set(fns)
+
+            return True
+
+        else:
+
+            return True
+
+    def calculo4(self, cel):
+
+        if self.variable3 == 0:
+            self.variable3 += 1
+
+        if self.n4 == 1:
+
+            self.entry_numero8.delete(0, END)
+
+            self.n4 -= 1
+
+        if str.isdigit(cel):
+
+            if self.peperoni == 1:
+
+                nf = float(self.Int_por_unidad.get())
+
+                n1 = int(cel)
+
+                res = eval("n1 * 1 / 100")
+
+                res *= 1000
+
+                fns = format(nf + res, ".2f")
+
+                self.string_entry4.set(fns)
 
             return True
 
