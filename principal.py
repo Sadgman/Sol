@@ -410,8 +410,6 @@ class principal:
 
         self.S1.place(x=516,y=394)
 
-        ####################################################################################
-
         self.imagen_buscar_label.place(x=40, y=20)
         self.label_descripcion_adicional.place(x=247, y=40)
         self.label_codigo_fabricante.place(x=582, y=80)
