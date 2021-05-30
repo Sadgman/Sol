@@ -11,7 +11,6 @@ class principal:
         root.minsize(width=200, height=256)
 
         self.lolosevolin = ttk.Notebook(root)
-        self.lolosevolin.pack(pady=10, expand=True)
 
         self.frame = Frame(root,bg="#03A9F4",width=10080, height=1080)
         self.frame.place(x=0, y=0)
@@ -20,6 +19,8 @@ class principal:
 
         self.frame_crear_producto = Frame(self.lolosevolin, width=900, height=530, bg="#127271")
 
+        self.frame_crear_producto2 = Frame(self.lolosevolin, width=900, height=420, bg="#127271")
+
         fuente_inventario = font.Font(size=13, font="Arial")
         fuente_todos = font.Font(font="Arial")
         fuente_crear_producto = font.Font(size=14, family="Lucida Grande")
@@ -27,6 +28,7 @@ class principal:
         fuente_numeros1 = font.Font(size=10)
         fuente_categoria = font.Font(size=10)
         fuente_especial = font.Font(size=8)
+        fuente_no_se = font.Font(size=11, family="Lucida Grande")
 
         self.imagen = PhotoImage(file="iconos e imagenes\hacia atras.png")
         self.imagen2 = PhotoImage(file="iconos e imagenes\hacia adelante.png")
@@ -34,6 +36,8 @@ class principal:
         self.imagen4 = PhotoImage(file="iconos e imagenes\Facturacion.png")
         self.crear_producto_imagen = PhotoImage(file="iconos e imagenes\Crear.png")
         self.Inventario_imagen = PhotoImage(file="iconos e imagenes\Inventario.png")
+        self.imagen_buscar = PhotoImage(file=r"iconos e imagenes\buscar1.png")
+        self.imagen_articulo = PhotoImage(file=r"iconos e imagenes\the photo of the item.png")
 
         self.boton_adelante = Button(root, image=self.imagen2, command=self.cambiar)
         self.boton_adelante.place(rely=0.5,relx=0.9, x=16)
@@ -176,14 +180,14 @@ class principal:
         self.CN3 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN4 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
 
-        self.R1 = Radiobutton(root, text="Fisico", bg="#127271", activebackground="#127271")
-        self.R2 = Radiobutton(root, text="Servicio", bg="#127271", activebackground="#127271")
-        self.R3 = Radiobutton(root, text="Ocasional", bg="#127271", activebackground="#127271")
+        self.R1 = Radiobutton(self.frame_crear_producto, text="Fisico", bg="#127271", activebackground="#127271")
+        self.R2 = Radiobutton(self.frame_crear_producto, text="Servicio", bg="#127271", activebackground="#127271")
+        self.R3 = Radiobutton(self.frame_crear_producto, text="Ocasional", bg="#127271", activebackground="#127271")
 
         self.S1 = Spinbox(self.frame_crear_producto, from_=0, to=10, width=3)
 
-        self.cx_inpuesto = ttk.Combobox(root, width=12, values=("Tax", "Iva", "SIN"))
-        self.cx0_otro_inpu = ttk.Combobox(root, width=12)
+        self.cx_inpuesto = ttk.Combobox(self.frame_crear_producto, width=12, values=("Tax", "Iva", "SIN"))
+        self.cx0_otro_inpu = ttk.Combobox(self.frame_crear_producto, width=12)
         self.cx1_categoria_producto = ttk.Combobox(self.frame_crear_producto, width=8)
         self.cx2_asignacion_bodega = ttk.Combobox(self.frame_crear_producto, width=8)
         self.cx3_asignado_bodega = ttk.Combobox(self.frame_crear_producto, width=6)
@@ -209,6 +213,50 @@ class principal:
 
         self.cx_inpuesto.bind("<<ComboboxSelected>>", self.funny_fan)
         self.cx4_se_vende_por.bind("<<ComboboxSelected>>", self.funcion_decoradora)
+
+        self.imagen_buscar_label = Label(self.frame_crear_producto2, text="Imagen :", bg="#127271", font=fuente_crear_producto)
+        self.label_descripcion_adicional = Label(self.frame_crear_producto2, text="Descripcion adicional del producto",bg="#127271", font=fuente_crear_producto)
+        self.label_codigo_fabricante = Label(self.frame_crear_producto2, text="Codigo fabricante", bg="#127271", font=fuente_no_se)
+        self.label_facturar_sin_existencia = Label(self.frame_crear_producto2, text="Facturar sin existencia", bg="#127271",font=fuente_no_se)
+        self.label_cantidad_minima = Label(self.frame_crear_producto2, text="Cantidad minima", bg="#127271", font=fuente_no_se)
+        self.label_provedor_principal = Label(self.frame_crear_producto2, text="Provedor principal", bg="#127271", font=fuente_no_se)
+        self.label_provedor_adicionar = Label(self.frame_crear_producto2, text="Adicionar a retirar otros provedores",bg="#127271", font=fuente_no_se)
+        self.label_en_varias_asignar = Label(self.frame_crear_producto2, text="En ventas asignar a cuentas (ventas)/ngresos",bg="#127271", font=fuente_no_se)
+        self.label_costo_mecaderia = Label(self.frame_crear_producto2, text="Costo de mercaderia(Cuenta de gastos)", bg="#127271",font=fuente_no_se)
+        self.label_inventariar_este_producto_en_venta_activo = Label(self.frame_crear_producto2,text="inventariar este producto en venta activo",bg="#127271", font=fuente_no_se)
+        self.label_articulo = Label(self.frame_crear_producto2, image=self.imagen_articulo)
+        self.label_producto_puede_tener_componenter = Label(self.frame_crear_producto2,text="Producto puede\n       tener componentes:", bg="#127271",font=fuente_no_se)
+        self.label_producto_puede_tener_equivalenter = Label(self.frame_crear_producto2,text="Producto puede\n     tener equivalentes:", bg="#127271",font=fuente_no_se)
+        self.label_producto_con_expiracion = Label(self.frame_crear_producto2,text="Producto con\nexpiracion    \n     (ejem. medicina)", bg="#127271", font=fuente_no_se)
+        self.label_producto_con_numero_serie = Label(self.frame_crear_producto2,text="Producto tiene\n        numero de serie    \n     (ejem. tel correo)",bg="#127271", font=fuente_no_se)
+
+        self.entry_codigo_fabricante = Entry(self.frame_crear_producto2, font=fuente_no_se)
+        self.entry_cantidad_minima = Entry(self.frame_crear_producto2, font=fuente_no_se)
+        self.entry_provedor_principal = Entry(self.frame_crear_producto2, font=fuente_no_se)
+        self.entry_en_varias_asignar = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
+        self.entry_costo_mercaderia = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
+        self.entry_inventariar_este_producto_en_venta_activo = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
+        self.comentario2 = Text(self.frame_crear_producto2, width=37, height=6, bd=2)
+        self.barrita = Scrollbar(self.frame_crear_producto2, command=self.comentario2.yview)
+        self.comentario2.config(yscrollcommand=self.barrita.set)
+
+        self.R4 = Radiobutton(self.frame_crear_producto2, text="Si", bg="#127271", activebackground="#127271")
+        self.R5 = Radiobutton(self.frame_crear_producto2, text="No", bg="#127271", activebackground="#127271")
+
+        self.ch_facturar_sin_existencia = Checkbutton(self.frame_crear_producto2,text="adicionar este comentario en facturas entre otras", bg="#127271",activebackground="#127271")
+        self.CN_producto_con_equivalente = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
+        self.CN_producto_con_numero_serie = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
+        self.CN_producto_con_expiracion = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
+
+        self.boton_buscar = Button(self.frame_crear_producto2, image=self.imagen_buscar)
+        self.boton_asignar = Button(self.frame_crear_producto2, text="asignar")
+        self.boton_buscar1 = Button(self.frame_crear_producto2, text="Buscar", width=5, height=0)
+        self.boton_buscar2 = Button(self.frame_crear_producto2, text="Buscar")
+        self.boton_buscar3 = Button(self.frame_crear_producto2, text="Buscar")
+        self.boton_asignar_componentes = Button(self.frame_crear_producto2, text="Asignar comp")
+        self.boton_asignar_equivalente = Button(self.frame_crear_producto2, text="Asignar equ")
+        self.boton_asignar_lotes = Button(self.frame_crear_producto2, text="Asignar lotes")
+        self.boton_asignar_serial = Button(self.frame_crear_producto2, text="Asignar serial")
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -290,7 +338,6 @@ class principal:
         self.label_codigo.place(x=42,y=12)
         self.entry_codigo.place(x=130, y=18, height=20)
         self.frame_crear_producto.place(x=90, y=40)
-        self.lolosevolin.add(self.frame_crear_producto, text="Informacion del producto")
         self.Entry_Nombre_producto.place(x=600, y=18, height=20)
 
         self.label_Nombre_producto.place(x=400, y=12)
@@ -357,11 +404,60 @@ class principal:
         self.CN3.place(x=340, y=450)
         self.CN4.place(x=340, y=483)
 
-        self.R1.place(x=270, y=360)
-        self.R2.place(x=340, y=362)
-        self.R3.place(x=420, y=364)
+        self.R1.place(x=180, y=323)
+        self.R2.place(x=260, y=326)
+        self.R3.place(x=347, y=328)
 
         self.S1.place(x=516,y=394)
+
+        ####################################################################################
+
+        self.imagen_buscar_label.place(x=40, y=20)
+        self.label_descripcion_adicional.place(x=247, y=40)
+        self.label_codigo_fabricante.place(x=582, y=80)
+        self.label_facturar_sin_existencia.place(x=582, y=120)
+        self.label_cantidad_minima.place(x=582, y=160)
+        self.label_provedor_principal.place(x=40, y=220)
+        self.label_provedor_adicionar.place(x=40, y=254)
+        self.label_en_varias_asignar.place(x=40, y=300)
+        self.label_costo_mecaderia.place(x=40, y=330)
+        self.label_inventariar_este_producto_en_venta_activo.place(x=40, y=360)
+        self.label_articulo.place(x=23, y=60)
+        self.label_producto_puede_tener_componenter.place(x=350, y=220)
+        self.label_producto_puede_tener_equivalenter.place(x=630, y=220)
+        self.label_producto_con_expiracion.place(x=630, y=270)
+        self.label_producto_con_numero_serie.place(x=624, y=343)
+
+        self.entry_codigo_fabricante.place(x=710, y=80)
+        self.entry_cantidad_minima.place(x=710, y=160)
+        self.entry_provedor_principal.place(x=190, y=220)
+        self.entry_en_varias_asignar.place(x=358, y=300)
+        self.entry_costo_mercaderia.place(x=358, y=330)
+        self.entry_inventariar_este_producto_en_venta_activo.place(x=358, y=360)
+        self.comentario2.place(x=250, y=79)
+        self.barrita.place(x=552, y=80, height=102)
+
+        self.ch_facturar_sin_existencia.place(x=249, y=180)
+        self.CN_producto_con_expiracion.place(x=745, y=270)
+        self.CN_producto_con_equivalente.place(x=755, y=220)
+        self.CN_producto_con_numero_serie.place(x=754, y=343)
+
+        self.R4.place(x=745, y=121)
+        self.R5.place(x=800, y=121)
+
+        self.boton_buscar.place(x=130, y=25)
+        self.boton_asignar.place(x=278, y=254)
+        self.boton_buscar1.place(x=478, y=360)
+        self.boton_buscar2.place(x=478, y=299)
+        self.boton_buscar3.place(x=478, y=330)
+        self.boton_asignar_componentes.place(x=540, y=233)
+        self.boton_asignar_equivalente.place(x=790, y=232)
+        self.boton_asignar_lotes.place(x=790, y=299)
+        self.boton_asignar_serial.place(x=790, y=373)
+
+        self.lolosevolin.add(self.frame_crear_producto, text="Informacion del producto")
+        self.lolosevolin.add(self.frame_crear_producto2, text="Detalles adicionales")
+        self.lolosevolin.pack(pady=10, expand=True)
 
     def calculos(self, dominiga):
 
@@ -452,8 +548,8 @@ class principal:
                 self.cx3_asignado_bodega.place(x=744, y=225)
                 self.cx5_se_compra_por.place(x=700, y=374)
 
-                self.cx_inpuesto.place(x=234, y=483)
-                self.cx0_otro_inpu.place(x=234, y=523)
+                self.cx_inpuesto.place(x=144, y=443)
+                self.cx0_otro_inpu.place(x=144, y=483)
 
             else:
                 self.cx4_se_vende_por.place_forget()
