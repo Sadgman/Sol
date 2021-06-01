@@ -1,3 +1,5 @@
+import sqlite3
+
 from Modulos import *
 
 
@@ -75,6 +77,7 @@ class principal:
 
         self.label_codigo = Label(self.frame_crear_producto, text="Codigo", font=fuente_crear_producto, bg="#127271")
         self.entry_codigo = ttk.Entry(self.frame_crear_producto, width=35,validate='all', validatecommand=(root.register(self.activar_puestos), '%P'))
+
         self.Entry_Nombre_producto = ttk.Entry(self.frame_crear_producto, width=46)
         self.label_Nombre_producto = Label(self.frame_crear_producto, bg="#127271",text="Nombre del producto", font=fuente_crear_producto)
 
@@ -152,6 +155,7 @@ class principal:
 
         self.Int_por_unidad = IntVar()
         self.Int_en_dolares = IntVar()
+        self.Int_cantidad_inicial = IntVar()
 
         self.Int_por_unidad.set("0.00")
 
@@ -184,7 +188,9 @@ class principal:
         self.R2 = Radiobutton(self.frame_crear_producto, text="Servicio", bg="#127271", activebackground="#127271")
         self.R3 = Radiobutton(self.frame_crear_producto, text="Ocasional", bg="#127271", activebackground="#127271")
 
-        self.S1 = Spinbox(self.frame_crear_producto, from_=0, to=10, width=3)
+        self.sx = IntVar()
+
+        self.S1 = Spinbox(self.frame_crear_producto, from_=0, to=10, width=3, textvariable=self.sx)
 
         self.cx_inpuesto = ttk.Combobox(self.frame_crear_producto, width=12, values=("Tax", "Iva", "SIN"))
         self.cx0_otro_inpu = ttk.Combobox(self.frame_crear_producto, width=12)
@@ -1062,6 +1068,27 @@ class principal:
             self.label_por_kilogramo.place_forget()
             self.label_botella.place(x=800, y=345)
             self.label_por_botella.place(x=380, y=145)
+
+    def data_base(self):
+
+        nombre = self.Entry_Nombre_producto.get()
+        codigo = self.entry_codigo.get()
+
+        precio = self.string_entry1.get()
+        precio2 = self.string_entry2.get()
+        precio3 = self.string_entry3.get()
+        precio4 = self.string_entry4.get()
+
+        se_vende_por = self.cx4_se_vende_por.get()
+        aplicar_en_ventas = self.CN_variable.get()
+        aplicar_en_compras = self.CN_variable.get()
+        facturar_con_precio = self.sx.get()
+        
+        cantidad_inicial = self.Int_cantidad_inicial.get()
+
+        data_base = sqlite3.connect("users.db")
+
+
 
 root0 = Tk()
 principal(root0)
