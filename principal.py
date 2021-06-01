@@ -1,5 +1,3 @@
-import sqlite3
-
 from Modulos import *
 
 
@@ -163,7 +161,9 @@ class principal:
         self.entry_en_dolares = ttk.Entry(self.frame_crear_producto, state="readonly", textvariable=self.Int_en_dolares)
         self.entry_cantidad_inicial = ttk.Entry(self.frame_crear_producto)
 
-        self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11)
+        self.ub_fs = StringVar()
+
+        self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11, textvariable=self.ub_fs)
 
         self.string_entry14 = IntVar()
         self.string_entry15 = IntVar()
@@ -177,29 +177,33 @@ class principal:
 
         self.CN_variable = IntVar()
         self.CN1_variable = IntVar()
+        self.CN = IntVar()
 
-        self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
+        self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, variable=self.CN, bg="#127271", activebackground="#127271")
         self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, variable=self.CN_variable, bg="#127271", activebackground="#127271", command=self.funny)
         self.CN2 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0,variable=self.CN1_variable, bg="#127271", activebackground="#127271")
         self.CN3 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN4 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
 
-        self.R1 = Radiobutton(self.frame_crear_producto, text="Fisico", bg="#127271", activebackground="#127271")
-        self.R2 = Radiobutton(self.frame_crear_producto, text="Servicio", bg="#127271", activebackground="#127271")
-        self.R3 = Radiobutton(self.frame_crear_producto, text="Ocasional", bg="#127271", activebackground="#127271")
+        self.Int_R = IntVar()
+
+        self.R1 = Radiobutton(self.frame_crear_producto, text="Fisico", bg="#127271", activebackground="#127271", variable=self.Int_R, value=1)
+        self.R2 = Radiobutton(self.frame_crear_producto, text="Servicio", bg="#127271", activebackground="#127271", variable=self.Int_R, value=2)
+        self.R3 = Radiobutton(self.frame_crear_producto, text="Ocasional", bg="#127271", activebackground="#127271", variable=self.Int_R, value=3)
 
         self.sx = IntVar()
 
         self.S1 = Spinbox(self.frame_crear_producto, from_=0, to=10, width=3, textvariable=self.sx)
+        self.contiene = IntVar()
 
         self.cx_inpuesto = ttk.Combobox(self.frame_crear_producto, width=12, values=("Tax", "Iva", "SIN"))
-        self.cx0_otro_inpu = ttk.Combobox(self.frame_crear_producto, width=12)
-        self.cx1_categoria_producto = ttk.Combobox(self.frame_crear_producto, width=8)
-        self.cx2_asignacion_bodega = ttk.Combobox(self.frame_crear_producto, width=8)
-        self.cx3_asignado_bodega = ttk.Combobox(self.frame_crear_producto, width=6)
+        self.cx0_otro_inpu = ttk.Combobox(self.frame_crear_producto, width=12, values=("Tax", "Iva", "SIN"))
+        self.cx1_categoria_producto = ttk.Combobox(self.frame_crear_producto, width=8, values=("NAC","INTER"))
+        self.cx2_sub_categoria = ttk.Combobox(self.frame_crear_producto, width=8, values=("GENE", "USA"))
+        self.cx3_asignado_bodega = ttk.Combobox(self.frame_crear_producto, width=6, values=("PRI","SECU", "TERCI"))
         self.cx4_se_vende_por = ttk.Combobox(self.frame_crear_producto, width=8, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
-        self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12)
-        self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10)
+        self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12, textvariable=self.contiene)
+        self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
 
         self.n = 1
         self.n1 = 1
@@ -236,20 +240,29 @@ class principal:
         self.label_producto_con_expiracion = Label(self.frame_crear_producto2,text="Producto con\nexpiracion    \n     (ejem. medicina)", bg="#127271", font=fuente_no_se)
         self.label_producto_con_numero_serie = Label(self.frame_crear_producto2,text="Producto tiene\n        numero de serie    \n     (ejem. tel correo)",bg="#127271", font=fuente_no_se)
 
-        self.entry_codigo_fabricante = Entry(self.frame_crear_producto2, font=fuente_no_se)
-        self.entry_cantidad_minima = Entry(self.frame_crear_producto2, font=fuente_no_se)
+        self.codigo_fabricante = StringVar()
+        self.minima = IntVar()
+
+        self.entry_codigo_fabricante = Entry(self.frame_crear_producto2, font=fuente_no_se, textvariable=self.codigo_fabricante)
+        self.entry_cantidad_minima = Entry(self.frame_crear_producto2, font=fuente_no_se, textvariable=self.minima)
         self.entry_provedor_principal = Entry(self.frame_crear_producto2, font=fuente_no_se)
         self.entry_en_varias_asignar = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
         self.entry_costo_mercaderia = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
         self.entry_inventariar_este_producto_en_venta_activo = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
+
         self.comentario2 = Text(self.frame_crear_producto2, width=37, height=6, bd=2)
+
         self.barrita = Scrollbar(self.frame_crear_producto2, command=self.comentario2.yview)
         self.comentario2.config(yscrollcommand=self.barrita.set)
 
-        self.R4 = Radiobutton(self.frame_crear_producto2, text="Si", bg="#127271", activebackground="#127271")
-        self.R5 = Radiobutton(self.frame_crear_producto2, text="No", bg="#127271", activebackground="#127271")
+        self.RSS = IntVar()
 
-        self.ch_facturar_sin_existencia = Checkbutton(self.frame_crear_producto2,text="adicionar este comentario en facturas entre otras", bg="#127271",activebackground="#127271")
+        self.R4 = Radiobutton(self.frame_crear_producto2, text="Si", bg="#127271", activebackground="#127271", variable=self.RSS, value=1)
+        self.R5 = Radiobutton(self.frame_crear_producto2, text="No", bg="#127271", activebackground="#127271", variable=self.RSS, value=0)
+
+        self.ad_comentario = IntVar()
+
+        self.ch_facturar_sin_existencia = Checkbutton(self.frame_crear_producto2,text="adicionar este comentario en facturas entre otras",variable=self.ad_comentario, bg="#127271",activebackground="#127271")
         self.CN_producto_con_equivalente = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN_producto_con_numero_serie = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN_producto_con_expiracion = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -547,7 +560,7 @@ class principal:
                 self.cx4_se_vende_por.place(x=744, y=305)
                 self.cx4_se_vende_por.current(1)
                 self.cx5_y_contiene_entry.place(x=700, y=340)
-                self.cx2_asignacion_bodega.place(x=744, y=180)
+                self.cx2_sub_categoria.place(x=744, y=180)
                 self.cx1_categoria_producto.place(x=744, y=140)
                 self.cx3_asignado_bodega.place(x=744, y=225)
                 self.cx5_se_compra_por.place(x=700, y=374)
@@ -558,7 +571,7 @@ class principal:
             else:
                 self.cx4_se_vende_por.place_forget()
                 self.cx5_y_contiene_entry.place_forget()
-                self.cx2_asignacion_bodega.place_forget()
+                self.cx2_sub_categoria.place_forget()
                 self.cx1_categoria_producto.place_forget()
                 self.cx3_asignado_bodega.place_forget()
                 self.cx_inpuesto.place_forget()
@@ -571,7 +584,7 @@ class principal:
 
             self.cx4_se_vende_por.place_forget()
             self.cx5_y_contiene_entry.place_forget()
-            self.cx2_asignacion_bodega.place_forget()
+            self.cx2_sub_categoria.place_forget()
             self.cx1_categoria_producto.place_forget()
             self.cx3_asignado_bodega.place_forget()
             self.cx_inpuesto.place_forget()
@@ -1079,16 +1092,35 @@ class principal:
         precio3 = self.string_entry3.get()
         precio4 = self.string_entry4.get()
 
+        precio_impuesto1 = self.string_entry14.get()
+        precio_impuesto2 = self.string_entry15.get()
+        precio_impuesto3 = self.string_entry16.get()
+        precio_impuesto4 = self.string_entry17.get()
+
         se_vende_por = self.cx4_se_vende_por.get()
+        se_compra_por = self.cx5_se_compra_por.get()
+        y_contiene = self.contiene.get()
+        asignado_bodega = self.cx3_asignado_bodega.get()
+
         aplicar_en_ventas = self.CN_variable.get()
-        aplicar_en_compras = self.CN_variable.get()
+        aplicar_en_compras = self.CN1_variable.get()
         facturar_con_precio = self.sx.get()
-        
+
         cantidad_inicial = self.Int_cantidad_inicial.get()
+        Tipo = self.Int_R.get()
+        categoria = self.cx1_categoria_producto.get()
+        sub_categoria = self.cx2_sub_categoria.get()
+        ubicacion_fisica = self.ub_fs.get()
+
+        comentario = self.comentario2.get(1.0, END)
+        ad = self.ad_comentario.get()
+        esta_activo_el_producto = self.CN.get()
+        Facturar_con_existencia = self.RSS.get()
+
+        codigo_fabricante = self.codigo_fabricante.get()
+        cantidad_minima = self.minima.get()
 
         data_base = sqlite3.connect("users.db")
-
-
 
 root0 = Tk()
 principal(root0)
