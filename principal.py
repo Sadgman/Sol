@@ -10,16 +10,14 @@ class principal:
         root.geometry("1080x640")
         root.minsize(width=200, height=256)
 
-        self.lolosevolin = ttk.Notebook(root)
-
         self.frame = Frame(root,bg="#03A9F4",width=10080, height=1080)
         self.frame.place(x=0, y=0)
 
         self.frame_inventario = Frame(root,bg="white",width=500, height=500)
 
-        self.frame_crear_producto = Frame(self.lolosevolin, width=900, height=530, bg="#127271")
+        self.frame_crear_producto = Frame(root, width=900, height=530, bg="#127271")
 
-        self.frame_crear_producto2 = Frame(self.lolosevolin, width=900, height=420, bg="#127271")
+        self.frame_crear_producto2 = Frame(root, width=900, height=420, bg="#127271")
 
         fuente_inventario = font.Font(size=13, font="Arial")
         fuente_todos = font.Font(font="Arial")
@@ -42,7 +40,6 @@ class principal:
         self.boton_adelante = Button(root, image=self.imagen2, command=self.cambiar)
         self.boton_adelante.place(rely=0.5,relx=0.9, x=16)
         self.boton_adelante.place_configure(bordermode=OUTSIDE, anchor=SE)
-
 
         self.boton_atras = Button(root, image=self.imagen, command=root.destroy)
         self.boton_atras.place(rely=0.8,relx=0.9, x=16)
@@ -175,11 +172,14 @@ class principal:
         self.entry_numero16 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry16)
         self.entry_numero17 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry17)
 
+        self.boton_siguiente = Button(root, text="siguiente", command=self.segundo_crear_inventario)
+        self.boton_crear = Button(root, text="Crear", command=self.data_base)
+
         self.CN_variable = IntVar()
         self.CN1_variable = IntVar()
-        self.CN = IntVar()
+        self.CN_pero_el_de_verdad = IntVar()
 
-        self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, variable=self.CN, bg="#127271", activebackground="#127271")
+        self.CN = Checkbutton(self.frame_crear_producto, text="El producto esta activo?", onvalue=1, offvalue=0, variable=self.CN_pero_el_de_verdad, bg="#127271", activebackground="#127271")
         self.CN1 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, variable=self.CN_variable, bg="#127271", activebackground="#127271", command=self.funny)
         self.CN2 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0,variable=self.CN1_variable, bg="#127271", activebackground="#127271")
         self.CN3 = Checkbutton(self.frame_crear_producto, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -417,6 +417,7 @@ class principal:
         self.entry_numero16.place(x=700, y=472)
         self.entry_numero17.place(x=700, y=502)
 
+        self.boton_siguiente.place(x=600, y=574)
         self.CN.place(x=410, y=230)
         self.CN1.place(x=300, y=450)
         self.CN2.place(x=300, y=483)
@@ -429,6 +430,94 @@ class principal:
 
         self.S1.place(x=516,y=394)
 
+    def segundo_crear_inventario(self):
+
+        self.label_codigo.place_forget()
+        self.entry_codigo.place_forget()
+        self.frame_crear_producto.place_forget()
+        self.Entry_Nombre_producto.place_forget()
+
+        self.label_Nombre_producto.place_forget()
+        self.label_precio_en_venta.place_forget()
+        self.label_precio_Ganancias.place_forget()
+
+        self.label_coste_producto.place_forget()
+        self.label_calificacion_producto.place_forget()
+
+        self.label_numero1.place_forget()
+        self.label_numero2.place_forget()
+        self.label_numero3.place_forget()
+        self.label_numero4.place_forget()
+
+        self.label_por_pieza.place_forget()
+        self.label_en_us.place_forget()
+        self.label_El_producto_es.place_forget()
+        self.label_cantidad_inicial.place_forget()
+        self.label_facturar_precio.place_forget()
+
+        self.label_inpuesto.place_forget()
+        self.label_inpuesto1.place_forget()
+        self.label_categoria.place_forget()
+        self.label_sub_categoria.place_forget()
+
+        self.label_asignado_bodega.place_forget()
+        self.label_ubicacion.place_forget()
+
+        self.label_vende_por.place_forget()
+        self.label_contiene.place_forget()
+        self.label_compra_por.place_forget()
+        self.label_Aplicar_en.place_forget()
+        self.label_pieza.place_forget()
+
+        self.label_precio1.place_forget()
+        self.label_precio2.place_forget()
+        self.label_precio3.place_forget()
+        self.label_precio4.place_forget()
+
+        self.entry_numero1.place_forget()
+        self.entry_numero2.place_forget()
+        self.entry_numero3.place_forget()
+        self.entry_numero4.place_forget()
+
+        self.entry_numero5.place_forget()
+        self.entry_numero6.place_forget()
+        self.entry_numero7.place_forget()
+        self.entry_numero8.place_forget()
+
+        self.entry_por_unidad.place_forget()
+        self.entry_en_dolares.place_forget()
+        self.entry_cantidad_inicial.place_forget()
+
+        self.entry_ubicacion_fisica.place_forget()
+
+        self.entry_numero14.place_forget()
+        self.entry_numero15.place_forget()
+        self.entry_numero16.place_forget()
+        self.entry_numero17.place_forget()
+
+        self.cx4_se_vende_por.place_forget()
+        self.cx5_y_contiene_entry.place_forget()
+        self.cx2_sub_categoria.place_forget()
+        self.cx1_categoria_producto.place_forget()
+        self.cx3_asignado_bodega.place_forget()
+        self.cx_inpuesto.place_forget()
+        self.cx0_otro_inpu.place_forget()
+        self.cx5_se_compra_por.place_forget()
+
+        self.boton_siguiente.place_forget()
+        self.CN.place_forget()
+        self.CN1.place_forget()
+        self.CN2.place_forget()
+        self.CN3.place_forget()
+        self.CN4.place_forget()
+
+        self.R1.place_forget()
+        self.R2.place_forget()
+        self.R3.place_forget()
+
+        self.S1.place_forget()
+
+        self.frame_crear_producto2.place(x=90, y=40)
         self.imagen_buscar_label.place(x=40, y=20)
         self.label_descripcion_adicional.place(x=247, y=40)
         self.label_codigo_fabricante.place(x=582, y=80)
@@ -471,10 +560,7 @@ class principal:
         self.boton_asignar_equivalente.place(x=790, y=232)
         self.boton_asignar_lotes.place(x=790, y=299)
         self.boton_asignar_serial.place(x=790, y=373)
-
-        self.lolosevolin.add(self.frame_crear_producto, text="Informacion del producto")
-        self.lolosevolin.add(self.frame_crear_producto2, text="Detalles adicionales")
-        self.lolosevolin.pack(pady=10, expand=True)
+        self.boton_crear.place(x=600, y=574)
 
     def calculos(self, dominiga):
 
@@ -1114,13 +1200,32 @@ class principal:
 
         comentario = self.comentario2.get(1.0, END)
         ad = self.ad_comentario.get()
-        esta_activo_el_producto = self.CN.get()
+        esta_activo_el_producto = self.CN_pero_el_de_verdad.get()
         Facturar_con_existencia = self.RSS.get()
 
         codigo_fabricante = self.codigo_fabricante.get()
         cantidad_minima = self.minima.get()
 
-        data_base = sqlite3.connect("users.db")
+        lista_de_informacion = [
+            (codigo, nombre, esta_activo_el_producto, Tipo, categoria, comentario, ad, Facturar_con_existencia,
+             cantidad_minima, codigo_fabricante, sub_categoria, asignado_bodega, ubicacion_fisica, se_vende_por,
+             se_compra_por, y_contiene, facturar_con_precio, None, None, precio, precio2, precio3, precio4,
+             precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4)
+        ]
+
+        try:
+
+            data_base = sqlite3.connect("users.db")
+            cursor = data_base.cursor()
+            cursor.executemany("INSERT INTO PRODUCTO VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                               lista_de_informacion)
+            data_base.commit()
+            data_base.close()
+
+            messagebox.showinfo("", "Se creo exitosamente")
+
+        except:
+            messagebox.showinfo("", "El producto ya existe")
 
 root0 = Tk()
 principal(root0)
