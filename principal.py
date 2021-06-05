@@ -261,6 +261,7 @@ class principal:
 
         self.R4 = Radiobutton(self.frame_crear_producto2, text="Si", bg="#127271", activebackground="#127271", variable=self.RSS, value=1)
         self.R5 = Radiobutton(self.frame_crear_producto2, text="No", bg="#127271", activebackground="#127271", variable=self.RSS, value=0)
+        self.boton_actualizar = Button(root, text="Actulizar", command=self.data_base_update)
 
         self.ad_comentario = IntVar()
 
@@ -420,6 +421,7 @@ class principal:
         self.entry_numero17.place(x=700, y=502)
 
         self.boton_siguiente.place(x=600, y=574)
+        self.boton_actualizar.place(x=400, y=574)
         self.CN.place(x=410, y=230)
         self.CN1.place(x=300, y=450)
         self.CN2.place(x=300, y=483)
@@ -507,6 +509,7 @@ class principal:
         self.cx5_se_compra_por.place_forget()
 
         self.boton_siguiente.place_forget()
+        self.boton_actualizar.place_forget()
         self.CN.place_forget()
         self.CN1.place_forget()
         self.CN2.place_forget()
@@ -638,6 +641,18 @@ class principal:
             return True
 
     def activar_puestos(self, dxs):
+
+        data_base = sqlite3.connect("users.db")
+        cursor = data_base.cursor()
+        cursor.executemany("SELECT * FROM PRODUCTO WHERE Codigo=" + dxs)
+        datos = cursor.fetchall()
+
+        for guardados in datos:
+
+            self.Entry_Nombre_producto.set(guardados[1])
+
+        data_base.commit()
+        data_base.close()
 
         en_numeros = len(dxs)
 
@@ -1227,11 +1242,13 @@ class principal:
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
-        elif comprobacion2 == "0.00" or comprobacion3 == "0.00"or comprobacion4 == "0.00" or comprobacion5 == "" or comprobacion2 == "" or comprobacion3 == "" or comprobacion4 == "" or comprobacion5 == "":
+        elif comprobacion2 == "0.00" or comprobacion3 == "0.00"or comprobacion4 == "0.00" or comprobacion5 == ""\
+                or comprobacion2 == "" or comprobacion3 == "" or comprobacion4 == "" or comprobacion5 == "":
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
-        elif comprobacion6 == "0.00" or comprobacion7 == "0.00" or comprobacion8 == "0.00" or comprobacion9 == "0.00" or comprobacion6 == "" or comprobacion7 == "" or comprobacion8 == "" or comprobacion9 == "":
+        elif comprobacion6 == "0.00" or comprobacion7 == "0.00" or comprobacion8 == "0.00" or comprobacion9 == "0.00"\
+                or comprobacion6 == "" or comprobacion7 == "" or comprobacion8 == "" or comprobacion9 == "":
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
@@ -1257,6 +1274,9 @@ class principal:
 
             except sqlite3.IntegrityError:
                 messagebox.showinfo("", "El producto ya existe")
+
+    def data_base_update(self):
+        print("ok")
 
 root0 = Tk()
 principal(root0)
