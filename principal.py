@@ -1,3 +1,5 @@
+import sqlite3
+
 from Modulos import *
 
 
@@ -1206,26 +1208,55 @@ class principal:
         codigo_fabricante = self.codigo_fabricante.get()
         cantidad_minima = self.minima.get()
 
-        lista_de_informacion = [
-            (codigo, nombre, esta_activo_el_producto, Tipo, categoria, comentario, ad, Facturar_con_existencia,
-             cantidad_minima, codigo_fabricante, sub_categoria, asignado_bodega, ubicacion_fisica, se_vende_por,
-             se_compra_por, y_contiene, facturar_con_precio, None, None, precio, precio2, precio3, precio4,
-             precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4)
-        ]
+        comprobacion = str(codigo)
+        comprobacion1 = str(nombre)
+        comprobacion2 = str(precio)
+        comprobacion3 = str(precio2)
+        comprobacion4 = str(precio3)
+        comprobacion5 = str(precio4)
+        comprobacion6 = str(precio_impuesto1)
+        comprobacion7 = str(precio_impuesto2)
+        comprobacion8 = str(precio_impuesto3)
+        comprobacion9 = str(precio_impuesto4)
 
-        try:
+        if comprobacion == "":
 
-            data_base = sqlite3.connect("users.db")
-            cursor = data_base.cursor()
-            cursor.executemany("INSERT INTO PRODUCTO VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                               lista_de_informacion)
-            data_base.commit()
-            data_base.close()
+            messagebox.showinfo("", "Introduzca la informacion requerida")
 
-            messagebox.showinfo("", "Se creo exitosamente")
+        elif comprobacion1 == "":
 
-        except:
-            messagebox.showinfo("", "El producto ya existe")
+            messagebox.showinfo("", "Introduzca la informacion requerida")
+
+        elif comprobacion2 == "0.00" or comprobacion3 == "0.00"or comprobacion4 == "0.00" or comprobacion5 == "" or comprobacion2 == "" or comprobacion3 == "" or comprobacion4 == "" or comprobacion5 == "":
+
+            messagebox.showinfo("", "Introduzca la informacion requerida")
+
+        elif comprobacion6 == "0.00" or comprobacion7 == "0.00" or comprobacion8 == "0.00" or comprobacion9 == "0.00" or comprobacion6 == "" or comprobacion7 == "" or comprobacion8 == "" or comprobacion9 == "":
+
+            messagebox.showinfo("", "Introduzca la informacion requerida")
+
+        else:
+
+            lista_de_informacion = [
+                (codigo, nombre, esta_activo_el_producto, Tipo, categoria, comentario, ad, Facturar_con_existencia,
+                 cantidad_minima, codigo_fabricante, sub_categoria, asignado_bodega, ubicacion_fisica, se_vende_por,
+                 se_compra_por, y_contiene, facturar_con_precio, None, None, precio, precio2, precio3, precio4,
+                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4)
+            ]
+
+            try:
+
+                data_base = sqlite3.connect("users.db")
+                cursor = data_base.cursor()
+                cursor.executemany("INSERT INTO PRODUCTO VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                                   lista_de_informacion)
+                data_base.commit()
+                data_base.close()
+
+                messagebox.showinfo("", "Se creo exitosamente")
+
+            except sqlite3.IntegrityError:
+                messagebox.showinfo("", "El producto ya existe")
 
 root0 = Tk()
 principal(root0)
