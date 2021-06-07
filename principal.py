@@ -1,5 +1,3 @@
-import sqlite3
-
 from Modulos import *
 
 
@@ -30,13 +28,15 @@ class principal:
         fuente_especial = font.Font(size=8)
         fuente_no_se = font.Font(size=11, family="Lucida Grande")
 
+        self.file = r"iconos e imagenes\buscar1.png"
+
         self.imagen = PhotoImage(file="iconos e imagenes\hacia atras.png")
         self.imagen2 = PhotoImage(file="iconos e imagenes\hacia adelante.png")
         self.imagen3 = PhotoImage(file="iconos e imagenes\salir.png")
         self.imagen4 = PhotoImage(file="iconos e imagenes\Facturacion.png")
         self.crear_producto_imagen = PhotoImage(file="iconos e imagenes\Crear.png")
         self.Inventario_imagen = PhotoImage(file="iconos e imagenes\Inventario.png")
-        self.imagen_buscar = PhotoImage(file=r"iconos e imagenes\buscar1.png")
+        self.imagen_buscar = PhotoImage(file=self.file)
         self.imagen_articulo = PhotoImage(file=r"iconos e imagenes\the photo of the item.png")
 
         self.boton_adelante = Button(root, image=self.imagen2, command=self.cambiar)
@@ -270,7 +270,7 @@ class principal:
         self.CN_producto_con_numero_serie = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
         self.CN_producto_con_expiracion = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
 
-        self.boton_buscar = Button(self.frame_crear_producto2, image=self.imagen_buscar)
+        self.boton_buscar = Button(self.frame_crear_producto2, image=self.imagen_buscar, command=self.buscar_imagen_producto)
         self.boton_asignar = Button(self.frame_crear_producto2, text="asignar")
         self.boton_buscar1 = Button(self.frame_crear_producto2, text="Buscar", width=5, height=0)
         self.boton_buscar2 = Button(self.frame_crear_producto2, text="Buscar")
@@ -279,6 +279,7 @@ class principal:
         self.boton_asignar_equivalente = Button(self.frame_crear_producto2, text="Asignar equ")
         self.boton_asignar_lotes = Button(self.frame_crear_producto2, text="Asignar lotes")
         self.boton_asignar_serial = Button(self.frame_crear_producto2, text="Asignar serial")
+
 
         menu = Menu(root)
         root.config(menu=menu)
@@ -642,17 +643,17 @@ class principal:
 
     def activar_puestos(self, dxs):
 
-        data_base = sqlite3.connect("users.db")
-        cursor = data_base.cursor()
-        cursor.executemany("SELECT * FROM PRODUCTO WHERE Codigo=" + dxs)
-        datos = cursor.fetchall()
+       #data_base = sqlite3.connect("users.db")
+       #cursor = data_base.cursor()
+       #cursor.executemany("SELECT * FROM PRODUCTO WHERE Codigo=" + dxs)
+       #datos = cursor.fetchall()
 
-        for guardados in datos:
+        #for guardados in datos:
 
-            self.Entry_Nombre_producto.set(guardados[1])
+         #   self.Entry_Nombre_producto.set(guardados[1])
 
-        data_base.commit()
-        data_base.close()
+        #data_base.commit()
+        #data_base.close()
 
         en_numeros = len(dxs)
 
@@ -1242,30 +1243,23 @@ class principal:
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
-        elif comprobacion2 == "0.00" or comprobacion3 == "0.00"or comprobacion4 == "0.00" or comprobacion5 == ""\
-                or comprobacion2 == "" or comprobacion3 == "" or comprobacion4 == "" or comprobacion5 == "":
-
-            messagebox.showinfo("", "Introduzca la informacion requerida")
-
-        elif comprobacion6 == "0.00" or comprobacion7 == "0.00" or comprobacion8 == "0.00" or comprobacion9 == "0.00"\
-                or comprobacion6 == "" or comprobacion7 == "" or comprobacion8 == "" or comprobacion9 == "":
-
+        elif comprobacion2 == "0.00":
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
         else:
 
             lista_de_informacion = [
-                (codigo, nombre, esta_activo_el_producto, Tipo, categoria, comentario, ad, Facturar_con_existencia,
-                 cantidad_minima, codigo_fabricante, sub_categoria, asignado_bodega, ubicacion_fisica, se_vende_por,
-                 se_compra_por, y_contiene, facturar_con_precio, None, None, precio, precio2, precio3, precio4,
-                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4)
+                (codigo, nombre, esta_activo_el_producto, Tipo, categoria, sub_categoria, comentario, ad,
+                 Facturar_con_existencia, cantidad_minima, codigo_fabricante, asignado_bodega, ubicacion_fisica, se_vende_por,
+                 se_compra_por, y_contiene, facturar_con_precio, precio, precio2, precio3, precio4,
+                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, self.file)
             ]
 
             try:
 
                 data_base = sqlite3.connect("users.db")
                 cursor = data_base.cursor()
-                cursor.executemany("INSERT INTO PRODUCTO VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
                 data_base.commit()
                 data_base.close()
@@ -1275,8 +1269,33 @@ class principal:
             except sqlite3.IntegrityError:
                 messagebox.showinfo("", "El producto ya existe")
 
+
+            except sqlite3.OperationalError:
+                data_base = sqlite3.connect("users.db")
+                cursor = data_base.cursor()
+                cursor.execute("CREATE TABLE PRODUCTOS(CODIGO INTEGER PRIMARY KEY UNIQUE, NOMBRE VARCHAR,"
+                               " ACTIVO INTEGER, TIPO INTEGER, CATEGORIA VARCHAR, SUB_CATEGORIA VARCHAR,"
+                               " COMENTARIO VARCHAR,ADICIONAR INTEGER,FACTURAR_EXISTENCIA INTEGER,"
+                               " CANTIDAD_MINIMA INTEGER, CODIGO_FABRICANTE INTEGER, BODEGA_ASIGNADO VARCHAR,"
+                               " UB_FISICA VARCHAR, VENDE_POR VARCHAR, COMPRA_POR VARCHAR,CONTIENE INTEGER,"
+                               " FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER, P4 INTEGER,"
+                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER, UB_IMAGEN_PRODUCTO VARCHAR)")
+
+                data_base.commit()
+                data_base.close()
+
+
     def data_base_update(self):
         print("ok")
+
+    def buscar_imagen_producto(self):
+
+        from tkinter import filedialog
+
+        tipo = (('imagen', '*.png'))
+
+        self.file = Filedialog.askopenfilename(filetypes=[("Excel files", ".xlsx .xls")])
+
 
 root0 = Tk()
 principal(root0)
