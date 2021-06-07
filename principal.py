@@ -1290,13 +1290,12 @@ class principal:
 
     def buscar_imagen_producto(self):
 
-        from tkinter import filedialog
+        self.file = filedialog.askopenfilename(filetypes=[("Image", "*.png")])
 
-        tipo = (('imagen', '*.png'))
-
-        self.file = Filedialog.askopenfilename(filetypes=[("Excel files", ".xlsx .xls")])
+        print(file)
 
 
 root0 = Tk()
 principal(root0)
 root0.mainloop()
+
