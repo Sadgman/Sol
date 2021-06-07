@@ -196,8 +196,8 @@ def ubicacion():
 fram = Frame(root, bg="white", width=570, height=53, borderwidth=1)
 fram.place(x=0, y=0)
 
-fuente = tkinter.font.Font(size=9, weight="bold")
-fuent = fuente.Font(family="Calibri", size=5)
+fuente = font.Font(size=9, weight="bold")
+fuent = font.Font(family="Calibri", size=8)
 
 ropa = Label(text="Informacion", bg="white", font=fuente)
 ropa.place(x=19, y=1)
@@ -247,7 +247,6 @@ def abrir():
     global file
 
     file = FileDialog.askdirectory(initialdir="C:\Program Files", title="Abrir")
-
 
     if len(file) > 0:
         sufall.set("")
