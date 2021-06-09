@@ -28,15 +28,13 @@ class principal:
         fuente_especial = font.Font(size=8)
         fuente_no_se = font.Font(size=11, family="Lucida Grande")
 
-        self.file = r"iconos e imagenes\buscar1.png"
-
         self.imagen = PhotoImage(file="iconos e imagenes\hacia atras.png")
         self.imagen2 = PhotoImage(file="iconos e imagenes\hacia adelante.png")
         self.imagen3 = PhotoImage(file="iconos e imagenes\salir.png")
         self.imagen4 = PhotoImage(file="iconos e imagenes\Facturacion.png")
         self.crear_producto_imagen = PhotoImage(file="iconos e imagenes\Crear.png")
         self.Inventario_imagen = PhotoImage(file="iconos e imagenes\Inventario.png")
-        self.imagen_buscar = PhotoImage(file=self.file)
+        self.imagen_buscar = PhotoImage(file=r"iconos e imagenes\buscar1.png")
         self.imagen_articulo = PhotoImage(file=r"iconos e imagenes\the photo of the item.png")
 
         self.boton_adelante = Button(root, image=self.imagen2, command=self.cambiar)
@@ -206,7 +204,8 @@ class principal:
         self.cx4_se_vende_por = ttk.Combobox(self.frame_crear_producto, width=8, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
         self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12, textvariable=self.contiene)
         self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
-
+        
+        self.contador_borrar  = 0
         self.n = 1
         self.n1 = 1
         self.n2 = 1
@@ -264,6 +263,9 @@ class principal:
         self.boton_actualizar = Button(root, text="Actulizar", command=self.data_base_update)
 
         self.ad_comentario = IntVar()
+
+        self.reverso_ubicacion = ""
+        self.resultado = ""
 
         self.ch_facturar_sin_existencia = Checkbutton(self.frame_crear_producto2,text="adicionar este comentario en facturas entre otras",variable=self.ad_comentario, bg="#127271",activebackground="#127271")
         self.CN_producto_con_equivalente = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -1252,14 +1254,14 @@ class principal:
                 (codigo, nombre, esta_activo_el_producto, Tipo, categoria, sub_categoria, comentario, ad,
                  Facturar_con_existencia, cantidad_minima, codigo_fabricante, asignado_bodega, ubicacion_fisica, se_vende_por,
                  se_compra_por, y_contiene, facturar_con_precio, precio, precio2, precio3, precio4,
-                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, self.file)
+                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4)
             ]
 
             try:
 
                 data_base = sqlite3.connect("users.db")
                 cursor = data_base.cursor()
-                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
                 data_base.commit()
                 data_base.close()
@@ -1279,7 +1281,7 @@ class principal:
                                " CANTIDAD_MINIMA INTEGER, CODIGO_FABRICANTE INTEGER, BODEGA_ASIGNADO VARCHAR,"
                                " UB_FISICA VARCHAR, VENDE_POR VARCHAR, COMPRA_POR VARCHAR,CONTIENE INTEGER,"
                                " FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER, P4 INTEGER,"
-                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER, UB_IMAGEN_PRODUCTO VARCHAR)")
+                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER)")
 
                 data_base.commit()
                 data_base.close()
@@ -1290,12 +1292,57 @@ class principal:
 
     def buscar_imagen_producto(self):
 
-        self.file = filedialog.askopenfilename(filetypes=[("Image", "*.png")])
+        file = filedialog.askopenfilename(filetypes=[("Image", "*.png")])
 
-        print(file)
+        if len(file) > 1:
+            ruta = os.getcwd()
+            
+            archivo_numeros = len(file)
+            archivo_en_numeros_completos = len(file)
+            archivo_numeros -= 1
+
+            contador = 0
+
+            for m in file:
+                complete = file[archivo_numeros]
+                archivo_numeros -= 1
+
+                if "/" in complete:
+                    contador += 1
+                    archivo_numeros += 2
+                    self.resultado = file[archivo_numeros:archivo_en_numeros_completos]
+                    if contador == 1:
+                        break
+                        
+            re_archivo_en_numeros = len(file)
+            re_archivo_en_numeros -= 1
+
+            re_contador = 0
+
+            for m in enumerate(file):
+                re_complete = file[re_archivo_en_numeros]
+                re_archivo_en_numeros -= 1
+
+                if "/" in re_complete:
+                    re_contador += 1
+                    re_archivo_en_numeros += 1
+                    self.reverso_ubicacion = file[0:re_archivo_en_numeros]
+                    if re_contador == 1:
+                        break
+
+            os.chdir(self.reverso_ubicacion)
+
+            ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
+
+            shutil.copy(self.resultado, ruta + ruta_carpeta[1:39])
+
+            imagen_cambio = PhotoImage(file=ruta + ruta_carpeta[1:39] + self.resultado)
+
+            self.label_articulo.place_forget()
+
+            Label(self.frame_crear_producto2, image=imagen_cambio).place(x=23, y=60)
 
 
 root0 = Tk()
 principal(root0)
 root0.mainloop()
-
