@@ -204,8 +204,7 @@ class principal:
         self.cx4_se_vende_por = ttk.Combobox(self.frame_crear_producto, width=8, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
         self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12, textvariable=self.contiene)
         self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
-        
-        self.contador_borrar  = 0
+
         self.n = 1
         self.n1 = 1
         self.n2 = 1
@@ -266,6 +265,7 @@ class principal:
 
         self.reverso_ubicacion = ""
         self.resultado = ""
+        self.contador = 0
 
         self.ch_facturar_sin_existencia = Checkbutton(self.frame_crear_producto2,text="adicionar este comentario en facturas entre otras",variable=self.ad_comentario, bg="#127271",activebackground="#127271")
         self.CN_producto_con_equivalente = Checkbutton(self.frame_crear_producto2, onvalue=1, offvalue=0, bg="#127271", activebackground="#127271")
@@ -644,18 +644,6 @@ class principal:
             return True
 
     def activar_puestos(self, dxs):
-
-       #data_base = sqlite3.connect("users.db")
-       #cursor = data_base.cursor()
-       #cursor.executemany("SELECT * FROM PRODUCTO WHERE Codigo=" + dxs)
-       #datos = cursor.fetchall()
-
-        #for guardados in datos:
-
-         #   self.Entry_Nombre_producto.set(guardados[1])
-
-        #data_base.commit()
-        #data_base.close()
 
         en_numeros = len(dxs)
 
@@ -1254,14 +1242,14 @@ class principal:
                 (codigo, nombre, esta_activo_el_producto, Tipo, categoria, sub_categoria, comentario, ad,
                  Facturar_con_existencia, cantidad_minima, codigo_fabricante, asignado_bodega, ubicacion_fisica, se_vende_por,
                  se_compra_por, y_contiene, facturar_con_precio, precio, precio2, precio3, precio4,
-                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4)
+                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, self.resultado)
             ]
 
             try:
 
                 data_base = sqlite3.connect("users.db")
                 cursor = data_base.cursor()
-                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL)",
                                    lista_de_informacion)
                 data_base.commit()
                 data_base.close()
@@ -1281,7 +1269,8 @@ class principal:
                                " CANTIDAD_MINIMA INTEGER, CODIGO_FABRICANTE INTEGER, BODEGA_ASIGNADO VARCHAR,"
                                " UB_FISICA VARCHAR, VENDE_POR VARCHAR, COMPRA_POR VARCHAR,CONTIENE INTEGER,"
                                " FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER, P4 INTEGER,"
-                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER)")
+                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER, NAME_IMAGE VARCHAR,"
+                               " NUMBER INTEGER UNIQUE AUTOINCREMENT)")
 
                 data_base.commit()
                 data_base.close()
@@ -1290,13 +1279,28 @@ class principal:
     def data_base_update(self):
         print("ok")
 
+    def existe_o_no(self, nombre_archivo):
+        try:
+
+            with open(nombre_archivo, 'r'):
+                return True
+
+        except FileNotFoundError:
+            return False
+
+        except IOError:
+            return False
+
     def buscar_imagen_producto(self):
 
         file = filedialog.askopenfilename(filetypes=[("Image", "*.png")])
 
-        if len(file) > 1:
+        img = cv2.imread(file)
+
+        if img.shape[0:2] == (116, 193):
+
             ruta = os.getcwd()
-            
+
             archivo_numeros = len(file)
             archivo_en_numeros_completos = len(file)
             archivo_numeros -= 1
@@ -1313,13 +1317,13 @@ class principal:
                     self.resultado = file[archivo_numeros:archivo_en_numeros_completos]
                     if contador == 1:
                         break
-                        
+
             re_archivo_en_numeros = len(file)
             re_archivo_en_numeros -= 1
 
             re_contador = 0
 
-            for m in enumerate(file):
+            for m in (file):
                 re_complete = file[re_archivo_en_numeros]
                 re_archivo_en_numeros -= 1
 
@@ -1334,14 +1338,29 @@ class principal:
 
             ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
 
-            shutil.copy(self.resultado, ruta + ruta_carpeta[1:39])
+            m = ruta + ruta_carpeta[1:39]
+
+            shutil.copy(self.resultado, m)
 
             imagen_cambio = PhotoImage(file=ruta + ruta_carpeta[1:39] + self.resultado)
 
-            self.label_articulo.place_forget()
+            self.label_articulo.configure(image=imagen_cambio)
 
-            Label(self.frame_crear_producto2, image=imagen_cambio).place(x=23, y=60)
+            self.label_articulo.image = imagen_cambio
 
+            os.chdir(ruta)
+
+            if self.contador == 0:
+                os.rename(ruta + ruta_carpeta[1:39] + self.resultado, ruta + ruta_carpeta[1:39] + "1.png")
+                self.contador += 1
+
+            else:
+                os.remove(ruta + ruta_carpeta[1:39] + "1.png")
+                os.rename(ruta + ruta_carpeta[1:39] + self.resultado, ruta + ruta_carpeta[1:39] + "1.png")
+                self.contador -= 1
+
+        else:
+            messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
 
 root0 = Tk()
 principal(root0)
