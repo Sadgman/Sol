@@ -1213,6 +1213,7 @@ class principal:
 
         codigo_fabricante = self.codigo_fabricante.get()
         cantidad_minima = self.minima.get()
+        ruta = os.getcwd()
 
         comprobacion = str(codigo)
         comprobacion1 = str(nombre)
@@ -1238,18 +1239,26 @@ class principal:
 
         else:
 
+            ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
+            vnet = "1599768594340096507342464680906565653568767878908.png"
+            vn2et = "599768594340096507342464680906565653568767878908.png"
+            os.chdir("iconos e imagenes/productos imagenes")
+            os.mkdir(nombre)
+            shutil.move(ruta+ ruta_carpeta[1:39] + vnet, ruta + ruta_carpeta[1:39] + nombre + r"\1" + vn2et)
+            os.chdir(ruta)
+
             lista_de_informacion = [
                 (codigo, nombre, esta_activo_el_producto, Tipo, categoria, sub_categoria, comentario, ad,
                  Facturar_con_existencia, cantidad_minima, codigo_fabricante, asignado_bodega, ubicacion_fisica, se_vende_por,
                  se_compra_por, y_contiene, facturar_con_precio, precio, precio2, precio3, precio4,
-                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, self.resultado)
+                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, "lo dejo por si acaso")
             ]
 
             try:
 
                 data_base = sqlite3.connect("users.db")
                 cursor = data_base.cursor()
-                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL)",
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
                 data_base.commit()
                 data_base.close()
@@ -1259,8 +1268,8 @@ class principal:
             except sqlite3.IntegrityError:
                 messagebox.showinfo("", "El producto ya existe")
 
-
             except sqlite3.OperationalError:
+
                 data_base = sqlite3.connect("users.db")
                 cursor = data_base.cursor()
                 cursor.execute("CREATE TABLE PRODUCTOS(CODIGO INTEGER PRIMARY KEY UNIQUE, NOMBRE VARCHAR,"
@@ -1269,12 +1278,15 @@ class principal:
                                " CANTIDAD_MINIMA INTEGER, CODIGO_FABRICANTE INTEGER, BODEGA_ASIGNADO VARCHAR,"
                                " UB_FISICA VARCHAR, VENDE_POR VARCHAR, COMPRA_POR VARCHAR,CONTIENE INTEGER,"
                                " FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER, P4 INTEGER,"
-                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER, NAME_IMAGE VARCHAR,"
-                               " NUMBER INTEGER UNIQUE AUTOINCREMENT)")
+                               " PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER, NAME_IMAGE VARCHAR)")
+
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                                   lista_de_informacion)
+
+                messagebox.showinfo("", "Se creo exitosamente")
 
                 data_base.commit()
                 data_base.close()
-
 
     def data_base_update(self):
         print("ok")
@@ -1351,12 +1363,12 @@ class principal:
             os.chdir(ruta)
 
             if self.contador == 0:
-                os.rename(ruta + ruta_carpeta[1:39] + self.resultado, ruta + ruta_carpeta[1:39] + "1.png")
+                os.rename(ruta + ruta_carpeta[1:39] + self.resultado, ruta + ruta_carpeta[1:39] + "1599768594340096507342464680906565653568767878908.png")
                 self.contador += 1
 
             else:
-                os.remove(ruta + ruta_carpeta[1:39] + "1.png")
-                os.rename(ruta + ruta_carpeta[1:39] + self.resultado, ruta + ruta_carpeta[1:39] + "1.png")
+                os.remove(ruta + ruta_carpeta[1:39] + "1599768594340096507342464680906565653568767878908.png")
+                os.rename(ruta + ruta_carpeta[1:39] + self.resultado, ruta + ruta_carpeta[1:39] + "1599768594340096507342464680906565653568767878908.png")
                 self.contador -= 1
 
         else:
