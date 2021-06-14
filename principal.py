@@ -1218,7 +1218,7 @@ class principal:
         comprobacion = str(codigo)
         comprobacion1 = str(nombre)
         comprobacion2 = str(precio)
-        
+
         if comprobacion == "":
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
@@ -1231,14 +1231,18 @@ class principal:
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
         else:
-
-            ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
-            vnet = "1599768594340096507342464680906565653568767878908.png"
-            vn2et = "599768594340096507342464680906565653568767878908.png"
-            os.chdir("iconos e imagenes/productos imagenes")
-            os.mkdir(nombre)
-            shutil.move(ruta+ ruta_carpeta[1:39] + vnet, ruta + ruta_carpeta[1:39] + nombre + r"\1" + vn2et)
-            os.chdir(ruta)
+            
+            if self.resultado == "":
+                pass
+            
+            else:    
+                ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
+                vnet = "1599768594340096507342464680906565653568767878908.png"
+                vn2et = "599768594340096507342464680906565653568767878908.png"
+                os.chdir("iconos e imagenes/productos imagenes")
+                os.mkdir(nombre)
+                shutil.move(ruta+ ruta_carpeta[1:39] + vnet, ruta + ruta_carpeta[1:39] + nombre + r"\1" + vn2et)
+                os.chdir(ruta)
 
             lista_de_informacion = [
                 (codigo, nombre, esta_activo_el_producto, Tipo, categoria, sub_categoria, comentario, ad,
