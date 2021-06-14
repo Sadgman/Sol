@@ -1218,14 +1218,7 @@ class principal:
         comprobacion = str(codigo)
         comprobacion1 = str(nombre)
         comprobacion2 = str(precio)
-        comprobacion3 = str(precio2)
-        comprobacion4 = str(precio3)
-        comprobacion5 = str(precio4)
-        comprobacion6 = str(precio_impuesto1)
-        comprobacion7 = str(precio_impuesto2)
-        comprobacion8 = str(precio_impuesto3)
-        comprobacion9 = str(precio_impuesto4)
-
+        
         if comprobacion == "":
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
@@ -1289,7 +1282,34 @@ class principal:
                 data_base.close()
 
     def data_base_update(self):
-        print("ok")
+
+        precio = str(self.string_entry1.get())
+        precio2 = str(self.string_entry2.get())
+        precio3 = str(self.string_entry3.get())
+        precio4 = str(self.string_entry4.get())
+
+        precio_impuesto1 = str(self.string_entry14.get())
+        precio_impuesto2 = str(self.string_entry15.get())
+        precio_impuesto3 = str(self.string_entry16.get())
+        precio_impuesto4 = str(self.string_entry17.get())
+
+        date_base = sqlite3.connect("users.db")
+        cursor = date_base.cursor()
+        cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + self.Entry_Nombre_producto.get() + "', ACTIVO='" +
+                       str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
+                       str(self.cx1_categoria_producto.get()) +"', SUB_CATEGORIA='"+ str(self.cx2_sub_categoria.get())
+                       +"', COMENTARIO='"+ str(self.comentario2.get(1.0, END))+"', ADICIONAR='"+ str(self.ad_comentario.get())
+                       +"', FACTURAR_EXISTENCIA='"+ str(self.RSS.get()) + "', CANTIDAD_MINIMA='"+ str(self.minima.get()) +
+                       "', CODIGO_FABRICANTE='"+ str(self.codigo_fabricante.get())+"', BODEGA_ASIGNADO='"+
+                       str(self.cx3_asignado_bodega.get()) + "', UB_FISICA='" + str(self.ub_fs.get()) + "', VENDE_POR='" +
+                       str(self.cx4_se_vende_por.get()) + "', COMPRA_POR='" + str(self.cx5_se_compra_por.get()) + "', CONTIENE='" +
+                       str(self.contiene.get()) +"', FACTURAR_CON_PRECIO='"+ str(self.sx.get()) + "', P1='"
+                       + precio + "', P2='" + precio2 + "', P3='" + precio3 + "', P4='" + precio4 + "', PI1='" +
+                       precio_impuesto1 + ", PI2=" + precio_impuesto2+ "', PI3='" + precio_impuesto3 + "', PI4='" +
+                       precio_impuesto4 + "'WHERE CODIGO=" + str(self.entry_codigo.get()))
+
+        date_base.commit()
+        date_base.close()
 
     def existe_o_no(self, nombre_archivo):
         try:
