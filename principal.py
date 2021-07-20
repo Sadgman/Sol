@@ -73,7 +73,9 @@ class principal:
         self.label_codigo = Label(self.frame_crear_producto, text="Codigo", font=fuente_crear_producto, bg="#127271")
         self.entry_codigo = ttk.Entry(self.frame_crear_producto, width=35,validate='all', validatecommand=(root.register(self.activar_puestos), '%P'))
 
-        self.Entry_Nombre_producto = ttk.Entry(self.frame_crear_producto, width=46)
+        self.nombre = StringVar()
+
+        self.Entry_Nombre_producto = ttk.Entry(self.frame_crear_producto, width=46, textvariable=self.nombre)
         self.label_Nombre_producto = Label(self.frame_crear_producto, bg="#127271",text="Nombre del producto", font=fuente_crear_producto)
 
         self.label_precio_en_venta = Label(self.frame_crear_producto, text="Precio en compra.", font=fuente_crear_producto, bg="#127271")
@@ -260,6 +262,7 @@ class principal:
         self.R4 = Radiobutton(self.frame_crear_producto2, text="Si", bg="#127271", activebackground="#127271", variable=self.RSS, value=1)
         self.R5 = Radiobutton(self.frame_crear_producto2, text="No", bg="#127271", activebackground="#127271", variable=self.RSS, value=0)
         self.boton_actualizar = Button(root, text="Actulizar", command=self.data_base_update)
+        self.boton_mostrar = Button(root, text="Mostrar", command=self.mostrar_producto)
 
         self.ad_comentario = IntVar()
 
@@ -425,6 +428,8 @@ class principal:
 
         self.boton_siguiente.place(x=600, y=574)
         self.boton_actualizar.place(x=400, y=574)
+        self.boton_mostrar.place(x=500, y=574)
+
         self.CN.place(x=410, y=230)
         self.CN1.place(x=300, y=450)
         self.CN2.place(x=300, y=483)
@@ -1231,11 +1236,11 @@ class principal:
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
         else:
-            
+
             if self.resultado == "":
                 pass
-            
-            else:    
+
+            else:
                 ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
                 vnet = "1599768594340096507342464680906565653568767878908.png"
                 vn2et = "599768594340096507342464680906565653568767878908.png"
@@ -1297,23 +1302,269 @@ class principal:
         precio_impuesto3 = str(self.string_entry16.get())
         precio_impuesto4 = str(self.string_entry17.get())
 
-        date_base = sqlite3.connect("users.db")
-        cursor = date_base.cursor()
-        cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + self.Entry_Nombre_producto.get() + "', ACTIVO='" +
-                       str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
-                       str(self.cx1_categoria_producto.get()) +"', SUB_CATEGORIA='"+ str(self.cx2_sub_categoria.get())
-                       +"', COMENTARIO='"+ str(self.comentario2.get(1.0, END))+"', ADICIONAR='"+ str(self.ad_comentario.get())
-                       +"', FACTURAR_EXISTENCIA='"+ str(self.RSS.get()) + "', CANTIDAD_MINIMA='"+ str(self.minima.get()) +
-                       "', CODIGO_FABRICANTE='"+ str(self.codigo_fabricante.get())+"', BODEGA_ASIGNADO='"+
-                       str(self.cx3_asignado_bodega.get()) + "', UB_FISICA='" + str(self.ub_fs.get()) + "', VENDE_POR='" +
-                       str(self.cx4_se_vende_por.get()) + "', COMPRA_POR='" + str(self.cx5_se_compra_por.get()) + "', CONTIENE='" +
-                       str(self.contiene.get()) +"', FACTURAR_CON_PRECIO='"+ str(self.sx.get()) + "', P1='"
-                       + precio + "', P2='" + precio2 + "', P3='" + precio3 + "', P4='" + precio4 + "', PI1='" +
-                       precio_impuesto1 + ", PI2=" + precio_impuesto2+ "', PI3='" + precio_impuesto3 + "', PI4='" +
-                       precio_impuesto4 + "'WHERE CODIGO=" + str(self.entry_codigo.get()))
+        try:
 
-        date_base.commit()
-        date_base.close()
+            date_base = sqlite3.connect("users.db")
+            cursor = date_base.cursor()
+            cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + str(self.Entry_Nombre_producto.get()) + "', ACTIVO='" +
+                           str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
+                           str(self.cx1_categoria_producto.get()) +"', SUB_CATEGORIA='"+ str(self.cx2_sub_categoria.get())
+                           +"', COMENTARIO='"+ str(self.comentario2.get(1.0, END))+"', ADICIONAR='"+ str(self.ad_comentario.get())
+                           +"', FACTURAR_EXISTENCIA='"+ str(self.RSS.get()) + "', CANTIDAD_MINIMA='"+ str(self.minima.get()) +
+                           "', CODIGO_FABRICANTE='"+ str(self.codigo_fabricante.get())+"', BODEGA_ASIGNADO='"+
+                           str(self.cx3_asignado_bodega.get()) + "', UB_FISICA='" + str(self.ub_fs.get()) + "', VENDE_POR='" +
+                           str(self.cx4_se_vende_por.get()) + "', COMPRA_POR='" + str(self.cx5_se_compra_por.get()) + "', CONTIENE='" +
+                           str(self.contiene.get()) +"', FACTURAR_CON_PRECIO='"+ str(self.sx.get()) + "', P1='"
+                           + precio + "', P2='" + precio2 + "', P3='" + precio3 + "', P4='" + precio4 + "', PI1='" +
+                           precio_impuesto1 + ", PI2=" + precio_impuesto2+ "', PI3='" + precio_impuesto3 + "', PI4='" +
+                           precio_impuesto4 + "'WHERE CODIGO=" + str(self.entry_codigo.get()))
+
+            date_base.commit()
+            date_base.close()
+            messagebox.showinfo("", "actualizado correctamente")
+
+        except sqlite3.OperationalError:
+            messagebox.showinfo("", "introduzca el codigo del producto primero\nluego introduzca la informacion que"
+                                    " desea modificar")
+
+    def mostrar_producto(self):
+
+        data_base = sqlite3.connect("users.db")
+        cursor = data_base.cursor()
+        cursor.execute("SELECT * FROM PRODUCTOS WHERE CODIGO=" + str(self.entry_codigo.get()))
+        turtle = cursor.fetchall()
+
+        data_base.commit()
+        data_base.close()
+
+        turtle = str(turtle)
+
+        todo = len(turtle)
+        todo -= 2
+        buscador = turtle[2:todo]
+
+        contadorsito = len(turtle)
+
+        segundo_contador = 0
+        contador = 1
+
+        Codigo = ""
+        Nombre = ""
+        activo = ""
+        categoria = ""
+        tipo = ""
+        sub_categoria = ""
+        comentario = ""
+        adicionar = ""
+        facturar_existencia = ""
+        cantidad_minima = ""
+        codigo_fabricante = ""
+        asignado_bodega = ""
+        ubicacion_fisica = ""
+        vende_por = ""
+        compra_por = ""
+        contiene = ""
+        facturar_con_precio = ""
+        p1 = ""
+        p2 = ""
+        p3 = ""
+        p4 = ""
+        pi1 = ""
+        pi2 = ""
+        pi3 = ""
+        pi4 = ""
+        name_image = ""
+
+        numero = 0
+        numer1 = 0
+        numer2 = 0
+        numer3 = 0
+        numer4 = 0
+        numer5 = 0
+        numer6 = 0
+        numer7 = 0
+        numer8 = 0
+        numer9 = 0
+        numer10 = 0
+        numer11 = 0
+        numer12 = 0
+        numer13 = 0
+        numer14 = 0
+        numer15 = 0
+        numer16 = 0
+        numer17 = 0
+        numer18 = 0
+        numer19 = 0
+        numer20 = 0
+        numer21 = 0
+        numer22 = 0
+        numer23 = 0
+        numer24 = 0
+        numer25 = 0
+        numer26 = 0
+
+        for m in buscador:
+            segundo_contador += 1
+
+            if segundo_contador == contadorsito:
+                break
+
+            if "," in turtle[segundo_contador]:
+
+                if contador == 1:
+                    numero = segundo_contador
+                    numero += 1
+                    Codigo = buscador[0:segundo_contador]
+
+                elif contador == 2:
+                    numer1 = segundo_contador
+                    Nombre = buscador[numero:segundo_contador - 3]
+
+                elif contador == 3:
+                    numer2 = segundo_contador
+                    activo = buscador[numer1:segundo_contador]
+
+                elif contador == 4:
+                    numer3 = segundo_contador
+                    numer3 += 1
+                    tipo = buscador[numer2:segundo_contador]
+
+                elif contador == 5:
+                    numer4 = segundo_contador
+                    numer4 += 1
+                    categoria = buscador[numer3:segundo_contador - 3]
+
+                elif contador == 6:
+                    numer5 = segundo_contador
+                    numer5 += 1
+                    sub_categoria = buscador[numer4:segundo_contador - 3]
+
+                elif contador == 7:
+                    numer6 = segundo_contador
+                    comentario = buscador[numer5:segundo_contador]
+
+                elif contador == 8:
+                    numer7 = segundo_contador
+                    adicionar = buscador[numer6:segundo_contador - 2]
+
+                elif contador == 9:
+                    numer8 = segundo_contador
+                    facturar_existencia = buscador[numer7:segundo_contador - 2]
+
+                elif contador == 10:
+                    numer9 = segundo_contador
+                    cantidad_minima = buscador[numer8:segundo_contador - 2]
+
+                elif contador == 11:
+                    numer10 = segundo_contador
+                    numer10 += 1
+                    codigo_fabricante = buscador[numer9:segundo_contador - 2]
+
+                elif contador == 12:
+                    numer11 = segundo_contador
+                    numer11 += 1
+                    asignado_bodega = buscador[numer10:segundo_contador]
+
+                elif contador == 13:
+                    numer12 = segundo_contador
+                    numer12 += 1
+                    ubicacion_fisica = buscador[numer11:segundo_contador - 3]
+
+                elif contador == 14:
+                    numer13 = segundo_contador
+                    numer13 += 1
+                    vende_por = buscador[numer12:segundo_contador - 3]
+
+                elif contador == 15:
+                    numer14 = segundo_contador
+                    compra_por = buscador[numer13:segundo_contador - 3]
+
+                elif contador == 16:
+                    numer15 = segundo_contador
+                    contiene = buscador[numer14:segundo_contador - 2]
+
+                elif contador == 17:
+                    numer16 = segundo_contador
+                    numer16 += 1
+                    facturar_con_precio = buscador[numer15:segundo_contador]
+
+                elif contador == 18:
+                    numer17 = segundo_contador
+                    numer17 += 1
+                    p1 = buscador[numer16:segundo_contador]
+
+                elif contador == 19:
+                    numer18 = segundo_contador
+                    numer18 += 1
+                    p2 = buscador[numer17:segundo_contador]
+
+                elif contador == 20:
+                    numer19 = segundo_contador
+                    numer19 += 1
+                    p3 = buscador[numer18:segundo_contador]
+
+                elif contador == 21:
+                    numer20 = segundo_contador
+                    numer20 += 1
+                    p4 = buscador[numer19:segundo_contador]
+
+                elif contador == 22:
+                    numer21 = segundo_contador
+                    numer21 += 1
+                    pi1 = buscador[numer20:segundo_contador]
+
+                elif contador == 23:
+                    numer22 = segundo_contador
+                    numer22 += 1
+                    pi2 = buscador[numer21:segundo_contador]
+
+                elif contador == 24:
+                    numer23 = segundo_contador
+                    numer23 += 1
+                    pi3 = buscador[numer22:segundo_contador]
+
+                elif contador == 25:
+                    numer24 = segundo_contador
+                    numer24 += 1
+                    pi4 = buscador[numer23:segundo_contador]
+
+                contador += 1
+
+        todas_juntas = (Codigo, Nombre, activo[0], tipo[0], categoria, sub_categoria, comentario, adicionar, facturar_existencia,
+                        cantidad_minima, codigo_fabricante, asignado_bodega, ubicacion_fisica, vende_por, compra_por,
+                        contiene, facturar_con_precio, p1, p2, p3, p4, pi1, pi2, pi3, pi4)
+
+        print(todas_juntas)
+
+        for m in buscador:
+
+            self.nombre.set(todas_juntas[1])
+            self.CN_pero_el_de_verdad.set(todas_juntas[2])
+            self.Int_R.set(todas_juntas[3])
+            self.cx1_categoria_producto.set(todas_juntas[4])
+            self.cx2_sub_categoria.set(todas_juntas[5])
+            self.comentario2.insert(1.0, todas_juntas[6])
+            self.ad_comentario.set(todas_juntas[7])
+            self.minima.set(todas_juntas[9])
+            self.codigo_fabricante.set(todas_juntas[10])
+
+            if self.codigo_fabricante.get() == '""':
+                print("jcjd")
+
+         #   self.cx3_asignado_bodega.set(todas_juntas[11])
+          #  self.ub_fs.set(todas_juntas[12])
+           # self.cx4_se_vende_por.set(todas_juntas[13])
+#            self.cx5_se_compra_por.set(todas_juntas[14])
+ #           self.contiene.set(todas_juntas[15])
+  #          self.sx.set(todas_juntas[16])
+   #         self.string_entry1.set(todas_juntas[17])
+    #        self.string_entry2.set(todas_juntas[18])
+     #       self.string_entry3.set(todas_juntas[19])
+      #      self.string_entry4.set(todas_juntas[20])
+       #     self.string_entry14.set(todas_juntas[21])
+        #    self.string_entry15.set(todas_juntas[22])
+         #   self.string_entry16.set(todas_juntas[23])
+          #  self.string_entry17.set(todas_juntas[24])
 
     def existe_o_no(self, nombre_archivo):
         try:
