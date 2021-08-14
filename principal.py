@@ -70,8 +70,10 @@ class principal:
 
         self.crear_productos = Button(root, image=self.crear_producto_imagen, command=self.crear_producto_1)
 
+        self.Int_codigo = IntVar()
+
         self.label_codigo = Label(self.frame_crear_producto, text="Codigo", font=fuente_crear_producto, bg="#127271")
-        self.entry_codigo = ttk.Entry(self.frame_crear_producto, width=35,validate='all', validatecommand=(root.register(self.activar_puestos), '%P'))
+        self.entry_codigo = ttk.Entry(self.frame_crear_producto, width=35,validate='all', textvariable=self.Int_codigo,validatecommand=(root.register(self.activar_puestos), '%P'))
 
         self.nombre = StringVar()
 
@@ -263,6 +265,7 @@ class principal:
         self.R5 = Radiobutton(self.frame_crear_producto2, text="No", bg="#127271", activebackground="#127271", variable=self.RSS, value=0)
         self.boton_actualizar = Button(root, text="Actulizar", command=self.data_base_update)
         self.boton_mostrar = Button(root, text="Mostrar", command=self.mostrar_producto)
+        self.boton_atras1 = Button(root, text="Atras", command=self.atras, width=7)
 
         self.ad_comentario = IntVar()
 
@@ -574,6 +577,166 @@ class principal:
         self.boton_asignar_lotes.place(x=790, y=299)
         self.boton_asignar_serial.place(x=790, y=373)
         self.boton_crear.place(x=600, y=574)
+        self.boton_atras1.place(x=400, y=574)
+
+    def atras(self):
+
+        self.frame_crear_producto2.place_forget()
+        self.imagen_buscar_label.place_forget()
+        self.label_descripcion_adicional.place_forget()
+        self.label_codigo_fabricante.place_forget()
+        self.label_facturar_sin_existencia.place_forget()
+        self.label_cantidad_minima.place_forget()
+        self.label_provedor_principal.place_forget()
+        self.label_provedor_adicionar.place_forget()
+        self.label_en_varias_asignar.place_forget()
+        self.label_costo_mecaderia.place_forget()
+        self.label_inventariar_este_producto_en_venta_activo.place_forget()
+        self.label_articulo.place_forget()
+        self.label_producto_puede_tener_componenter.place_forget()
+        self.label_producto_puede_tener_equivalenter.place_forget()
+        self.label_producto_con_expiracion.place_forget()
+        self.label_producto_con_numero_serie.place_forget()
+
+        self.entry_codigo_fabricante.place_forget()
+        self.entry_cantidad_minima.place_forget()
+        self.entry_provedor_principal.place_forget()
+        self.entry_en_varias_asignar.place_forget()
+        self.entry_costo_mercaderia.place_forget()
+        self.entry_inventariar_este_producto_en_venta_activo.place_forget()
+        self.comentario2.place_forget()
+        self.barrita.place_forget()
+
+        self.ch_facturar_sin_existencia.place_forget()
+        self.CN_producto_con_expiracion.place_forget()
+        self.CN_producto_con_equivalente.place_forget()
+        self.CN_producto_con_numero_serie.place_forget()
+
+        self.R4.place_forget()
+        self.R5.place_forget()
+
+        self.boton_buscar.place_forget()
+        self.boton_asignar.place_forget()
+        self.boton_buscar1.place_forget()
+        self.boton_buscar2.place_forget()
+        self.boton_buscar3.place_forget()
+        self.boton_asignar_componentes.place_forget()
+        self.boton_asignar_equivalente.place_forget()
+        self.boton_asignar_lotes.place_forget()
+        self.boton_asignar_serial.place_forget()
+        self.boton_crear.place_forget()
+        self.boton_atras1.place_forget()
+
+        self.label_codigo.place(x=42,y=12)
+        self.entry_codigo.place(x=130, y=18, height=20)
+        self.frame_crear_producto.place(x=90, y=40)
+        self.Entry_Nombre_producto.place(x=600, y=18, height=20)
+
+        self.label_Nombre_producto.place(x=400, y=12)
+        self.label_precio_en_venta.place(x=40, y=90)
+        self.label_precio_Ganancias.place(x=250, y=90)
+
+        self.label_coste_producto.place(x=400, y=90)
+        self.label_calificacion_producto.place(x=630, y=90)
+
+        self.label_numero1.place(x=40, y=140)
+        self.label_numero2.place(x=40, y=180)
+        self.label_numero3.place(x=40, y=220)
+        self.label_numero4.place(x=40, y=256)
+
+        self.label_por_pieza.place(x=380, y=145)
+        self.label_en_us.place(x=380, y=178)
+        self.label_El_producto_es.place(x=40, y=320)
+        self.label_cantidad_inicial.place(x=37, y=390)
+        self.label_facturar_precio.place(x=330, y=390)
+
+        self.label_inpuesto.place(x=39, y=440)
+        self.label_inpuesto1.place(x=36, y=480)
+        self.label_categoria.place(x=600, y=140)
+        self.label_sub_categoria.place(x=600, y=180)
+
+        self.label_asignado_bodega.place(x=600, y=220)
+        self.label_ubicacion.place(x=600, y=260)
+
+        self.label_vende_por.place(x=600, y=300)
+        self.label_contiene.place(x=600, y=340)
+        self.label_compra_por.place(x=600, y=374)
+        self.label_Aplicar_en.place(x=290, y=419)
+        self.label_pieza.place(x=800, y=345)
+
+        self.label_precio1.place(x=600, y=410)
+        self.label_precio2.place(x=600, y=440)
+        self.label_precio3.place(x=600, y=470)
+        self.label_precio4.place(x=600, y=500)
+
+        self.entry_numero1.place(x=70, y=145)
+        self.entry_numero2.place(x=70, y=186)
+        self.entry_numero3.place(x=70, y=226)
+        self.entry_numero4.place(x=70, y=260)
+
+        self.entry_numero5.place(x=240, y=145)
+        self.entry_numero6.place(x=240, y=186)
+        self.entry_numero7.place(x=240, y=226)
+        self.entry_numero8.place(x=240, y=260)
+
+        self.entry_por_unidad.place(x=460, y=145)
+        self.entry_en_dolares.place(x=460, y=179)
+        self.entry_cantidad_inicial.place(x=189, y=392)
+
+        self.entry_ubicacion_fisica.place(x=745, y=265)
+
+        self.entry_numero14.place(x=700, y=413)
+        self.entry_numero15.place(x=700, y=442)
+        self.entry_numero16.place(x=700, y=472)
+        self.entry_numero17.place(x=700, y=502)
+
+        self.boton_siguiente.place(x=600, y=574)
+        self.boton_actualizar.place(x=400, y=574)
+        self.boton_mostrar.place(x=500, y=574)
+
+        self.CN.place(x=410, y=230)
+        self.CN1.place(x=300, y=450)
+        self.CN2.place(x=300, y=483)
+        self.CN3.place(x=340, y=450)
+        self.CN4.place(x=340, y=483)
+
+        self.R1.place(x=180, y=323)
+        self.R2.place(x=260, y=326)
+        self.R3.place(x=347, y=328)
+
+        self.S1.place(x=516,y=394)
+
+        try:
+
+            en_numeros = str(self.Int_codigo.get())
+
+            if str.isdigit(en_numeros):
+
+                if len(en_numeros) > 2:
+
+                    self.cx4_se_vende_por.place(x=744, y=305)
+                    self.cx4_se_vende_por.current(1)
+                    self.cx5_y_contiene_entry.place(x=700, y=340)
+                    self.cx2_sub_categoria.place(x=744, y=180)
+                    self.cx1_categoria_producto.place(x=744, y=140)
+                    self.cx3_asignado_bodega.place(x=744, y=225)
+                    self.cx5_se_compra_por.place(x=700, y=374)
+
+                    self.cx_inpuesto.place(x=144, y=443)
+                    self.cx0_otro_inpu.place(x=144, y=483)
+
+            else:
+
+                self.cx4_se_vende_por.place_forget()
+                self.cx5_y_contiene_entry.place_forget()
+                self.cx2_sub_categoria.place_forget()
+                self.cx1_categoria_producto.place_forget()
+                self.cx3_asignado_bodega.place_forget()
+                self.cx_inpuesto.place_forget()
+                self.cx0_otro_inpu.place_forget()
+                self.cx5_se_compra_por.place_forget()
+        except:
+            pass
 
     def calculos(self, dominiga):
 
@@ -1253,14 +1416,15 @@ class principal:
                 (codigo, nombre, esta_activo_el_producto, Tipo, categoria, sub_categoria, comentario, ad,
                  Facturar_con_existencia, cantidad_inicial,cantidad_minima, codigo_fabricante, asignado_bodega, ubicacion_fisica, se_vende_por,
                  se_compra_por, y_contiene, facturar_con_precio, precio, precio2, precio3, precio4,
-                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, "lo dejo por si acaso")
+                 precio_impuesto1, precio_impuesto2, precio_impuesto3, precio_impuesto4, aplicar_en_ventas,
+                 aplicar_en_compras ,"lo dejo por si acaso")
             ]
 
             try:
 
                 data_base = sqlite3.connect("users.db")
                 cursor = data_base.cursor()
-                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
                 data_base.commit()
                 data_base.close()
@@ -1280,9 +1444,10 @@ class principal:
                                "CANTIDAD_INICIAL INTEGER, CANTIDAD_MINIMA INTEGER, CODIGO_FABRICANTE INTEGER,"
                                " BODEGA_ASIGNADO VARCHAR, UB_FISICA VARCHAR, VENDE_POR VARCHAR, COMPRA_POR VARCHAR,"
                                "CONTIENE INTEGER,FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER,"
-                               " P4 INTEGER, PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER, NAME_IMAGE VARCHAR)")
-
-                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                               " P4 INTEGER, PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER,"
+                               " APLICAR_EN_VENTAS INTEGER, APLICAR_EN_COMPRAS INTEGER, NAME_IMAGE VARCHAR)")
+#aplicar en ventas
+                cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
 
                 messagebox.showinfo("", "Se creo exitosamente")
@@ -1348,6 +1513,7 @@ class principal:
         self.cx1_categoria_producto.set(resultado[4])
         self.cx2_sub_categoria.set(resultado[5])
         self.ad_comentario.set(resultado[7])
+        self.RSS.set(resultado[8])
         self.Int_cantidad_inicial.set(resultado[9])
         self.minima.set(resultado[10])
         self.codigo_fabricante.set(resultado[11])
@@ -1366,6 +1532,8 @@ class principal:
         self.string_entry15.set(resultado[23])
         self.string_entry16.set(resultado[24])
         self.string_entry17.set(resultado[25])
+        self.CN_variable.set(resultado[26])
+        self.CN1_variable.set(resultado[27])
 
     def existe_o_no(self, nombre_archivo):
         try:
