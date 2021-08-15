@@ -206,7 +206,7 @@ class principal:
         self.cx2_sub_categoria = ttk.Combobox(self.frame_crear_producto, width=8, values=("GENE", "USA"))
         self.cx3_asignado_bodega = ttk.Combobox(self.frame_crear_producto, width=6, values=("PRI","SECU", "TERCI"))
         self.cx4_se_vende_por = ttk.Combobox(self.frame_crear_producto, width=8, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
-        self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12, textvariable=self.contiene)
+        self.cx5_y_contiene_entry = ttk.Entry(self.frame_crear_producto, width=12, textvariable=self.contiene,validate='all', validatecommand=(root.register(self.contiene1), '%P'))
         self.cx5_se_compra_por = ttk.Combobox(self.frame_crear_producto, width=10, values=("Unidad", "Pieza", "Docena", "kilogramos", "Botella"))
 
         self.n = 1
@@ -247,8 +247,8 @@ class principal:
         self.codigo_fabricante = StringVar()
         self.minima = IntVar()
 
-        self.entry_codigo_fabricante = Entry(self.frame_crear_producto2, font=fuente_no_se, textvariable=self.codigo_fabricante)
-        self.entry_cantidad_minima = Entry(self.frame_crear_producto2, font=fuente_no_se, textvariable=self.minima)
+        self.entry_codigo_fabricante = Entry(self.frame_crear_producto2, font=fuente_no_se, textvariable=self.codigo_fabricante,validate='all', validatecommand=(root.register(self.codigo_fabricante1), '%P'))
+        self.entry_cantidad_minima = Entry(self.frame_crear_producto2, font=fuente_no_se, textvariable=self.minima,validate='all', validatecommand=(root.register(self.cantidad_minima1), '%P'))
         self.entry_provedor_principal = Entry(self.frame_crear_producto2, font=fuente_no_se)
         self.entry_en_varias_asignar = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
         self.entry_costo_mercaderia = Entry(self.frame_crear_producto2, font=fuente_no_se, width=14)
@@ -816,6 +816,45 @@ class principal:
                 return False
 
     def cantidad_inicial(self, dxs):
+        en_numeros = len(dxs)
+
+        if str.isdigit(dxs):
+            return True
+
+        else:
+            if en_numeros == 0:
+                return True
+
+            else:
+                return False
+
+    def contiene1(self, dxs):
+        en_numeros = len(dxs)
+
+        if str.isdigit(dxs):
+            return True
+
+        else:
+            if en_numeros == 0:
+                return True
+
+            else:
+                return False
+
+    def cantidad_minima1(self, dxs):
+        en_numeros = len(dxs)
+
+        if str.isdigit(dxs):
+            return True
+
+        else:
+            if en_numeros == 0:
+                return True
+
+            else:
+                return False
+
+    def codigo_fabricante1(self, dxs):
         en_numeros = len(dxs)
 
         if str.isdigit(dxs):
