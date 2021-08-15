@@ -160,7 +160,7 @@ class principal:
 
         self.entry_por_unidad = ttk.Entry(self.frame_crear_producto, textvariable=self.Int_por_unidad,validate='all', validatecommand=(root.register(self.calculos), '%P'))
         self.entry_en_dolares = ttk.Entry(self.frame_crear_producto, state="readonly", textvariable=self.Int_en_dolares)
-        self.entry_cantidad_inicial = ttk.Entry(self.frame_crear_producto, textvariable=self.Int_cantidad_inicial)
+        self.entry_cantidad_inicial = ttk.Entry(self.frame_crear_producto, textvariable=self.Int_cantidad_inicial,validate='all', validatecommand=(root.register(self.cantidad_inicial), '%P'))
 
         self.ub_fs = StringVar()
 
@@ -740,6 +740,7 @@ class principal:
 
     def calculos(self, dominiga):
 
+        en_numeros = len(dominiga)
         ch = self.string_entry5.get()
         ch1 = self.string_entry6.get()
         ch2 = self.string_entry6.get()
@@ -809,7 +810,23 @@ class principal:
 
             self.pero = 0
 
+            if en_numeros == 0:
+                return True
+            else:
+                return False
+
+    def cantidad_inicial(self, dxs):
+        en_numeros = len(dxs)
+
+        if str.isdigit(dxs):
             return True
+
+        else:
+            if en_numeros == 0:
+                return True
+
+            else:
+                return False
 
     def activar_puestos(self, dxs):
 
@@ -843,19 +860,13 @@ class principal:
             return True
 
         else:
-
-            self.cx4_se_vende_por.place_forget()
-            self.cx5_y_contiene_entry.place_forget()
-            self.cx2_sub_categoria.place_forget()
-            self.cx1_categoria_producto.place_forget()
-            self.cx3_asignado_bodega.place_forget()
-            self.cx_inpuesto.place_forget()
-            self.cx0_otro_inpu.place_forget()
-            self.cx5_se_compra_por.place_forget()
-
-            return True
+            if en_numeros == 0:
+                return True
+            else:
+                return False
 
     def calculo(self, cel):
+        en_numeros = len(cel)
 
         if self.variable == 0:
             self.variable += 1
@@ -885,10 +896,14 @@ class principal:
             return True
 
         else:
-
-            return True
+            if en_numeros == 0:
+                return True
+            else:
+                return False
 
     def calculo2(self, cel):
+
+        en_numeros = len(cel)
 
         if self.variable1 == 0:
             self.variable1 += 1
@@ -918,10 +933,13 @@ class principal:
             return True
 
         else:
-
-            return True
+            if en_numeros == 0:
+                return True
+            else:
+                return False
 
     def calculo3(self, cel):
+        en_numeros = len(cel)
 
         if self.variable2 == 0:
             self.variable2 += 1
@@ -951,10 +969,14 @@ class principal:
             return True
 
         else:
-
-            return True
+            if en_numeros == 0:
+                return True
+            else:
+                return False
 
     def calculo4(self, cel):
+
+        en_numeros = len(cel)
 
         if self.variable3 == 0:
             self.variable3 += 1
@@ -984,8 +1006,10 @@ class principal:
             return True
 
         else:
-
-            return True
+            if en_numeros == 0:
+                return True
+            else:
+                return False
 
     def funny(self):
 
@@ -1446,7 +1470,7 @@ class principal:
                                "CONTIENE INTEGER,FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER,"
                                " P4 INTEGER, PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER,"
                                " APLICAR_EN_VENTAS INTEGER, APLICAR_EN_COMPRAS INTEGER, NAME_IMAGE VARCHAR)")
-#aplicar en ventas
+
                 cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
 
@@ -1456,41 +1480,46 @@ class principal:
                 data_base.close()
 
     def data_base_update(self):
-
-        precio = str(self.string_entry1.get())
-        precio2 = str(self.string_entry2.get())
-        precio3 = str(self.string_entry3.get())
-        precio4 = str(self.string_entry4.get())
-
-        precio_impuesto1 = str(self.string_entry14.get())
-        precio_impuesto2 = str(self.string_entry15.get())
-        precio_impuesto3 = str(self.string_entry16.get())
-        precio_impuesto4 = str(self.string_entry17.get())
-
         try:
 
-            date_base = sqlite3.connect("users.db")
-            cursor = date_base.cursor()
-            cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + str(self.Entry_Nombre_producto.get()) + "', ACTIVO='" +
-                           str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
-                           str(self.cx1_categoria_producto.get()) +"', SUB_CATEGORIA='"+ str(self.cx2_sub_categoria.get())
-                           +"', COMENTARIO='"+ str(self.comentario2.get(1.0, END))+"', ADICIONAR='"+ str(self.ad_comentario.get())
-                           +"', FACTURAR_EXISTENCIA='"+ str(self.RSS.get()) + "', CANTIDAD_MINIMA='"+ str(self.minima.get()) +
-                           "', CODIGO_FABRICANTE='"+ str(self.codigo_fabricante.get())+"', BODEGA_ASIGNADO='"+
-                           str(self.cx3_asignado_bodega.get()) + "', UB_FISICA='" + str(self.ub_fs.get()) + "', VENDE_POR='" +
-                           str(self.cx4_se_vende_por.get()) + "', COMPRA_POR='" + str(self.cx5_se_compra_por.get()) + "', CONTIENE='" +
-                           str(self.contiene.get()) +"', FACTURAR_CON_PRECIO='"+ str(self.sx.get()) + "', P1='"
-                           + precio + "', P2='" + precio2 + "', P3='" + precio3 + "', P4='" + precio4 + "', PI1='" +
-                           precio_impuesto1 + ", PI2=" + precio_impuesto2+ "', PI3='" + precio_impuesto3 + "', PI4='" +
-                           precio_impuesto4 + "'WHERE CODIGO=" + str(self.entry_codigo.get()))
+            precio = str(self.string_entry1.get())
+            precio2 = str(self.string_entry2.get())
+            precio3 = str(self.string_entry3.get())
+            precio4 = str(self.string_entry4.get())
 
-            date_base.commit()
-            date_base.close()
-            messagebox.showinfo("", "actualizado correctamente")
+            precio_impuesto1 = str(self.string_entry14.get())
+            precio_impuesto2 = str(self.string_entry15.get())
+            precio_impuesto3 = str(self.string_entry16.get())
+            precio_impuesto4 = str(self.string_entry17.get())
 
-        except sqlite3.OperationalError:
-            messagebox.showinfo("", "introduzca el codigo del producto primero\nluego introduzca la informacion que"
-                                    " desea modificar")
+            try:
+
+                date_base = sqlite3.connect("users.db")
+                cursor = date_base.cursor()
+                cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + str(self.Entry_Nombre_producto.get()) + "', ACTIVO='" +
+                               str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
+                               str(self.cx1_categoria_producto.get()) +"', SUB_CATEGORIA='"+ str(self.cx2_sub_categoria.get())
+                               +"', COMENTARIO='"+ str(self.comentario2.get(1.0, END))+"', ADICIONAR='"+ str(self.ad_comentario.get())
+                               +"', FACTURAR_EXISTENCIA='"+ str(self.RSS.get()) + "', CANTIDAD_MINIMA='"+ str(self.minima.get()) +
+                               "', CODIGO_FABRICANTE='"+ str(self.codigo_fabricante.get())+"', BODEGA_ASIGNADO='"+
+                               str(self.cx3_asignado_bodega.get()) + "', UB_FISICA='" + str(self.ub_fs.get()) + "', VENDE_POR='" +
+                               str(self.cx4_se_vende_por.get()) + "', COMPRA_POR='" + str(self.cx5_se_compra_por.get()) + "', CONTIENE='" +
+                               str(self.contiene.get()) +"', FACTURAR_CON_PRECIO='"+ str(self.sx.get()) + "', P1='"
+                               + precio + "', P2='" + precio2 + "', P3='" + precio3 + "', P4='" + precio4 + "', PI1='" +
+                               precio_impuesto1 + "', PI2='" + precio_impuesto2+ "', PI3='" + precio_impuesto3 + "', PI4='" +
+                               precio_impuesto4 + "', APLICAR_EN_VENTAS='"+str(self.CN_variable.get())+
+                               "', APLICAR_EN_COMPRAS='"+str(self.CN1_variable.get())+"'WHERE CODIGO="
+                               + str(self.entry_codigo.get()))
+
+                date_base.commit()
+                date_base.close()
+                messagebox.showinfo("", "actualizado correctamente")
+
+            except sqlite3.OperationalError:
+                messagebox.showinfo("", "introduzca el codigo del producto primero\nluego introduzca la informacion que"
+                                        " desea modificar")
+        except:
+            pass
 
     def mostrar_producto(self):
 
@@ -1618,6 +1647,8 @@ class principal:
         else:
             messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
 
-root0 = Tk()
-principal(root0)
-root0.mainloop()
+if __name__ == '__main__':
+    root0 = Tk()
+    root0.title("Sol")
+    principal(root0)
+    root0.mainloop()
