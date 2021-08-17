@@ -1,6 +1,5 @@
 from Modulos import *
 
-
 class principal:
 
     def __init__(self, root):
@@ -1485,7 +1484,7 @@ class principal:
 
             try:
 
-                data_base = sqlite3.connect("users.db")
+                data_base = sqlite3.connect("Data_base.db")
                 cursor = data_base.cursor()
                 cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
@@ -1499,7 +1498,7 @@ class principal:
 
             except sqlite3.OperationalError:
 
-                data_base = sqlite3.connect("users.db")
+                data_base = sqlite3.connect("Data_base.db")
                 cursor = data_base.cursor()
                 cursor.execute("CREATE TABLE PRODUCTOS(CODIGO INTEGER PRIMARY KEY UNIQUE, NOMBRE VARCHAR,"
                                " ACTIVO INTEGER, TIPO INTEGER, CATEGORIA VARCHAR, SUB_CATEGORIA VARCHAR,"
@@ -1533,7 +1532,7 @@ class principal:
 
             try:
 
-                date_base = sqlite3.connect("users.db")
+                date_base = sqlite3.connect("Data_base.db")
                 cursor = date_base.cursor()
                 cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + str(self.Entry_Nombre_producto.get()) + "', ACTIVO='" +
                                str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
@@ -1562,7 +1561,7 @@ class principal:
 
     def mostrar_producto(self):
 
-        data_base = sqlite3.connect("users.db")
+        data_base = sqlite3.connect("Data_base.db")
         cursor = data_base.cursor()
         cursor.execute("SELECT * FROM PRODUCTOS WHERE CODIGO=" + str(self.entry_codigo.get()))
         resultado = cursor.fetchone()
@@ -1685,9 +1684,25 @@ class principal:
 
         else:
             messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
+try:
+    nanombre = sqlite3.connect("Data_base.db")
+    cursor = nanombre.cursor()
+    cursor.execute("SELECT EXISTS (SELECT 1 FROM PERSONA WHERE NUM = ? LIMIT 1)", (1,))
+    personas = cursor.fetchone()
+    nanombre.commit()
+    nanombre.close()
 
-if __name__ == '__main__':
-    root0 = Tk()
-    root0.title("Sol")
-    principal(root0)
-    root0.mainloop()
+    if personas[0] == 1:
+        import inicio
+        if inicio.enviar_abrir():
+            Sol = Tk()
+            Sol.title("Sol")
+            principal(Sol)
+            Sol.mainloop()
+except:
+    import user
+    if user.soplamocos():
+        Sol = Tk()
+        Sol.title("Sol")
+        principal(Sol)
+        Sol.mainloop()
