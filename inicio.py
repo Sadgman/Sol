@@ -4,13 +4,14 @@ root = Tk()
 
 root.iconbitmap('iconos e imagenes\icono.ico')
 
-root.title("")
+root.title("Iniciar de sesion")
 
 root.resizable(0, 0)
 
 root.config(width=500, height=300)
 
 so = ""
+z = False
 
 def cosito1():
 
@@ -110,10 +111,10 @@ def saltar(evento):
             Nombre.focus_set()
 
 def ejecucion():
-
+    global z
     k = 0
 
-    nanombre = sqlite3.connect("users.db")
+    nanombre = sqlite3.connect("Data_base.db")
 
     cursor = nanombre.cursor()
 
@@ -134,7 +135,7 @@ def ejecucion():
 
     nanombre.close()
 
-    nanombre = sqlite3.connect("users.db")
+    nanombre = sqlite3.connect("Data_base.db")
 
     cursor = nanombre.cursor()
 
@@ -155,11 +156,12 @@ def ejecucion():
     nanombre.close()
 
     if k == 2:
-
         root.destroy()
+        z = True
 
-        import ma
-
+def enviar_abrir():
+    if z:
+        return True
 
 def comprobacion1():
 
