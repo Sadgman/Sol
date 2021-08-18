@@ -851,7 +851,7 @@ class principal:
 
         else:
             return self.validacion_(dxs)
-        
+
     def cantidad_minima1(self, dxs):
         en_numeros = len(dxs)
 
@@ -860,7 +860,7 @@ class principal:
 
         else:
             return self.validacion_(dxs)
-        
+
     def codigo_fabricante1(self, dxs):
         en_numeros = len(dxs)
 
@@ -1610,7 +1610,7 @@ class principal:
         self.CN_variable.set(resultado[26])
         self.CN1_variable.set(resultado[27])
 
-    def existe_o_no(self, nombre_archivo):
+    def existe_o_no(self,nombre_archivo):
         try:
 
             with open(nombre_archivo, 'r'):
@@ -1693,22 +1693,14 @@ class principal:
         else:
             messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
 
-try:
-    nanombre = sqlite3.connect("Data_base.db")
-    cursor = nanombre.cursor()
-    cursor.execute("SELECT EXISTS (SELECT 1 FROM PERSONA WHERE NUM = ? LIMIT 1)", (1,))
-    personas = cursor.fetchone()
-    nanombre.commit()
-    nanombre.close()
-
-    if personas[0] == 1:
-        import inicio
-        if inicio.enviar_abrir():
-            Sol = Tk()
-            Sol.title("Sol")
-            principal(Sol)
-            Sol.mainloop()
-except:
+if principal.existe_o_no(0,nombre_archivo="Data_base"):
+    import inicio
+    if inicio.enviar_abrir():
+        Sol = Tk()
+        Sol.title("Sol")
+        principal(Sol)
+        Sol.mainloop()
+else:
    import user
    if user.soplamocos():
        Sol = Tk()
