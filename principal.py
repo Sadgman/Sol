@@ -802,9 +802,9 @@ class principal:
             return True
 
         else:
-
             self.pero = 0
             if self.validacion_(dominiga):
+                self.pero +=1
                 Sr_Quaker = dominiga.split(",")
                 try:
                     Dominicanos = float(Sr_Quaker[0] + Sr_Quaker[1])
@@ -911,8 +911,51 @@ class principal:
             else:
                 return False
 
+    def Kaneki(self, Numero, Vacio, Entry):
+        if str.isdigit(Numero):
+            if self.validacion_(Numero):
+                if Vacio == 1:
+                    if str.isdigit(self.Int_por_unidad.get()):
+                        nf = float(self.Int_por_unidad.get())
+                    else:
+                        Quaker =self.Int_por_unidad.get().split(",")
+                        nf = float(Quaker[0] + Quaker[1])
+
+                    n1 = int(Numero)
+                    res = eval("n1 * 1 / 100")
+                    res *= 1000
+                    fns = format(nf + res, ".2f")
+                    Entry.set(fns)
+                return True
+        else:
+            if self.validacion_(Numero):
+                if Vacio == 1:
+                    Quaker = Numero.split(",")
+                    if str.isdigit(self.Int_por_unidad.get()):
+                        nf = float(self.Int_por_unidad.get())
+                    else:
+                        try:
+                            Quaker_ =self.Int_por_unidad.get().split(",")
+                            nf = float(Quaker_[0] + Quaker_[1])
+                        except IndexError:
+                            pass
+                    try:
+                        try:
+                            n1 = float(Numero)
+                        except ValueError:
+                                n1 = float(Quaker[0] + Quaker[1])
+
+                        res = eval("n1 * 1 / 100")
+                        res *= 1000
+                        fns = format(nf + res, ".2f")
+                        Entry.set(fns)
+                    except IndexError:
+                        pass
+                return True
+            else:
+                return False
+
     def calculo(self, cel):
-        en_numeros = len(cel)
 
         if self.variable == 0:
             self.variable += 1
@@ -923,33 +966,9 @@ class principal:
 
             self.n1 -= 1
 
-        if str.isdigit(cel):
-
-            if self.pero == 1:
-
-                nf = float(self.Int_por_unidad.get())
-
-                n1 = int(cel)
-
-                res = eval("n1 * 1 / 100")
-
-                res *= 1000
-
-                fns = format(nf + res, ".2f")
-
-                self.string_entry1.set(fns)
-
-            return True
-
-        else:
-            if en_numeros == 0:
-                return True
-            else:
-                return False
+        return self.Kaneki(cel, self.pero, self.string_entry1)
 
     def calculo2(self, cel):
-
-        en_numeros = len(cel)
 
         if self.variable1 == 0:
             self.variable1 += 1
@@ -960,32 +979,9 @@ class principal:
 
             self.n2 -= 1
 
-        if str.isdigit(cel):
-
-            if self.pepe == 1:
-
-                nf = float(self.Int_por_unidad.get())
-
-                n1 = int(cel)
-
-                res = eval("n1 * 1 / 100")
-
-                res *= 1000
-
-                fns = format(nf + res, ".2f")
-
-                self.string_entry2.set(fns)
-
-            return True
-
-        else:
-            if en_numeros == 0:
-                return True
-            else:
-                return False
+        return self.Kaneki(cel,self.pepe,self.string_entry2)
 
     def calculo3(self, cel):
-        en_numeros = len(cel)
 
         if self.variable2 == 0:
             self.variable2 += 1
@@ -995,34 +991,9 @@ class principal:
             self.entry_numero7.delete(0, END)
 
             self.n3 -= 1
-
-        if str.isdigit(cel):
-
-            if self.pepero == 1:
-
-                nf = float(self.Int_por_unidad.get())
-
-                n1 = int(cel)
-
-                res = eval("n1 * 1 / 100")
-
-                res *= 1000
-
-                fns = format(nf + res, ".2f")
-
-                self.string_entry3.set(fns)
-
-            return True
-
-        else:
-            if en_numeros == 0:
-                return True
-            else:
-                return False
+        return self.Kaneki(cel,self.pepero,self.string_entry3)
 
     def calculo4(self, cel):
-
-        en_numeros = len(cel)
 
         if self.variable3 == 0:
             self.variable3 += 1
@@ -1033,29 +1004,7 @@ class principal:
 
             self.n4 -= 1
 
-        if str.isdigit(cel):
-
-            if self.peperoni == 1:
-
-                nf = float(self.Int_por_unidad.get())
-
-                n1 = int(cel)
-
-                res = eval("n1 * 1 / 100")
-
-                res *= 1000
-
-                fns = format(nf + res, ".2f")
-
-                self.string_entry4.set(fns)
-
-            return True
-
-        else:
-            if en_numeros == 0:
-                return True
-            else:
-                return False
+        return self.Kaneki(cel, self.peperoni, self.string_entry4)
 
     def funny(self):
 
@@ -1693,7 +1642,7 @@ class principal:
         else:
             messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
 
-if principal.existe_o_no(0,nombre_archivo="Data_base"):
+if principal.existe_o_no(0,nombre_archivo="Data_base.db"):
     import inicio
     if inicio.enviar_abrir():
         Sol = Tk()
