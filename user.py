@@ -1,3 +1,6 @@
+import os
+import sqlite3
+
 from Modulos import *
 
 existe = 0
@@ -8,7 +11,7 @@ try:
     nanombre = sqlite3.connect("Data_base.db")
     cursor = nanombre.cursor()
     cursor.execute("CREATE TABLE PERSONA(COMPAÑIA VARCHAR ,"
-                       "NOMBRE VARCHAR UNIQUE , CONTRASEÑA INTEGER, NUM INTEGER)")
+                       "NOMBRE VARCHAR UNIQUE , CONTRASEÑA INTEGER)")
     nanombre.close()
 
 except:
@@ -536,7 +539,16 @@ else:
 
         if robles == 1:
             comprobacion()
-
+    def salir():
+        try:
+            with sqlite3.connect() as Data_Base:
+                cursor = Data_Base.cursor()
+                cursor.execute("CREATE TABLE PERSONA(COMPAÑIA VARCHAR ,NOMBRE VARCHAR UNIQUE , CONTRASEÑA INTEGER)")
+            Data_Base.commit()
+            Data_Base.close()
+        except:
+            os.remove("Data_Base.db")
+        root.destroy()
 
     def extensions():
         global corchete
@@ -547,7 +559,7 @@ else:
         v = password.get()
 
         lista = [
-            (s, l, v, 1)
+            (s, l, v)
         ]
 
         try:
@@ -654,6 +666,7 @@ else:
     fight.menu.add_separator()
     fight.menu.add_command(label="Pegar", command=pegar)
     fight.bind("<Button-3>", cosito)
+    root.protocol("WM_DELETE_WINDOW", salir)
 
     root.mainloop()
 
