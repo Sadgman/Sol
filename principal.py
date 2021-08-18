@@ -151,7 +151,7 @@ class principal:
         self.entry_numero7 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry7, validate='all', validatecommand=(root.register(self.calculo3), '%P'))
         self.entry_numero8 = ttk.Entry(self.frame_crear_producto, justify="right", textvariable=self.string_entry8, validate='all', validatecommand=(root.register(self.calculo4), '%P'))
 
-        self.Int_por_unidad = IntVar()
+        self.Int_por_unidad = StringVar()
         self.Int_en_dolares = IntVar()
         self.Int_cantidad_inicial = IntVar()
 
@@ -739,7 +739,6 @@ class principal:
 
     def calculos(self, dominiga):
 
-        en_numeros = len(dominiga)
         ch = self.string_entry5.get()
         ch1 = self.string_entry6.get()
         ch2 = self.string_entry6.get()
@@ -798,48 +797,61 @@ class principal:
                 self.peperoni += 1
 
             Dominicanos = float(dominiga)
-
-            dolares_entre_dominicanos = format(Dominicanos / 58, ".2f")
-
+            dolares_entre_dominicanos = format(Dominicanos / 57.02, ".2f")
             self.Int_en_dolares.set(dolares_entre_dominicanos)
-
             return True
 
         else:
 
             self.pero = 0
+            if self.validacion_(dominiga):
+                Sr_Quaker = dominiga.split(",")
+                try:
+                    Dominicanos = float(Sr_Quaker[0] + Sr_Quaker[1])
+                    dolares_entre_dominicanos = format(Dominicanos / 57.02, ".2f")
+                    self.Int_en_dolares.set(dolares_entre_dominicanos)
+                except:
+                    pass
+                return True
 
+            else:
+                return False
+
+    def validacion_(self,Sr_Quaker):
+        en_numeros = len(Sr_Quaker)
+        try:
+            float(Sr_Quaker)
+            return True
+        except ValueError:
             if en_numeros == 0:
                 return True
             else:
-                return False
+                if Sr_Quaker[en_numeros - 1] == ",":
+                    return True
+                else:
+                    try:
+                        kaneki = Sr_Quaker.split(",")
+                        float(kaneki[0] + kaneki[1])
+                        return True
+                    except:
+                        return False
 
     def cantidad_inicial(self, dxs):
-        en_numeros = len(dxs)
 
         if str.isdigit(dxs):
             return True
 
         else:
-            if en_numeros == 0:
-                return True
-
-            else:
-                return False
+            return self.validacion_(dxs)
 
     def contiene1(self, dxs):
-        en_numeros = len(dxs)
 
         if str.isdigit(dxs):
             return True
 
         else:
-            if en_numeros == 0:
-                return True
-
-            else:
-                return False
-
+            return self.validacion_(dxs)
+        
     def cantidad_minima1(self, dxs):
         en_numeros = len(dxs)
 
@@ -847,12 +859,8 @@ class principal:
             return True
 
         else:
-            if en_numeros == 0:
-                return True
-
-            else:
-                return False
-
+            return self.validacion_(dxs)
+        
     def codigo_fabricante1(self, dxs):
         en_numeros = len(dxs)
 
@@ -1684,6 +1692,7 @@ class principal:
 
         else:
             messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
+
 try:
     nanombre = sqlite3.connect("Data_base.db")
     cursor = nanombre.cursor()
@@ -1700,9 +1709,9 @@ try:
             principal(Sol)
             Sol.mainloop()
 except:
-    import user
-    if user.soplamocos():
-        Sol = Tk()
-        Sol.title("Sol")
-        principal(Sol)
-        Sol.mainloop()
+   import user
+   if user.soplamocos():
+       Sol = Tk()
+       Sol.title("Sol")
+       principal(Sol)
+       Sol.mainloop()
