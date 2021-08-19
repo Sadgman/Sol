@@ -911,7 +911,7 @@ class principal:
             else:
                 return False
 
-    def Kaneki(self, Numero, Vacio, Entry):
+    def Kaneki(self, Numero, Vacio, Entry, c=0):
         if str.isdigit(Numero):
             if self.validacion_(Numero):
                 if Vacio == 1:
@@ -919,95 +919,136 @@ class principal:
                         nf = float(self.Int_por_unidad.get())
                     else:
                         Quaker =self.Int_por_unidad.get().split(",")
-                        nf = float(Quaker[0] + Quaker[1])
+                        vacia = ""
+                        num = 0
+                        for mum in Quaker:
+                            vacia += Quaker[num]
+                            num += 1
+                        nf = float(vacia)
 
                     n1 = int(Numero)
                     res = eval("n1 * 1 / 100")
                     res *= 1000
                     fns = format(nf + res, ".2f")
-                    Entry.set(fns)
+                    Entry.set(self.coma(fns))
                 return True
         else:
             if self.validacion_(Numero):
                 if Vacio == 1:
-                    Quaker = Numero.split(",")
                     if str.isdigit(self.Int_por_unidad.get()):
                         nf = float(self.Int_por_unidad.get())
                     else:
                         try:
                             Quaker_ =self.Int_por_unidad.get().split(",")
-                            nf = float(Quaker_[0] + Quaker_[1])
+                            vacia = ""
+                            num = 0
+                            for mum in Quaker_:
+                                vacia += Quaker_[num]
+                                num += 1
+                            nf = float(vacia)
                         except IndexError:
                             pass
                     try:
                         try:
                             n1 = float(Numero)
+                            c += 1
                         except ValueError:
-                                n1 = float(Quaker[0] + Quaker[1])
-
-                        res = eval("n1 * 1 / 100")
-                        res *= 1000
-                        fns = format(nf + res, ".2f")
-                        Entry.set(fns)
+                            Quaker_do = Numero.split(",")
+                            vacia = ""
+                            num = 0
+                            for mum in Quaker_do:
+                                vacia += Quaker_do[num]
+                                num += 1
+                        try:
+                            n1 = float(vacia)
+                            c += 1
+                        except:
+                            pass
+                        if c == 1:
+                            res = eval("n1 * 1 / 100")
+                            res *= 1000
+                            fns = format(nf + res, ".2f")
+                            Entry.set(self.coma(fns))
                     except IndexError:
                         pass
                 return True
             else:
                 return False
 
-    def calculo(self, cel):
+    def coma(self, num):
+        num = num.split(".")
+        num = num[0]
+        resultado = ""
+        num1 = len(num)
+        if not num == "":
+            if num1 == 4:
+                resultado = num[0] + "," + num[1:len(num)]
+            elif num1 == 5:
+                resultado = num[0:2] + "," + num[2:len(num)]
+            elif num1 == 6:
+                resultado = num[0:3] + "," + num[3:len(num)]
+            elif num1 == 7:
+                resultado = num[0] + "," + num[1:4] + "," + num[4:len(num)]
+            elif num1 == 8:
+                resultado = num[0:2] + "," + num[2:5] + "," + num[5:len(num)]
+            elif num1 == 9:
+                resultado = num[0:3] + "," + num[3:6] + "," + num[6:len(num)]
+            elif num1 == 10:
+                resultado = num[0] + "," + num[1:4] + "," + num[4:7] + "," + num[7:len(num)]
+            elif num1 == 11:
+                resultado = num[0:2] + "," + num[2:5] + "," + num[5:8] + "," + num[8:len(num)]
+            elif num1 == 12:
+                resultado = num[0:3] + "," + num[3:6] + "," + num[6:9] + "," + num[9:len(num)]
+            elif num1 == 13:
+                resultado = num[0] +","+num[1:4]+","+num[4:7]+","+num[7:10]+","+num[10:len(num)]
+            elif num1 == 14:
+                resultado = num[0:2]+","+num[2:5]+","+num[5:8]+","+num[8:11]+","+num[11:len(num)]
+            elif num1 == 15:
+                resultado = num[0:3]+","+num[3:6]+","+num[6:9]+","+num[9:12]+","+num[12:len(num)]
+            elif num1 == 16:
+                resultado = num[0]+","+num[1:4]+","+num[4:7]+","+num[7:10]+","+num[10:13]+","+num[13:len(num)]
+            elif num1 == 17:
+                resultado = num[0:2]+","+num[2:5]+","+num[5:8]+","+num[8:11]+","+num[11:14]+","+num[14:len(num)]
+            elif num1 == 18:
+                resultado = num[0:3]+","+num[3:6]+","+num[6:9]+","+num[9:12]+","+num[12:15]+","+num[15:len(num)]
+            elif num1 == 19:
+                resultado = num[0]+","+num[1:4]+","+num[4:7]+","+num[7:10] + ","+num[10:13]+","+num[13:16]+","+num[16:len(num)]
+            return resultado
 
+    def calculo(self, cel):
         if self.variable == 0:
             self.variable += 1
-
         if self.n1 == 1:
-
             self.entry_numero5.delete(0, END)
-
             self.n1 -= 1
-
         return self.Kaneki(cel, self.pero, self.string_entry1)
 
     def calculo2(self, cel):
-
         if self.variable1 == 0:
             self.variable1 += 1
-
         if self.n2 == 1:
-
             self.entry_numero6.delete(0, END)
-
             self.n2 -= 1
-
         return self.Kaneki(cel,self.pepe,self.string_entry2)
 
     def calculo3(self, cel):
-
         if self.variable2 == 0:
             self.variable2 += 1
-
         if self.n3 == 1:
-
             self.entry_numero7.delete(0, END)
-
             self.n3 -= 1
         return self.Kaneki(cel,self.pepero,self.string_entry3)
 
     def calculo4(self, cel):
-
         if self.variable3 == 0:
             self.variable3 += 1
-
         if self.n4 == 1:
-
             self.entry_numero8.delete(0, END)
-
             self.n4 -= 1
-
         return self.Kaneki(cel, self.peperoni, self.string_entry4)
 
     def funny(self):
-
+        
         inpuesto = self.cx_inpuesto.get()
         nf = float(self.string_entry1.get())
         nf1 = float(self.string_entry2.get())
