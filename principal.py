@@ -975,6 +975,69 @@ class principal:
             else:
                 return False
 
+    def Impuesto(self, Numero, Entry, N1, X, c=0):
+        if str.isdigit(Numero):
+            if self.validacion_(Numero):
+
+                if str.isdigit(self.Int_por_unidad.get()):
+                    nf = float(self.Int_por_unidad.get())
+                else:
+                    Quaker = N1.split(",")
+                    vacia = ""
+                    num = 0
+                    for mum in Quaker:
+                        vacia += Quaker[num]
+                        num += 1
+                    nf = float(vacia)
+
+                n1 = int(Numero)
+                res = eval("n1 * 1 / 100")
+                res *= X
+                fns = format(nf + res, ".2f")
+                Entry.set(self.coma(fns))
+                return True
+        else:
+            if self.validacion_(Numero):
+                if str.isdigit(self.Int_por_unidad.get()):
+                    nf = float(self.Int_por_unidad.get())
+                else:
+                    try:
+                        Quaker_ = N1.split(",")
+                        vacia = ""
+                        num = 0
+                        for mum in Quaker_:
+                            vacia += Quaker_[num]
+                            num += 1
+                        nf = float(vacia)
+                    except IndexError:
+                        pass
+                try:
+                    try:
+                        n1 = float(Numero)
+                        c += 1
+                    except ValueError:
+                        Quaker_do = Numero.split(",")
+                        vacia = ""
+                        num = 0
+                        for mum in Quaker_do:
+                            vacia += Quaker_do[num]
+                            num += 1
+                    try:
+                        n1 = float(vacia)
+                        c += 1
+                    except:
+                        pass
+                    if c == 1:
+                        res = eval("n1 * 1 / 100")
+                        res *= X
+                        fns = format(nf + res, ".2f")
+                        Entry.set(self.coma(fns))
+                except IndexError:
+                    pass
+                return True
+            else:
+                return False
+
     def coma(self, num):
         num = num.split(".")
         num = num[0]
@@ -1048,77 +1111,32 @@ class principal:
         return self.Kaneki(cel, self.peperoni, self.string_entry4)
 
     def funny(self):
-        
+
         inpuesto = self.cx_inpuesto.get()
-        nf = float(self.string_entry1.get())
-        nf1 = float(self.string_entry2.get())
-        nf2 = float(self.string_entry3.get())
-        nf3 = float(self.string_entry4.get())
+        nf = self.string_entry1.get()
+        nf1 = self.string_entry2.get()
+        nf2 = self.string_entry3.get()
+        nf3 = self.string_entry4.get()
 
         if self.CN_variable.get() == 1:
 
             if inpuesto == "Iva":
-
                 if nf == 0.0:
                     self.string_entry14.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf + res, ".2f")
-
-                    self.string_entry14.set(fns)
-
+                    self.Impuesto(nf, self.string_entry14, 15, 2000)
                 if nf1 == 0.0:
                     self.string_entry15.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf1 + res, ".2f")
-
-                    self.string_entry15.set(fns)
-
+                    self.Impuesto(nf1, self.string_entry15, 15, 2000)
                 if nf2 == 0.0:
                     self.string_entry16.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf2 + res, ".2f")
-
-                    self.string_entry16.set(fns)
-
+                    self.Impuesto(nf2, self.string_entry16, 15, 2000)
                 if nf3 == 0.0:
                     self.string_entry17.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf3 + res, ".2f")
-
-                    self.string_entry17.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry17, 15, 2000)
             elif inpuesto == "Tax":
 
                 if nf == 0.0:
@@ -1126,62 +1144,25 @@ class principal:
 
 
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 1000
-
-                    fns = format(nf + res, ".2f")
-
-                    self.string_entry14.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry14, 7, 2000)
+                
                 if nf1 == 0.0:
                     self.string_entry15.set("")
 
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf1 + res, ".2f")
-
-                    self.string_entry15.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry15, 7, 2000)
                 if nf2 == 0.0:
                     self.string_entry16.set("")
 
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf2 + res, ".2f")
-
-                    self.string_entry16.set(fns)
+                    self.Impuesto(nf3, self.string_entry16, 7, 2000)
 
                 if nf3 == 0.0:
                     self.string_entry17.set("")
 
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf3 + res, ".2f")
-
-                    self.string_entry17.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry17, 7, 2000)
+                    
             else:
                 pass
 
@@ -1194,10 +1175,10 @@ class principal:
     def funny_fan(self, z):
 
         inpuesto = self.cx_inpuesto.get()
-        nf = float(self.string_entry1.get())
-        nf1 = float(self.string_entry2.get())
-        nf2 = float(self.string_entry3.get())
-        nf3 = float(self.string_entry4.get())
+        nf = self.string_entry1.get()
+        nf1 = self.string_entry2.get()
+        nf2 = self.string_entry3.get()
+        nf3 = self.string_entry4.get()
 
         if self.CN_variable.get() == 1:
 
@@ -1205,127 +1186,38 @@ class principal:
 
                 if nf == 0.0:
                     self.string_entry14.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf + res, ".2f")
-
-                    self.string_entry14.set(fns)
-
+                    self.Impuesto(nf, self.string_entry14, 15, 2000)
                 if nf1 == 0.0:
                     self.string_entry15.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf1 + res, ".2f")
-
-                    self.string_entry15.set(fns)
-
+                    self.Impuesto(nf1, self.string_entry15, 15, 2000)
                 if nf2 == 0.0:
                     self.string_entry16.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf2 + res, ".2f")
-
-                    self.string_entry16.set(fns)
-
+                    self.Impuesto(nf2, self.string_entry16, 15, 2000)
                 if nf3 == 0.0:
                     self.string_entry17.set("")
-
                 else:
-
-                    n1 = 15
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf3 + res, ".2f")
-
-                    self.string_entry17.set(fns)
+                    self.Impuesto(nf3, self.string_entry17, 15, 2000)
 
             elif inpuesto == "Tax":
-
                 if nf == 0.0:
                     self.string_entry14.set("")
-
-
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 1000
-
-                    fns = format(nf + res, ".2f")
-
-                    self.string_entry14.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry14, 7, 2000)
                 if nf1 == 0.0:
                     self.string_entry15.set("")
-
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf1 + res, ".2f")
-
-                    self.string_entry15.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry15, 7, 2000)
                 if nf2 == 0.0:
                     self.string_entry16.set("")
-
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf2 + res, ".2f")
-
-                    self.string_entry16.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry16, 7, 2000)
                 if nf3 == 0.0:
                     self.string_entry17.set("")
-
                 else:
-
-                    n1 = 7
-
-                    res = eval("n1 * 1 / 100")
-
-                    res *= 2000
-
-                    fns = format(nf3 + res, ".2f")
-
-                    self.string_entry17.set(fns)
-
+                    self.Impuesto(nf3, self.string_entry17, 7, 2000)
             else:
                 pass
 
