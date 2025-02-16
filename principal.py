@@ -27,14 +27,14 @@ class principal:
         fuente_especial = font.Font(size=8)
         fuente_no_se = font.Font(size=11, family="Lucida Grande")
 
-        self.imagen = PhotoImage(file="iconos e imagenes\hacia atras.png")
-        self.imagen2 = PhotoImage(file="iconos e imagenes\hacia adelante.png")
-        self.imagen3 = PhotoImage(file="iconos e imagenes\salir.png")
-        self.imagen4 = PhotoImage(file="iconos e imagenes\Facturacion.png")
-        self.crear_producto_imagen = PhotoImage(file="iconos e imagenes\Crear.png")
-        self.Inventario_imagen = PhotoImage(file="iconos e imagenes\Inventario.png")
-        self.imagen_buscar = PhotoImage(file=r"iconos e imagenes\buscar1.png")
-        self.imagen_articulo = PhotoImage(file=r"iconos e imagenes\the photo of the item.png")
+        self.imagen = PhotoImage(file="iconos e imagenes\\hacia atras.png")
+        self.imagen2 = PhotoImage(file="iconos e imagenes\\hacia adelante.png")
+        self.imagen3 = PhotoImage(file="iconos e imagenes\\salir.png")
+        self.imagen4 = PhotoImage(file="iconos e imagenes\\Facturacion.png")
+        self.crear_producto_imagen = PhotoImage(file="iconos e imagenes\\Crear.png")
+        self.Inventario_imagen = PhotoImage(file="iconos e imagenes\\Inventario.png")
+        self.imagen_buscar = PhotoImage(file=r"iconos e imagenes\\buscar1.png")
+        self.imagen_articulo = PhotoImage(file=r"iconos e imagenes\\the photo of the item.png")
 
         self.boton_adelante = Button(root, image=self.imagen2, command=self.cambiar)
         self.boton_adelante.place(rely=0.5,relx=0.9, x=16)
@@ -1339,11 +1339,11 @@ class principal:
         comprobacion1 = str(nombre)
         comprobacion2 = str(precio)
 
-        if comprobacion == "":
+        if not comprobacion:
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
-        elif comprobacion1 == "":
+        elif not comprobacion1:
 
             messagebox.showinfo("", "Introduzca la informacion requerida")
 
@@ -1374,7 +1374,7 @@ class principal:
 
             try:
 
-                data_base = sqlite3.connect("Data_base.db")
+                data_base = sqlite3.connect("./db/NDB.db")
                 cursor = data_base.cursor()
                 cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
@@ -1388,17 +1388,8 @@ class principal:
 
             except sqlite3.OperationalError:
 
-                data_base = sqlite3.connect("Data_base.db")
+                data_base = sqlite3.connect("./db/NDB.db")
                 cursor = data_base.cursor()
-                cursor.execute("CREATE TABLE PRODUCTOS(CODIGO INTEGER PRIMARY KEY UNIQUE, NOMBRE VARCHAR,"
-                               " ACTIVO INTEGER, TIPO INTEGER, CATEGORIA VARCHAR, SUB_CATEGORIA VARCHAR,"
-                               " COMENTARIO VARCHAR,ADICIONAR INTEGER,FACTURAR_EXISTENCIA INTEGER,"
-                               "CANTIDAD_INICIAL INTEGER, CANTIDAD_MINIMA INTEGER, CODIGO_FABRICANTE INTEGER,"
-                               " BODEGA_ASIGNADO VARCHAR, UB_FISICA VARCHAR, VENDE_POR VARCHAR, COMPRA_POR VARCHAR,"
-                               "CONTIENE INTEGER,FACTURAR_CON_PRECIO INTEGER,P1 INTEGER, P2 INTEGER, P3 INTEGER,"
-                               " P4 INTEGER, PI1 INTEGER, PI2 INTEGER, PI3 INTEGER, PI4 INTEGER,"
-                               " APLICAR_EN_VENTAS INTEGER, APLICAR_EN_COMPRAS INTEGER, NAME_IMAGE VARCHAR)")
-
                 cursor.executemany("INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                                    lista_de_informacion)
 
@@ -1422,7 +1413,7 @@ class principal:
 
             try:
 
-                date_base = sqlite3.connect("Data_base.db")
+                date_base = sqlite3.connect("./db/NDB.db")
                 cursor = date_base.cursor()
                 cursor.execute("UPDATE PRODUCTOS SET NOMBRE='" + str(self.Entry_Nombre_producto.get()) + "', ACTIVO='" +
                                str(self.CN_pero_el_de_verdad.get()) + "', TIPO='"+ str(self.Int_R.get()) + "', CATEGORIA='"+
@@ -1451,7 +1442,7 @@ class principal:
 
     def mostrar_producto(self):
 
-        data_base = sqlite3.connect("Data_base.db")
+        data_base = sqlite3.connect("./db/NDB.db")
         cursor = data_base.cursor()
         cursor.execute("SELECT * FROM PRODUCTOS WHERE CODIGO=" + str(self.entry_codigo.get()))
         resultado = cursor.fetchone()
@@ -1549,7 +1540,7 @@ class principal:
 
             os.chdir(self.reverso_ubicacion)
 
-            ruta_carpeta = r"'\iconos e imagenes\productos imagenes\'"
+            ruta_carpeta = "\\iconos e imagenes\\productos imagenes\\'"
 
             m = ruta + ruta_carpeta[1:39]
 
@@ -1575,17 +1566,7 @@ class principal:
         else:
             messagebox.showinfo("Informacion", "La imagen debe ser 118, 79 pixeles")
 
-if principal.existe_o_no(0,nombre_archivo="Data_base.db"):
-    import inicio
-    if inicio.enviar_abrir():
-        Sol = Tk()
-        Sol.title("Sol")
-        principal(Sol)
-        Sol.mainloop()
-else:
-   import user
-   if user.soplamocos():
-       Sol = Tk()
-       Sol.title("Sol")
-       principal(Sol)
-       Sol.mainloop()
+Sol = Tk()
+Sol.title("Sol")
+principal(Sol)
+Sol.mainloop()

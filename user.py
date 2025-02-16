@@ -3,672 +3,279 @@ import sqlite3
 
 from Modulos import *
 
-existe = 0
 corchete = False
 
-try:
+root = Tk()
+root.resizable(0, 0)
+root.title("Crear un usuario")
+root.iconbitmap('iconos e imagenes\\icono.ico')
+root.config(width=500, height=299)
 
-    nanombre = sqlite3.connect("Data_base.db")
-    cursor = nanombre.cursor()
-    cursor.execute("CREATE TABLE PERSONA(COMPAÑIA VARCHAR ,"
-                       "NOMBRE VARCHAR UNIQUE , CONTRASEÑA INTEGER)")
-    nanombre.close()
+def cosito(eventico):
 
-except:
-    existe +=1
+    carlitos = str(root.focus_get())
 
-if existe == 1:
-    pass
-else:
+    try:
+        if carlitos[7] == "2":
+            Nombre.menu.post(eventico.x_root, eventico.y_root)
 
-    root = Tk()
-    root.resizable(0, 0)
-    root.title("Crear un usuario")
-    root.iconbitmap('iconos e imagenes\icono.ico')
-    root.config(width=500, height=299)
+        elif carlitos[7] == "3":
+            fight.menu.post(eventico.x_root, eventico.y_root)
 
-    def cosito(eventico):
-
-        carlitos = str(root.focus_get())
-
+    except:
         try:
-            if carlitos[7] == "2":
-                Nombre.menu.post(eventico.x_root, eventico.y_root)
-
-            elif carlitos[7] == "3":
-                fight.menu.post(eventico.x_root, eventico.y_root)
-
-        except:
-            try:
-
-                if carlitos[6] == "y":
-                    Company.menu.post(eventico.x_root, eventico.y_root)
-            except:
-                pass
-    def copiar():
-
-        carlitos = str(root.focus_get())
-
-        try:
-
-            if carlitos[7] == "2":
-                Nombre.event_generate("<<Copy>>")
-
-            elif carlitos[7] == "3":
-                fight.event_generate("<<Copy>>")
-
-        except:
 
             if carlitos[6] == "y":
-                Company.event_generate("<<Copy>>")
-
-    def pegar():
-        carlitos = str(root.focus_get())
-
-        try:
-            if carlitos[7] == "2":
-                Nombre.event_generate("<<Paste>>")
-
-            elif carlitos[7] == "3":
-                fight.event_generate("<<Paste>>")
-
+                Company.menu.post(eventico.x_root, eventico.y_root)
         except:
+            pass
+def copiar():
 
-            if carlitos[6] == "y":
-                Company.event_generate("<<Paste>>")
+    carlitos = str(root.focus_get())
 
+    try:
 
-    def saltar(evento):
-        carlos = str(root.focus_get())
+        if carlitos[7] == "2":
+            Nombre.event_generate("<<Copy>>")
 
-        try:
+        elif carlitos[7] == "3":
+            fight.event_generate("<<Copy>>")
 
-            if carlos[7] == "2":
+    except:
 
-                fight.focus_set()
+        if carlitos[6] == "y":
+            Company.event_generate("<<Copy>>")
 
-            elif carlos[7] == "3":
+def pegar():
+    carlitos = str(root.focus_get())
 
-                info()
+    try:
+        if carlitos[7] == "2":
+            Nombre.event_generate("<<Paste>>")
 
-                Company.focus_set()
+        elif carlitos[7] == "3":
+            fight.event_generate("<<Paste>>")
 
-        except:
+    except:
 
-            if carlos[6] == "y":
-                Nombre.focus_set()
-
-
-    def comprobacion1():
-        if chequeo.get() == 1:
-
-            fight.config(show="")
-
-        else:
-
-            fight.config(show="*")
+        if carlitos[6] == "y":
+            Company.event_generate("<<Paste>>")
 
 
-    def comprobacion():
-        s = compañia.get()
+def saltar(evento):
+    carlos = str(root.focus_get())
 
-        variable = name.get()
+    try:
 
-        l = int(len(name.get()))
+        if carlos[7] == "2":
 
-        v = int(len(password.get()))
+            fight.focus_set()
 
-        if l > 20:
+        elif carlos[7] == "3":
 
-            messagebox.showwarning("", "Demaciado largo")
+            info()
 
-        elif v < 5:
+            Company.focus_set()
 
-            m = messagebox.askyesno("", "La contraseña es poco segura, Quieres continuar?")
+    except:
 
-            if m:
-
-                if s == "":
-
-                    extensions()
-
-                else:
-
-                    try:
-                        ruta = os.getcwd()
-                        os.mkdir(s)
-                        os.chdir(s)
-                        os.mkdir(variable)
-                        os.chdir(ruta)
-
-                    except:
-
-                        ruta = os.getcwd()
-                        os.chdir(s)
-                        os.mkdir(variable)
-                        os.chdir(ruta)
-
-                    extensions()
-        else:
-
-            if s == "":
-                extensions()
-
-            else:
-
-                try:
-                    ruta = os.getcwd()
-                    os.mkdir(s)
-                    os.chdir(s)
-                    os.mkdir(variable)
-                    os.chdir(ruta)
-
-                except:
-
-                    ruta = os.getcwd()
-                    os.chdir(s)
-                    os.mkdir(variable)
-                    os.chdir(ruta)
-
-                extensions()
+        if carlos[6] == "y":
+            Nombre.focus_set()
 
 
-    def info():
-        # -----------------------------------
-        s = compañia.get()
+def comprobacion1():
+    if chequeo.get() == 1:
 
-        variable = name.get()
+        fight.config(show="")
 
-        v = password.get()
-        # -----------------------------------
+    else:
 
-        if variable == "" and v == "":
+        fight.config(show="*")
 
-            contraseña_vacia.place_forget()
 
-            nombre_vacio.place_forget()
+def comprobacion():
+    
+    ccompa = (compañia.get() + name.get()).lower()
+    p = int(len(password.get()))
+    s = compañia.get()
 
-            Ambos_vacios.place(x=320, y=137)
+    if(re.fullmatch(r'^[a-záéíóúñ0-9 ]+$', ccompa) is None):
+        messagebox.showwarning("", "No se permiten caracteres extraños")
+        return
 
-        elif variable == "":
+    elif len(name.get()) > 100: messagebox.showwarning("", "Demaciado largo"); return
 
-            contraseña_vacia.place_forget()
+    elif p < 4: messagebox.showwarning("", "Contraseña muy corta"); return
+    
+    elif not s: os.makedirs(os.path.join(os.getcwd(), s, name.get()), exist_ok=True)
 
-            Ambos_vacios.place_forget()
+    extensions()
 
-            nombre_vacio.place(x=320, y=137)
 
-        elif v == "":
+def info():
+    # -----------------------------------
+    s = compañia.get()
 
-            nombre_vacio.place_forget()
+    variable = name.get()
 
-            Ambos_vacios.place_forget()
+    v = password.get()
+    # -----------------------------------
+    if not variable and not v:
 
-            contraseña_vacia.place(x=320, y=137)
+        contraseña_vacia.place_forget()
+
+        nombre_vacio.place_forget()
+
+        Ambos_vacios.place(x=320, y=137)
+
+    elif not variable:
+
+        contraseña_vacia.place_forget()
+
+        Ambos_vacios.place_forget()
+
+        nombre_vacio.place(x=320, y=137)
+
+    elif not v:
+
+        nombre_vacio.place_forget()
+
+        Ambos_vacios.place_forget()
+
+        contraseña_vacia.place(x=320, y=137)
+
+    else:
+
+        if not s:
+
+            cuestion = messagebox.askyesno("", "Seguro que quieres continuar sin una compañia?")
+
+            if cuestion:
+                comprobacion()
 
         else:
 
-            if s == "":
-
-                cuestion = messagebox.askyesno("", "Seguro que quieres continuar sin una compañia?")
-
-                if cuestion:
-                    comprobacion2()
-
-            else:
-
-                comprobacion2()
-
-
-    def comprobacion2():
-        s = compañia.get()
-        t = name.get()
-        to = password.get()
-        robles = 0
-
-        while True:
-
-            if "," in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "." in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "@" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "#" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "=" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "[" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            if "]" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "}" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "{" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "!" in t and "¡" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "°" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "$" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "%" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "&" in t and "¬" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "/" in t and "~" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "(" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif ")" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "-" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "_" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif ":" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif ";" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "´" in t and "¨" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "*" in t and "+" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "|" in t and "/" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "?" in t and "¿" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "^" in t and "´" in t:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            #######################################CONTRASEÑA######################
-            #
-            if "," in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "." in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "@" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "#" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "=" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "[" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            if "]" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "}" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "{" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "!" in to and "¡" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "°" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "$" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "%" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "&" in to and "¬" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "/" in to and "~" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "(" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif ")" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "-" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "_" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif ":" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif ";" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "´" in to and "¨" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "*" in to and "+" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "|" in to and "/" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "?" in to and "¿" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-                #
-            elif "^" in to and "´" in to:  #
-                messagebox.showwarning("", "No se permiten caracteres extraños")  #
-                break  #
-            #######################################################################
-
-            if "," in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "." in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "@" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "#" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "=" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "[" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            if "]" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "}" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "{" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "!" in s and "¡" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "°" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-            elif "$" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "%" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "&" in s and "¬" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "/" in s and "~" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "(" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif ")" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "-" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "_" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif ":" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif ";" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "´" in s and "¨" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "*" in s and "+" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "|" in s and "/" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "?" in s and "¿" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            elif "^" in s and "´" in s:
-                messagebox.showwarning("", "No se permiten caracteres extraños")
-                break
-
-            else:
-                robles += 1
-                break
-
-        if robles == 1:
             comprobacion()
-    def salir():
-        try:
-            with sqlite3.connect() as Data_Base:
-                cursor = Data_Base.cursor()
-                cursor.execute("CREATE TABLE PERSONA(COMPAÑIA VARCHAR ,NOMBRE VARCHAR UNIQUE , CONTRASEÑA INTEGER)")
-            Data_Base.commit()
-            Data_Base.close()
-        except:
-            os.remove("Data_Base.db")
+
+
+def extensions():
+    global corchete
+    s = str(compañia.get())
+
+    l = str(name.get())
+
+    v = password.get()
+
+    lista = [
+        (l, v, s)
+    ]
+
+    try:
+        nanombre = sqlite3.connect("./db/NDB.db")
+
+        cursor = nanombre.cursor()
+
+        cursor.executemany("INSERT INTO PERSONA (NOMBRE, CONTRASEÑA, COMPAÑIA) VALUES(?,?,?)", lista)
+
+        nanombre.commit()
+
+        nanombre.close()
+
         root.destroy()
+        corchete = True
 
-    def extensions():
-        global corchete
-        s = compañia.get()
+    except:
 
-        l = str(name.get())
+        messagebox.showinfo("", "El usuario ya existe")
 
-        v = password.get()
+name = StringVar()
 
-        lista = [
-            (s, l, v)
-        ]
+compañia = StringVar()
 
-        try:
-            nanombre = sqlite3.connect("Data_base.db")
+chequeo = IntVar()
 
-            cursor = nanombre.cursor()
+password = StringVar()
 
-            cursor.executemany("INSERT INTO PERSONA VALUES(?,?,?,?)", lista)
+fuent = fuente.Font(family="Lucida Grande", size=20)
+fuente = tkinter.font.Font(family="Lucida Grande", size=15)
 
-            nanombre.commit()
+###########################Compañia###############################
+ttk.Label(root, text="Negocio :", font=fuent).place(relx=.0, rely=.2)
 
-            nanombre.close()
+Company = ttk.Entry(root, font=fuente, textvariable=compañia)
+Company.place(x=125, y=68, width=168, height=30)
 
-            root.destroy()
-            corchete = True
+Company.menu = Menu(tearoff=False)
+Company.menu.add_command(label="Copiar", command=copiar)
+Company.menu.add_separator()
+Company.menu.add_command(label="Pegar", command=pegar)
+Company.bind("<Button-3>", cosito)
+#########################Nombre################################
+ttk.Label(root, text="Nombre :", font=fuent).place(relx=.0, rely=.4)
 
-        except:
+Nombre = ttk.Entry(root, font=fuente, textvariable=name)
+Nombre.place(x=122, y=126, width=168, height=30)
 
-            messagebox.showinfo("", "El usuario ya existe")
+Nombre.menu = Menu(tearoff=False)
+Nombre.menu.add_command(label="Copiar", command=copiar)
+Nombre.menu.add_separator()
+Nombre.menu.add_command(label="Pegar", command=pegar)
+Nombre.bind("<Button-3>", cosito)
+#######################Contraseña#################################
+ttk.Label(root, text="Contraseña :", font=fuent).place(relx=.0, rely=.6)
 
-    name = StringVar()
+fight = ttk.Entry(root, font=fuente, textvariable=password)
+fight.config(show="*")
+fight.place(x=170, y=186, width=168, height=30)
 
-    compañia = StringVar()
+fight.menu = Menu(tearoff=False)
+fight.menu.add_command(label="Copiar", command=copiar)
+fight.menu.add_separator()
+fight.menu.add_command(label="Pegar", command=pegar)
+fight.bind("<Button-3>", cosito)
+####################################################################
 
-    chequeo = IntVar()
+ttk.Checkbutton(root, text="Mostrar contraseña", variable=chequeo, onvalue=1, offvalue=0, command=comprobacion1).place(
+    x=339, y=196)
 
-    password = StringVar()
+boton = Button(root, text="Crear", width=20, command=info)
+boton.place(x=100, y=270)
 
-    fuent = fuente.Font(family="Lucida Grande", size=20)
-    fuente = tkinter.font.Font(family="Lucida Grande", size=15)
+boton1 = Button(root, text="Continuar", width=20)
+boton1.place(x=260, y=270)
 
-    ###########################Compañia###############################
-    ttk.Label(root, text="Negocio :", font=fuent).place(relx=.0, rely=.2)
+root.bind("<Return>", saltar)
 
-    Company = ttk.Entry(root, font=fuente, textvariable=compañia)
-    Company.place(x=125, y=68, width=168, height=30)
+lapiz = tkinter.font.Font(weight="bold", size=7)
 
-    Company.menu = Menu(tearoff=False)
-    Company.menu.add_command(label="Copiar", command=copiar)
-    Company.menu.add_separator()
-    Company.menu.add_command(label="Pegar", command=pegar)
-    Company.bind("<Button-3>", cosito)
-    #########################Nombre################################
-    ttk.Label(root, text="Nombre :", font=fuent).place(relx=.0, rely=.4)
+style = ttk.Style()
+style.configure("BW.TLabel", foreground="red")
 
-    Nombre = ttk.Entry(root, font=fuente, textvariable=name)
-    Nombre.place(x=122, y=126, width=168, height=30)
+Ambos_vacios = ttk.Label(text="Los campos estan vacios", font=lapiz, style="BW.TLabel")
 
-    Nombre.menu = Menu(tearoff=False)
-    Nombre.menu.add_command(label="Copiar", command=copiar)
-    Nombre.menu.add_separator()
-    Nombre.menu.add_command(label="Pegar", command=pegar)
-    Nombre.bind("<Button-3>", cosito)
-    #######################Contraseña#################################
-    ttk.Label(root, text="Contraseña :", font=fuent).place(relx=.0, rely=.6)
+nombre_vacio = ttk.Label(text="El campo nombre esta vacio", font=lapiz, style="BW.TLabel")
 
-    fight = ttk.Entry(root, font=fuente, textvariable=password)
-    fight.config(show="*")
-    fight.place(x=170, y=186, width=168, height=30)
+contraseña_vacia = ttk.Label(text="El campo contraseña esta vacio", font=lapiz, style="BW.TLabel")
 
-    fight.menu = Menu(tearoff=False)
-    fight.menu.add_command(label="Copiar", command=copiar)
-    fight.menu.add_separator()
-    fight.menu.add_command(label="Pegar", command=pegar)
-    fight.bind("<Button-3>", cosito)
-    ####################################################################
+Company.menu = Menu(tearoff=False)
+Company.menu.add_command(label="Copiar", command=copiar)
+Company.menu.add_separator()
+Company.menu.add_command(label="Pegar", command=pegar)
+Company.bind("<Button-3>", cosito)
 
-    ttk.Checkbutton(root, text="Mostrar contraseña", variable=chequeo, onvalue=1, offvalue=0, command=comprobacion1).place(
-        x=339, y=196)
+Nombre.menu = Menu(tearoff=False)
+Nombre.menu.add_command(label="Copiar", command=copiar)
+Nombre.menu.add_separator()
+Nombre.menu.add_command(label="Pegar", command=pegar)
+Nombre.bind("<Button-3>", cosito)
 
-    boton = Button(root, text="Crear", width=20, command=info)
-    boton.place(x=100, y=270)
+fight.menu = Menu(tearoff=False)
+fight.menu.add_command(label="Copiar", command=copiar)
+fight.menu.add_separator()
+fight.menu.add_command(label="Pegar", command=pegar)
+fight.bind("<Button-3>", cosito)
 
-    boton1 = Button(root, text="Continuar", width=20)
-    boton1.place(x=260, y=270)
-
-    root.bind("<Return>", saltar)
-
-    lapiz = tkinter.font.Font(weight="bold", size=7)
-
-    style = ttk.Style()
-    style.configure("BW.TLabel", foreground="red")
-
-    Ambos_vacios = ttk.Label(text="Los campos estan vacios", font=lapiz, style="BW.TLabel")
-
-    nombre_vacio = ttk.Label(text="El campo nombre esta vacio", font=lapiz, style="BW.TLabel")
-
-    contraseña_vacia = ttk.Label(text="El campo contraseña esta vacio", font=lapiz, style="BW.TLabel")
-
-    Company.menu = Menu(tearoff=False)
-    Company.menu.add_command(label="Copiar", command=copiar)
-    Company.menu.add_separator()
-    Company.menu.add_command(label="Pegar", command=pegar)
-    Company.bind("<Button-3>", cosito)
-
-    Nombre.menu = Menu(tearoff=False)
-    Nombre.menu.add_command(label="Copiar", command=copiar)
-    Nombre.menu.add_separator()
-    Nombre.menu.add_command(label="Pegar", command=pegar)
-    Nombre.bind("<Button-3>", cosito)
-
-    fight.menu = Menu(tearoff=False)
-    fight.menu.add_command(label="Copiar", command=copiar)
-    fight.menu.add_separator()
-    fight.menu.add_command(label="Pegar", command=pegar)
-    fight.bind("<Button-3>", cosito)
-    root.protocol("WM_DELETE_WINDOW", salir)
-
-    root.mainloop()
+root.mainloop()
 
 def soplamocos():
     if corchete:

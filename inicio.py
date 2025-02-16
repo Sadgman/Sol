@@ -2,7 +2,7 @@ from Modulos import *
 
 root = Tk()
 
-root.iconbitmap('iconos e imagenes\icono.ico')
+root.iconbitmap('iconos e imagenes\\icono.ico')
 
 root.title("Iniciar de sesion")
 
@@ -114,7 +114,7 @@ def ejecucion():
     global z
     k = 0
 
-    nanombre = sqlite3.connect("Data_base.db")
+    nanombre = sqlite3.connect("./db/NDB.db")
 
     cursor = nanombre.cursor()
 
@@ -135,7 +135,7 @@ def ejecucion():
 
     nanombre.close()
 
-    nanombre = sqlite3.connect("Data_base.db")
+    nanombre = sqlite3.connect("./db/NDB.db")
 
     cursor = nanombre.cursor()
 
