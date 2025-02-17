@@ -33,8 +33,8 @@ class principal:
         self.imagen4 = PhotoImage(file="iconos e imagenes\\Facturacion.png")
         self.crear_producto_imagen = PhotoImage(file="iconos e imagenes\\Crear.png")
         self.Inventario_imagen = PhotoImage(file="iconos e imagenes\\Inventario.png")
-        self.imagen_buscar = PhotoImage(file=r"iconos e imagenes\\buscar1.png")
-        self.imagen_articulo = PhotoImage(file=r"iconos e imagenes\\the photo of the item.png")
+        self.imagen_buscar = PhotoImage(file="iconos e imagenes\\buscar1.png")
+        self.imagen_articulo = PhotoImage(file="iconos e imagenes\\the photo of the item.png")
 
         self.boton_adelante = Button(root, image=self.imagen2, command=self.cambiar)
         self.boton_adelante.place(rely=0.5,relx=0.9, x=16)
@@ -1039,44 +1039,8 @@ class principal:
                 return False
 
     def coma(self, num):
-        num = num.split(".")
-        num = num[0]
-        resultado = ""
-        num1 = len(num)
-        if not num == "":
-            if num1 == 4:
-                resultado = num[0] + "," + num[1:len(num)]
-            elif num1 == 5:
-                resultado = num[0:2] + "," + num[2:len(num)]
-            elif num1 == 6:
-                resultado = num[0:3] + "," + num[3:len(num)]
-            elif num1 == 7:
-                resultado = num[0] + "," + num[1:4] + "," + num[4:len(num)]
-            elif num1 == 8:
-                resultado = num[0:2] + "," + num[2:5] + "," + num[5:len(num)]
-            elif num1 == 9:
-                resultado = num[0:3] + "," + num[3:6] + "," + num[6:len(num)]
-            elif num1 == 10:
-                resultado = num[0] + "," + num[1:4] + "," + num[4:7] + "," + num[7:len(num)]
-            elif num1 == 11:
-                resultado = num[0:2] + "," + num[2:5] + "," + num[5:8] + "," + num[8:len(num)]
-            elif num1 == 12:
-                resultado = num[0:3] + "," + num[3:6] + "," + num[6:9] + "," + num[9:len(num)]
-            elif num1 == 13:
-                resultado = num[0] +","+num[1:4]+","+num[4:7]+","+num[7:10]+","+num[10:len(num)]
-            elif num1 == 14:
-                resultado = num[0:2]+","+num[2:5]+","+num[5:8]+","+num[8:11]+","+num[11:len(num)]
-            elif num1 == 15:
-                resultado = num[0:3]+","+num[3:6]+","+num[6:9]+","+num[9:12]+","+num[12:len(num)]
-            elif num1 == 16:
-                resultado = num[0]+","+num[1:4]+","+num[4:7]+","+num[7:10]+","+num[10:13]+","+num[13:len(num)]
-            elif num1 == 17:
-                resultado = num[0:2]+","+num[2:5]+","+num[5:8]+","+num[8:11]+","+num[11:14]+","+num[14:len(num)]
-            elif num1 == 18:
-                resultado = num[0:3]+","+num[3:6]+","+num[6:9]+","+num[9:12]+","+num[12:15]+","+num[15:len(num)]
-            elif num1 == 19:
-                resultado = num[0]+","+num[1:4]+","+num[4:7]+","+num[7:10] + ","+num[10:13]+","+num[13:16]+","+num[16:len(num)]
-            return resultado
+        num = num.split(".")[0]
+        return "{:,}".format(int(num))
 
     def calculo(self, cel):
         if self.variable == 0:
