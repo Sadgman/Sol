@@ -816,25 +816,17 @@ class principal:
 
             else:
                 return False
-
-    def validacion_(self,Sr_Quaker):
-        en_numeros = len(Sr_Quaker)
+    
+    def validacion_(self, numero):
+        # Comprueba si hay algo en `numero`
+        if not numero: return False
         try:
-            float(Sr_Quaker)
+            # Remueve comas y convierte a float si esto da error es porque no es un número
+            float(numero.replace(",", "")) 
             return True
         except ValueError:
-            if en_numeros == 0:
-                return True
-            else:
-                if Sr_Quaker[en_numeros - 1] == ",":
-                    return True
-                else:
-                    try:
-                        kaneki = Sr_Quaker.split(",")
-                        float(kaneki[0] + kaneki[1])
-                        return True
-                    except:
-                        return False
+            return False
+    
 
     def cantidad_inicial(self, dxs):
 
@@ -974,72 +966,37 @@ class principal:
                 return True
             else:
                 return False
+    def Impuesto(self, Numero, Entry, N1, X):
+        if not self.validacion_(Numero):
+            return False
 
-    def Impuesto(self, Numero, Entry, N1, X, c=0):
-        if str.isdigit(Numero):
-            if self.validacion_(Numero):
+        # Convertir `Numero` en un valor numérico válido
+        try:
+            n1 = float(Numero.replace(",", ""))  # Remueve comas y convierte a float
+        except ValueError:
+            return False
 
-                if str.isdigit(self.Int_por_unidad.get()):
-                    nf = float(self.Int_por_unidad.get())
-                else:
-                    Quaker = N1.split(",")
-                    vacia = ""
-                    num = 0
-                    for mum in Quaker:
-                        vacia += Quaker[num]
-                        num += 1
-                    nf = float(vacia)
-
-                n1 = int(Numero)
-                res = eval("n1 * 1 / 100")
-                res *= X
-                fns = format(nf + res, ".2f")
-                Entry.set(self.coma(fns))
-                return True
-        else:
-            if self.validacion_(Numero):
-                if str.isdigit(self.Int_por_unidad.get()):
-                    nf = float(self.Int_por_unidad.get())
-                else:
-                    try:
-                        Quaker_ = N1.split(",")
-                        vacia = ""
-                        num = 0
-                        for mum in Quaker_:
-                            vacia += Quaker_[num]
-                            num += 1
-                        nf = float(vacia)
-                    except IndexError:
-                        pass
-                try:
-                    try:
-                        n1 = float(Numero)
-                        c += 1
-                    except ValueError:
-                        Quaker_do = Numero.split(",")
-                        vacia = ""
-                        num = 0
-                        for mum in Quaker_do:
-                            vacia += Quaker_do[num]
-                            num += 1
-                    try:
-                        n1 = float(vacia)
-                        c += 1
-                    except:
-                        pass
-                    if c == 1:
-                        res = eval("n1 * 1 / 100")
-                        res *= X
-                        fns = format(nf + res, ".2f")
-                        Entry.set(self.coma(fns))
-                except IndexError:
-                    pass
-                return True
-            else:
+        # Convertir `Int_por_unidad` en un valor numérico válido
+        try:
+            nf = float(self.Int_por_unidad.get())
+        except ValueError:
+            try:
+                nf = float(N1.replace(",", ""))
+            except ValueError:
                 return False
 
+        # Calcular impuesto y actualizar Entry
+        res = (n1 * 1 / 100) * X
+        fns = format(nf + res, ".2f")
+        Entry.set(self.coma(fns))
+
+        return True
+
+
     def coma(self, num):
+        # Uso split para separar la parte decimal de la entera
         num = num.split(".")[0]
+        # Uso format para agregar comas a la parte entera
         return "{:,}".format(int(num))
 
     def calculo(self, cel):
