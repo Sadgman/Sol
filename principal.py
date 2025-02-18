@@ -165,10 +165,10 @@ class principal:
 
         self.entry_ubicacion_fisica = ttk.Entry(self.frame_crear_producto, width=11, textvariable=self.ub_fs)
 
-        self.string_entry14 = IntVar()
-        self.string_entry15 = IntVar()
-        self.string_entry16 = IntVar()
-        self.string_entry17 = IntVar()
+        self.string_entry14 = StringVar()
+        self.string_entry15 = StringVar()
+        self.string_entry16 = StringVar()
+        self.string_entry17 = StringVar()
 
         self.entry_numero14 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry14)
         self.entry_numero15 = ttk.Entry(self.frame_crear_producto, textvariable=self.string_entry15)
